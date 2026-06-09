@@ -10,20 +10,22 @@ const t = ui[lang];
 const icons = ['grid', 'play', 'pen', 'calendar'];
 ---
 
-<section id="que-fem" class="scroll-mt-20 py-20 md:py-28">
+<section id="que-fem" class="scroll-mt-24 py-24 md:py-32">
   <div class="container-edge">
-    <div class="max-w-2xl">
-      <p class="eyebrow" data-reveal>{t.services.eyebrow}</p>
-      <h2 class="mt-4 text-h2 font-semibold" data-reveal>{t.services.title}</h2>
-      <p class="mt-4 text-lg text-ink-soft" data-reveal>{t.services.lead}</p>
+    <div class="grid items-end gap-8 md:grid-cols-[1.3fr_1fr]">
+      <div>
+        <p class="eyebrow" data-reveal>{t.services.eyebrow}</p>
+        <h2 class="mt-5 max-w-2xl text-h2 font-semibold" data-reveal>{t.services.title}</h2>
+      </div>
+      <p class="text-lg text-ink-soft md:pb-1" data-reveal>{t.services.lead}</p>
     </div>
 
-    <div class="mt-14 grid gap-5 sm:grid-cols-2">
+    <div class="mt-14 grid gap-4 sm:grid-cols-2">
       {
         t.services.items.map((item, i) => (
-          <article class="card flex gap-4" data-reveal data-lift>
+          <article class="card flex gap-5 md:p-8" data-reveal data-lift>
             <span
-              class="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-accent/10 text-accent-ink"
+              class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-accent/[0.12] text-accent-ink"
               aria-hidden="true"
             >
               {icons[i] === 'grid' && (

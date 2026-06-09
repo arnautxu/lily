@@ -1,0 +1,36 @@
+---
+import type { Lang } from '../lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+
+const items =
+  lang === 'ca'
+    ? ['Restaurants', 'Perruqueries', 'Estètica', 'Botigues de roba', 'Gimnasos', 'Clíniques de salut', 'Cafeteries', 'Floristeries']
+    : ['Restaurantes', 'Peluquerías', 'Estética', 'Tiendas de ropa', 'Gimnasios', 'Clínicas de salud', 'Cafeterías', 'Floristerías'];
+
+// Duplicat per al loop continu
+const loop = [...items, ...items];
+---
+
+<section class="border-y border-sand/70 bg-surface/40 py-5" aria-hidden="true">
+  <div class="marquee-mask overflow-hidden">
+    <div class="marquee">
+      {
+        loop.map((item) => (
+          <span class="flex items-center gap-12 whitespace-nowrap font-display text-xl text-ink-soft md:text-2xl">
+            {item}
+            <span class="h-1.5 w-1.5 rounded-full bg-coral/70"></span>
+          </span>
+        ))
+      }
+    </div>
+  </div>
+</section>
+<p class="sr-only">
+  {lang === 'ca'
+    ? 'Treballo amb restaurants, perruqueries i estètica, botigues de roba, gimnasos i clíniques de salut de Vic i Osona.'
+    : 'Trabajo con restaurantes, peluquerías y estética, tiendas de ropa, gimnasios y clínicas de salud de Vic y Osona.'}
+</p>

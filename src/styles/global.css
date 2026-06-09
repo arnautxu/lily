@@ -1,39 +1,46 @@
 /* Fonts self-hosted (Fontsource) — millor LCP que CDN */
 @import '@fontsource-variable/fraunces';
-@import '@fontsource-variable/inter';
+@import '@fontsource-variable/geist';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  /* Colors com a triplets RGB perquè els modificadors d'opacitat de Tailwind
-     (ex. bg-accent/10) funcionin. */
-  --bg: 251 247 240; /* #FBF7F0 crema sorra */
-  --surface: 255 255 255; /* #FFFFFF */
-  --sand: 232 220 200; /* #E8DCC8 arena */
-  --ink: 43 36 32; /* #2B2420 espresso */
-  --ink-soft: 92 82 73; /* #5C5249 */
-  --accent: 198 90 54; /* #C65A36 terracota */
-  --accent-ink: 168 69 31; /* #A8451F terracota fosc */
-  --success: 79 122 82; /* #4F7A52 */
+  /* Verd editorial · colors com a triplets RGB perquè les opacitats de
+     Tailwind (ex. bg-accent/10) funcionin a tot arreu. */
+  --bg: 246 241 233; /* #F6F1E9 ivori càlid */
+  --surface: 252 250 245; /* #FCFAF5 */
+  --sand: 231 223 210; /* #E7DFD2 hairline / neutre */
+  --ink: 24 21 18; /* #181512 tinta */
+  --ink-soft: 107 98 88; /* #6B6258 */
+  --accent: 77 124 47; /* #4D7C2F verd herba */
+  --accent-ink: 56 92 34; /* #385C22 verd fosc (text/hover) */
+  --coral: 229 104 60; /* #E5683C pop */
+  --success: 47 107 51; /* #2F6B33 */
 
-  --r-sm: 8px;
-  --r-md: 14px;
+  --r-sm: 10px;
+  --r-md: 16px;
   --r-lg: 24px;
+  --r-xl: 32px;
+  --r-2xl: 40px;
+
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    /* Guard contra scroll horizontal SENSE crear un context de scroll
+       (a diferència d'overflow-x:hidden, que trencava l'scroll d'àncores). */
+    overflow-x: clip;
   }
 
   body {
     background-color: rgb(var(--bg));
     color: rgb(var(--ink));
-    font-family: '"Inter Variable"', system-ui, sans-serif;
-    font-optical-sizing: auto;
+    font-family: '"Geist Variable"', system-ui, sans-serif;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
@@ -48,11 +55,10 @@
 
   p { text-wrap: pretty; }
 
-  /* Focus visible — accessibilitat AA */
   :focus-visible {
     outline: 2px solid rgb(var(--accent-ink));
     outline-offset: 3px;
-    border-radius: 4px;
+    border-radius: 6px;
   }
 
   ::selection {
@@ -62,60 +68,121 @@
 }
 
 @layer components {
-  /* Botó primari: accent de fons + text crema (contrast AA validat) */
-  .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3
-           font-medium text-[0.975rem] leading-none transition duration-200
-           ease-out-soft focus-visible:outline-offset-4 will-change-transform;
-  }
-  .btn-primary {
-    @apply btn bg-accent text-[#fff] shadow-soft;
-  }
-  .btn-primary:hover {
-    background-color: rgb(var(--accent-ink));
-    box-shadow: 0 12px 28px -10px rgba(198, 90, 54, 0.5);
-    transform: translateY(-1px);
-  }
-  .btn-secondary {
-    @apply btn border border-ink/15 bg-surface text-ink;
-  }
-  .btn-secondary:hover {
-    border-color: rgb(var(--accent));
-    color: rgb(var(--accent-ink));
-    transform: translateY(-1px);
-  }
-
-  .eyebrow {
-    @apply inline-flex items-center gap-2 text-[0.78rem] font-semibold uppercase
-           tracking-[0.14em] text-accent-ink;
-  }
-
-  .card {
-    @apply rounded-lg border border-sand/70 bg-surface p-6 shadow-soft transition
-           duration-300 ease-out-soft;
-  }
-
   .container-edge {
     @apply mx-auto w-full max-w-content px-5 md:px-8;
   }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full border border-ink/10 bg-surface/60
+           px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-accent-ink
+           backdrop-blur-sm;
+  }
+
+  /* ── Botons ──────────────────────────────────────────────── */
+  .btn {
+    @apply inline-flex items-center gap-3 whitespace-nowrap rounded-full pl-6 pr-2 py-2
+           text-[0.95rem] font-medium leading-none transition-transform duration-300
+           ease-out-soft will-change-transform active:scale-[0.97];
+  }
+  .btn-ico {
+    @apply flex h-9 w-9 items-center justify-center rounded-full transition-transform
+           duration-300 ease-out-soft;
+  }
+  .btn:hover .btn-ico {
+    transform: translate(2px, -1px) scale(1.05);
+  }
+  .btn-primary {
+    @apply btn bg-accent text-white;
+    box-shadow: 0 14px 30px -14px rgb(var(--accent) / 0.7);
+  }
+  .btn-primary .btn-ico { @apply bg-white/20; }
+  .btn-primary:hover { background-color: rgb(var(--accent-ink)); }
+
+  .btn-secondary {
+    @apply btn border border-ink/[0.12] bg-surface/70 text-ink backdrop-blur-sm;
+  }
+  .btn-secondary .btn-ico { @apply bg-ink/5; }
+  .btn-secondary:hover { border-color: rgb(var(--accent) / 0.5); color: rgb(var(--accent-ink)); }
+
+  /* Variant simple (sense icona-bombolla) per a enllaços compactes */
+  .btn-plain {
+    @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full
+           px-5 py-2.5 text-[0.9rem] font-medium leading-none transition duration-300
+           ease-out-soft active:scale-[0.97];
+  }
+
+  /* ── Double-bezel (carcassa + nucli) ─────────────────────── */
+  .bezel {
+    @apply rounded-2xl border border-ink/[0.08] bg-ink/[0.025] p-1.5;
+  }
+  .bezel-core {
+    @apply rounded-xl bg-surface;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.7);
+  }
+
+  .card {
+    @apply rounded-xl border border-sand bg-surface p-6 transition-all duration-500 ease-out-soft;
+    box-shadow: 0 18px 40px -28px rgb(var(--ink) / 0.18);
+  }
+  .card:hover {
+    border-color: rgb(var(--accent) / 0.35);
+    box-shadow: 0 26px 56px -30px rgb(var(--accent) / 0.3);
+  }
+
+  /* ── Marquee (kinetic) ───────────────────────────────────── */
+  .marquee {
+    @apply flex w-max items-center gap-12 will-change-transform;
+    animation: marquee 36s linear infinite;
+  }
+  .marquee-mask {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  }
 }
 
-/* Scroll-reveal base (CSS) — Motion One l'orquestra en JS, però aquest és el
-   fallback i l'estat inicial. */
-[data-reveal] {
-  opacity: 0;
-  transform: translateY(20px);
+/* ── Aura / mesh gradient orbs (subtil, càlid) ─────────────── */
+.aura::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(40rem 30rem at 78% -8%, rgb(var(--accent) / 0.12), transparent 60%),
+    radial-gradient(34rem 26rem at 6% 12%, rgb(var(--coral) / 0.10), transparent 60%);
+  pointer-events: none;
 }
-[data-reveal].is-visible {
+
+/* ── Film grain (fix, no afecta scroll) ────────────────────── */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── Scroll-reveal (estat inicial; JS hi afegeix .is-visible) ──
+   Amagat NOMÉS si hi ha JS (.js a <html>): sense JS es veu tot. */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  filter: blur(6px);
+}
+.js [data-reveal].is-visible {
   opacity: 1;
   transform: none;
-  transition: opacity 0.55s var(--ease, cubic-bezier(0.22, 1, 0.36, 1)),
-    transform 0.55s var(--ease, cubic-bezier(0.22, 1, 0.36, 1));
+  filter: blur(0);
+  transition:
+    opacity 0.8s var(--ease-soft),
+    transform 0.8s var(--ease-soft),
+    filter 0.8s var(--ease-soft);
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  [data-reveal] { opacity: 1; transform: none; }
+  .js [data-reveal], [data-reveal] { opacity: 1; transform: none; filter: none; }
+  .marquee, .animate-float, .animate-marquee { animation: none !important; }
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
     transition-duration: 0.001ms !important;

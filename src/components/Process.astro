@@ -8,30 +8,45 @@ const { lang } = Astro.props;
 const t = ui[lang];
 ---
 
-<section
-  id="com-treballem"
-  class="scroll-mt-20 border-y border-sand/50 bg-ink py-20 text-bg md:py-28"
->
+<section id="com-treballem" class="scroll-mt-24 bg-ink py-24 text-bg md:py-32">
   <div class="container-edge">
-    <div class="max-w-2xl">
-      <p class="eyebrow text-accent" data-reveal>{t.process.eyebrow}</p>
-      <h2 class="mt-4 text-h2 font-semibold text-bg" data-reveal>{t.process.title}</h2>
-      <p class="mt-4 text-lg text-bg/75" data-reveal>{t.process.lead}</p>
+    <div class="grid items-end gap-8 md:grid-cols-[1.2fr_1fr]">
+      <div>
+        <p class="eyebrow border-white/10 bg-white/5 text-coral" data-reveal>{t.process.eyebrow}</p>
+        <h2 class="mt-5 max-w-2xl text-h2 font-semibold text-bg" data-reveal>{t.process.title}</h2>
+      </div>
+      <p class="text-lg text-bg/70 md:pb-1" data-reveal>{t.process.lead}</p>
     </div>
 
-    <ol class="mt-14 grid gap-px overflow-hidden rounded-lg bg-bg/10 md:grid-cols-5">
+    <!-- Sticky stack (GSAP escala les targetes anteriors en scroll) -->
+    <div class="relative mt-16" data-stack>
       {
-        t.process.steps.map((step) => (
-          <li class="bg-ink p-6 transition-colors duration-300 hover:bg-[#332b26]" data-reveal>
-            <span class="font-display text-2xl font-semibold text-accent">{step.n}</span>
-            <h3 class="mt-3 text-base font-semibold text-bg">{step.title}</h3>
-            <p class="mt-2 text-sm leading-relaxed text-bg/70">{step.body}</p>
-          </li>
+        t.process.steps.map((step, i) => (
+          <article
+            class="sticky top-28 mb-5 origin-top overflow-hidden rounded-2xl border border-white/10 bg-[#16130f] p-7 md:p-10"
+            data-stack-card
+            style={`box-shadow: 0 -8px 40px -20px rgb(0 0 0 / 0.6);`}
+          >
+            <div class="grid gap-6 md:grid-cols-[auto_1fr] md:items-start md:gap-10">
+              <span class="font-display text-5xl font-semibold text-accent md:text-7xl">{step.n}</span>
+              <div class="max-w-2xl">
+                <h3 class="font-display text-2xl font-semibold text-bg md:text-3xl">{step.title}</h3>
+                <p class="mt-3 text-bg/70 md:text-lg">{step.body}</p>
+                <div
+                  class="mt-6 h-px w-full bg-gradient-to-r from-accent/60 to-transparent"
+                  aria-hidden="true"
+                />
+                <p class="mt-3 text-xs uppercase tracking-[0.18em] text-bg/35">
+                  {String(i + 1).padStart(2, '0')} / {String(t.process.steps.length).padStart(2, '0')}
+                </p>
+              </div>
+            </div>
+          </article>
         ))
       }
-    </ol>
+    </div>
 
-    <p class="mt-8 max-w-xl text-sm text-bg/55" data-reveal>
+    <p class="mt-10 max-w-xl text-sm text-bg/55" data-reveal>
       {
         lang === 'ca'
           ? 'En cap pas es publica res sense que una persona ho hagi revisat i tu ho hagis vist. Aquesta és la diferència amb un bot.'

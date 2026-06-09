@@ -10,7 +10,7 @@ const t = ui[lang];
 const year = 2026; // PLACEHOLDER · actualitza l'any si cal
 ---
 
-<footer class="border-t border-sand/60 bg-bg py-14">
+<footer class="border-t border-sand bg-bg py-16">
   <div class="container-edge grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
     <div class="max-w-xs">
       <p class="font-display text-lg font-semibold">
@@ -44,6 +44,9 @@ const year = 2026; // PLACEHOLDER · actualitza l'any si cal
 
   <div class="container-edge mt-10 flex flex-col items-center justify-between gap-2 border-t border-sand/60 pt-6 text-xs text-ink-soft sm:flex-row">
     <p>© {year} {site.brand} · {site.tagline}. {t.footer.rights}</p>
-    <p>{t.footer.madeIn} ❤</p>
+    <p class="inline-flex items-center gap-1.5">
+      {t.footer.madeIn}
+      <span class="inline-block h-1.5 w-1.5 rounded-full bg-coral" aria-hidden="true"></span>
+    </p>
   </div>
 </footer>

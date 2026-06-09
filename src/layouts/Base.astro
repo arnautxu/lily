@@ -49,6 +49,9 @@ const jsonLd = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
 
@@ -75,7 +78,7 @@ const jsonLd = {
     <meta name="twitter:description" content={t.meta.description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <meta name="theme-color" content="#fbf7f0" />
+    <meta name="theme-color" content="#f6f1e9" />
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
@@ -86,6 +89,7 @@ const jsonLd = {
     >
       {lang === 'ca' ? 'Salta al contingut' : 'Saltar al contenido'}
     </a>
+    <div class="grain" aria-hidden="true"></div>
     <slot />
     <script>
       import '../lib/motion.ts';

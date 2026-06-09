@@ -14,13 +14,14 @@ const otherLabel = otherLang === 'ca' ? 'CAT' : 'ES';
 const homeHref = lang === 'ca' ? '/' : '/es';
 ---
 
-<header
-  class="sticky top-0 z-50 border-b border-sand/60 bg-bg/80 backdrop-blur-md supports-[backdrop-filter]:bg-bg/70"
->
-  <nav class="container-edge flex h-16 items-center justify-between gap-4" aria-label={t.nav.cta}>
+<header class="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4 md:pt-5">
+  <nav
+    class="pointer-events-auto flex w-full max-w-content items-center justify-between gap-4 rounded-full border border-ink/[0.08] bg-bg/70 py-2 pl-5 pr-2 shadow-[0_10px_30px_-18px_rgb(24_21_18_/_0.4)] backdrop-blur-xl"
+    aria-label={t.nav.cta}
+  >
     <a
       href={homeHref}
-      class="font-display text-lg font-semibold tracking-tight text-ink transition-colors hover:text-accent-ink"
+      class="whitespace-nowrap font-display text-base font-semibold tracking-tight text-ink transition-colors hover:text-accent-ink md:text-[1.05rem]"
     >
       {site.brand}<span class="text-accent">.</span>
     </a>
@@ -31,7 +32,7 @@ const homeHref = lang === 'ca' ? '/' : '/es';
           <li>
             <a
               href={l.href}
-              class="text-[0.9rem] text-ink-soft transition-colors hover:text-ink"
+              class="relative text-[0.875rem] text-ink-soft transition-colors after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-accent after:transition-all after:duration-300 hover:text-ink hover:after:w-full"
             >
               {l.label}
             </a>
@@ -40,17 +41,22 @@ const homeHref = lang === 'ca' ? '/' : '/es';
       }
     </ul>
 
-    <div class="flex items-center gap-2 md:gap-3">
+    <div class="flex items-center gap-2">
       <a
         href={otherHref}
         hreflang={otherLang}
         aria-label={t.nav.langLabel}
-        class="rounded-full border border-ink/15 px-3 py-1.5 text-[0.8rem] font-medium text-ink-soft transition-colors hover:border-accent hover:text-accent-ink"
+        class="btn-plain border border-ink/[0.12] text-ink-soft hover:border-accent/50 hover:text-accent-ink"
       >
         {otherLabel}
       </a>
-      <a href={wa} class="btn-primary !px-4 !py-2 text-[0.875rem]" rel="noopener">
+      <a href={wa} rel="noopener" class="btn-primary !py-2">
         {t.nav.cta}
+        <span class="btn-ico" aria-hidden="true">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 17 17 7M9 7h8v8" />
+          </svg>
+        </span>
       </a>
     </div>
   </nav>

@@ -9,27 +9,26 @@ const { lang } = Astro.props;
 const t = ui[lang];
 ---
 
-<section id="lidia" class="scroll-mt-20 py-20 md:py-28">
-  <div class="container-edge grid items-center gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
-    <!-- Foto placeholder -->
+<section id="lidia" class="scroll-mt-24 py-24 md:py-32">
+  <div class="container-edge grid items-center gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+    <!-- Foto placeholder (double-bezel + float) -->
     <div class="relative mx-auto w-full max-w-sm lg:mx-0" data-reveal>
-      <div
-        class="aspect-[4/5] overflow-hidden rounded-lg bg-gradient-to-br from-[#d98b6a] to-[#a8451f] shadow-soft"
-      >
-        {/* PLACEHOLDER · foto real de la Lídia
-            <img src="/images/lidia.jpg" alt={t.about.imageAlt} width="480" height="600"
+      <div class="bezel" data-parallax="0.05">
+        <div class="bezel-core overflow-hidden">
+          <div class="aspect-[4/5] bg-gradient-to-br from-[#5d7d3a] via-[#4d7c2f] to-[#385c22]">
+            {/* PLACEHOLDER · <img src="/images/lidia.jpg" alt={t.about.imageAlt} width="480" height="600"
                  loading="lazy" class="h-full w-full object-cover" /> */}
+          </div>
+        </div>
       </div>
-      <span
-        class="absolute bottom-4 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-bg/90 px-3 py-1 text-[0.7rem] font-medium text-ink-soft"
-      >
+      <span class="absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-sand bg-bg/90 px-3 py-1 text-[0.68rem] font-medium text-ink-soft backdrop-blur-sm">
         {t.about.imageAlt}
       </span>
     </div>
 
     <div class="max-w-xl">
       <p class="eyebrow" data-reveal>{t.about.eyebrow}</p>
-      <h2 class="mt-4 text-h2 font-semibold" data-reveal>{t.about.title}</h2>
+      <h2 class="mt-5 text-h2 font-semibold" data-reveal>{t.about.title}</h2>
       {t.about.body.map((p) => <p class="mt-4 text-lg leading-relaxed text-ink-soft" data-reveal>{p}</p>)}
 
       <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3" data-reveal>
@@ -40,9 +39,9 @@ const t = ui[lang];
         <a
           href={instagramLink}
           rel="noopener"
-          class="inline-flex items-center gap-2 text-sm font-medium text-accent-ink transition-colors hover:text-ink"
+          class="inline-flex items-center gap-2 rounded-full border border-ink/[0.12] px-4 py-2 text-sm font-medium text-accent-ink transition-colors hover:border-accent/50 hover:text-ink"
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
             <rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="3.5" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
           </svg>
           @{contact.instagram}

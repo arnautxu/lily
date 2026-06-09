@@ -11,18 +11,18 @@ const wa = whatsappLink(lang);
 const f = t.contact.form;
 ---
 
-<section id="contacte" class="scroll-mt-20 border-t border-sand/50 bg-sand/25 py-20 md:py-28">
+<section id="contacte" class="scroll-mt-24 border-t border-sand bg-surface/40 py-24 md:py-32">
   <div class="container-edge grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
-    <div class="max-w-md">
+    <div class="max-w-md lg:sticky lg:top-28 lg:self-start">
       <p class="eyebrow" data-reveal>{t.contact.eyebrow}</p>
-      <h2 class="mt-4 text-h2 font-semibold" data-reveal>{t.contact.title}</h2>
+      <h2 class="mt-5 text-h2 font-semibold" data-reveal>{t.contact.title}</h2>
       <p class="mt-4 text-lg text-ink-soft" data-reveal>{t.contact.lead}</p>
 
-      <a href={wa} rel="noopener" class="btn-primary mt-7" data-reveal>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.49.07-1.12.1-1.8-.11-.42-.13-.95-.31-1.64-.61-2.88-1.24-4.76-4.14-4.9-4.33-.14-.19-1.17-1.56-1.17-2.97s.74-2.11 1-2.4c.26-.29.57-.36.76-.36l.55.01c.18.01.41-.07.64.49.24.58.82 2 .89 2.14.07.14.12.31.02.5-.1.19-.14.31-.29.48-.14.17-.3.38-.43.51-.14.14-.29.29-.12.58.17.29.74 1.22 1.59 1.98 1.09.97 2.01 1.27 2.3 1.42.29.14.46.12.63-.07.17-.19.72-.84.91-1.13.19-.29.39-.24.64-.14.26.09 1.66.78 1.95.93.29.14.48.21.55.34.07.12.07.72-.17 1.4Z" />
-        </svg>
+      <a href={wa} rel="noopener" class="btn-primary mt-7" data-reveal data-magnetic>
         {t.contact.waCta}
+        <span class="btn-ico" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.49.07-1.12.1-1.8-.11-.42-.13-.95-.31-1.64-.61-2.88-1.24-4.76-4.14-4.9-4.33-.14-.19-1.17-1.56-1.17-2.97s.74-2.11 1-2.4c.26-.29.57-.36.76-.36l.55.01c.18.01.41-.07.64.49.24.58.82 2 .89 2.14.07.14.12.31.02.5-.1.19-.14.31-.29.48-.14.17-.3.38-.43.51-.14.14-.29.29-.12.58.17.29.74 1.22 1.59 1.98 1.09.97 2.01 1.27 2.3 1.42.29.14.46.12.63-.07.17-.19.72-.84.91-1.13.19-.29.39-.24.64-.14.26.09 1.66.78 1.95.93.29.14.48.21.55.34.07.12.07.72-.17 1.4Z" /></svg>
+        </span>
       </a>
 
       <p class="mt-8 text-sm text-ink-soft" data-reveal>
@@ -31,7 +31,7 @@ const f = t.contact.form;
     </div>
 
     <!-- Formulari Web3Forms -->
-    <div class="rounded-lg border border-sand/70 bg-surface p-6 shadow-soft md:p-8" data-reveal>
+    <div class="rounded-2xl border border-sand bg-surface p-6 shadow-diffuse md:p-8" data-reveal>
       <p class="mb-5 text-sm font-medium text-ink-soft">{t.contact.orForm}</p>
       <form id="contact-form" class="grid gap-4" novalidate>
         <!-- Web3Forms access key — PLACEHOLDER (omple a src/lib/config.ts) -->
@@ -95,7 +95,12 @@ const f = t.contact.form;
           ></textarea>
         </label>
 
-        <button type="submit" class="btn-primary mt-1 w-full sm:w-auto sm:justify-self-start" data-submit>
+        <button
+          type="submit"
+          class="btn-plain mt-1 w-full bg-accent text-white transition-colors hover:bg-accent-ink sm:w-auto sm:justify-self-start"
+          style="box-shadow: 0 14px 30px -14px rgb(var(--accent) / 0.7);"
+          data-submit
+        >
           {f.submit}
         </button>
 
