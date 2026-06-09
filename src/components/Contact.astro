@@ -1,0 +1,165 @@
+---
+import { ui, type Lang } from '../lib/i18n';
+import { whatsappLink, forms, contact } from '../lib/config';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = ui[lang];
+const wa = whatsappLink(lang);
+const f = t.contact.form;
+---
+
+<section id="contacte" class="scroll-mt-20 border-t border-sand/50 bg-sand/25 py-20 md:py-28">
+  <div class="container-edge grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+    <div class="max-w-md">
+      <p class="eyebrow" data-reveal>{t.contact.eyebrow}</p>
+      <h2 class="mt-4 text-h2 font-semibold" data-reveal>{t.contact.title}</h2>
+      <p class="mt-4 text-lg text-ink-soft" data-reveal>{t.contact.lead}</p>
+
+      <a href={wa} rel="noopener" class="btn-primary mt-7" data-reveal>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.49.07-1.12.1-1.8-.11-.42-.13-.95-.31-1.64-.61-2.88-1.24-4.76-4.14-4.9-4.33-.14-.19-1.17-1.56-1.17-2.97s.74-2.11 1-2.4c.26-.29.57-.36.76-.36l.55.01c.18.01.41-.07.64.49.24.58.82 2 .89 2.14.07.14.12.31.02.5-.1.19-.14.31-.29.48-.14.17-.3.38-.43.51-.14.14-.29.29-.12.58.17.29.74 1.22 1.59 1.98 1.09.97 2.01 1.27 2.3 1.42.29.14.46.12.63-.07.17-.19.72-.84.91-1.13.19-.29.39-.24.64-.14.26.09 1.66.78 1.95.93.29.14.48.21.55.34.07.12.07.72-.17 1.4Z" />
+        </svg>
+        {t.contact.waCta}
+      </a>
+
+      <p class="mt-8 text-sm text-ink-soft" data-reveal>
+        <a href={`mailto:${contact.email}`} class="font-medium text-ink underline-offset-2 hover:underline">{contact.email}</a>
+      </p>
+    </div>
+
+    <!-- Formulari Web3Forms -->
+    <div class="rounded-lg border border-sand/70 bg-surface p-6 shadow-soft md:p-8" data-reveal>
+      <p class="mb-5 text-sm font-medium text-ink-soft">{t.contact.orForm}</p>
+      <form id="contact-form" class="grid gap-4" novalidate>
+        <!-- Web3Forms access key — PLACEHOLDER (omple a src/lib/config.ts) -->
+        <input type="hidden" name="access_key" value={forms.web3formsKey} />
+        <input type="hidden" name="subject" value="Nou contacte des de la web · Lídia Caldera" />
+        <input type="hidden" name="from_name" value="Web Lídia Caldera" />
+        <!-- Honeypot antispam (ocult als humans) -->
+        <input
+          type="checkbox"
+          name="botcheck"
+          tabindex="-1"
+          autocomplete="off"
+          class="absolute left-[-9999px] h-0 w-0 opacity-0"
+          aria-hidden="true"
+        />
+
+        <div class="grid gap-4 sm:grid-cols-2">
+          <label class="grid gap-1.5 text-sm">
+            <span class="font-medium">{f.name}</span>
+            <input
+              name="name"
+              type="text"
+              required
+              autocomplete="name"
+              placeholder={f.namePh}
+              class="rounded-md border border-sand bg-bg px-3.5 py-2.5 text-ink outline-none transition-colors placeholder:text-ink-soft/60 focus:border-accent"
+            />
+          </label>
+          <label class="grid gap-1.5 text-sm">
+            <span class="font-medium">{f.business}</span>
+            <input
+              name="business"
+              type="text"
+              autocomplete="organization"
+              placeholder={f.businessPh}
+              class="rounded-md border border-sand bg-bg px-3.5 py-2.5 text-ink outline-none transition-colors placeholder:text-ink-soft/60 focus:border-accent"
+            />
+          </label>
+        </div>
+
+        <label class="grid gap-1.5 text-sm">
+          <span class="font-medium">{f.phone}</span>
+          <input
+            name="phone"
+            type="tel"
+            required
+            autocomplete="tel"
+            placeholder={f.phonePh}
+            class="rounded-md border border-sand bg-bg px-3.5 py-2.5 text-ink outline-none transition-colors placeholder:text-ink-soft/60 focus:border-accent"
+          />
+        </label>
+
+        <label class="grid gap-1.5 text-sm">
+          <span class="font-medium">{f.message}</span>
+          <textarea
+            name="message"
+            rows="4"
+            required
+            placeholder={f.messagePh}
+            class="resize-y rounded-md border border-sand bg-bg px-3.5 py-2.5 text-ink outline-none transition-colors placeholder:text-ink-soft/60 focus:border-accent"
+          ></textarea>
+        </label>
+
+        <button type="submit" class="btn-primary mt-1 w-full sm:w-auto sm:justify-self-start" data-submit>
+          {f.submit}
+        </button>
+
+        <p class="text-xs text-ink-soft/80">{f.privacy}</p>
+        <p
+          id="form-status"
+          role="status"
+          aria-live="polite"
+          class="hidden rounded-md px-4 py-3 text-sm font-medium"
+        ></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script
+  define:vars={{
+    msgOk: f.ok,
+    msgErr: f.error,
+    msgSending: f.sending,
+    labelSubmit: f.submit,
+  }}
+>
+  const form = document.getElementById('contact-form');
+  const status = document.getElementById('form-status');
+  const btn = form?.querySelector('[data-submit]');
+
+  function showStatus(text, ok) {
+    status.textContent = text;
+    status.classList.remove('hidden');
+    status.style.background = ok ? 'rgba(79,122,82,.12)' : 'rgba(198,90,54,.12)';
+    status.style.color = ok ? 'var(--success)' : 'var(--accent-ink)';
+  }
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    // Honeypot
+    if (form.botcheck?.checked) return;
+
+    btn.disabled = true;
+    btn.textContent = msgSending;
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(form),
+      });
+      const data = await res.json();
+      if (data.success) {
+        form.reset();
+        showStatus(msgOk, true);
+      } else {
+        showStatus(msgErr, false);
+      }
+    } catch {
+      showStatus(msgErr, false);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = labelSubmit;
+    }
+  });
+</script>

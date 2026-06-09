@@ -1,0 +1,44 @@
+---
+import { ui, type Lang } from '../lib/i18n';
+import { portfolio } from '../data/portfolio';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = ui[lang];
+const pieces = portfolio[lang];
+const tints = ['bg-[#d98b6a]', 'bg-[#9aa86f]', 'bg-[#7d6b5d]'];
+---
+
+<section id="feina" class="scroll-mt-20 border-y border-sand/50 bg-sand/25 py-20 md:py-28">
+  <div class="container-edge">
+    <div class="max-w-2xl">
+      <p class="eyebrow" data-reveal>{t.portfolio.eyebrow}</p>
+      <h2 class="mt-4 text-h2 font-semibold" data-reveal>{t.portfolio.title}</h2>
+      <p class="mt-4 text-lg text-ink-soft" data-reveal>{t.portfolio.lead}</p>
+    </div>
+
+    <div class="mt-14 grid gap-6 md:grid-cols-3">
+      {
+        pieces.map((piece, i) => (
+          <figure class="group overflow-hidden rounded-lg bg-surface shadow-soft" data-reveal data-lift>
+            <div class={`relative aspect-[4/5] ${tints[i]} overflow-hidden`}>
+              {/* PLACEHOLDER · substitueix per <img> amb foto real
+                  <img src={piece.image} alt={piece.imageAlt} width="640" height="800"
+                       loading="lazy" class="h-full w-full object-cover" /> */}
+              <span class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/55 to-transparent p-4 text-xs font-medium text-white/90">
+                {t.portfolio.placeholderNote}
+              </span>
+            </div>
+            <figcaption class="p-5">
+              <p class="text-xs font-semibold uppercase tracking-wide text-accent-ink">{piece.sector}</p>
+              <p class="mt-1 font-display text-lg font-semibold">{piece.client}</p>
+              <p class="mt-1 text-sm text-ink-soft">{piece.result}</p>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>

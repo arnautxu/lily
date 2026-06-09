@@ -1,0 +1,57 @@
+---
+import { ui, type Lang } from '../lib/i18n';
+import { site, whatsappLink } from '../lib/config';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = ui[lang];
+const wa = whatsappLink(lang);
+const otherLang: Lang = lang === 'ca' ? 'es' : 'ca';
+const otherHref = otherLang === 'ca' ? '/' : '/es';
+const otherLabel = otherLang === 'ca' ? 'CAT' : 'ES';
+const homeHref = lang === 'ca' ? '/' : '/es';
+---
+
+<header
+  class="sticky top-0 z-50 border-b border-sand/60 bg-bg/80 backdrop-blur-md supports-[backdrop-filter]:bg-bg/70"
+>
+  <nav class="container-edge flex h-16 items-center justify-between gap-4" aria-label={t.nav.cta}>
+    <a
+      href={homeHref}
+      class="font-display text-lg font-semibold tracking-tight text-ink transition-colors hover:text-accent-ink"
+    >
+      {site.brand}<span class="text-accent">.</span>
+    </a>
+
+    <ul class="hidden items-center gap-7 md:flex">
+      {
+        t.nav.links.map((l) => (
+          <li>
+            <a
+              href={l.href}
+              class="text-[0.9rem] text-ink-soft transition-colors hover:text-ink"
+            >
+              {l.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="flex items-center gap-2 md:gap-3">
+      <a
+        href={otherHref}
+        hreflang={otherLang}
+        aria-label={t.nav.langLabel}
+        class="rounded-full border border-ink/15 px-3 py-1.5 text-[0.8rem] font-medium text-ink-soft transition-colors hover:border-accent hover:text-accent-ink"
+      >
+        {otherLabel}
+      </a>
+      <a href={wa} class="btn-primary !px-4 !py-2 text-[0.875rem]" rel="noopener">
+        {t.nav.cta}
+      </a>
+    </div>
+  </nav>
+</header>

@@ -1,0 +1,42 @@
+---
+import { ui, type Lang } from '../lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = ui[lang];
+---
+
+<section
+  id="com-treballem"
+  class="scroll-mt-20 border-y border-sand/50 bg-ink py-20 text-bg md:py-28"
+>
+  <div class="container-edge">
+    <div class="max-w-2xl">
+      <p class="eyebrow text-accent" data-reveal>{t.process.eyebrow}</p>
+      <h2 class="mt-4 text-h2 font-semibold text-bg" data-reveal>{t.process.title}</h2>
+      <p class="mt-4 text-lg text-bg/75" data-reveal>{t.process.lead}</p>
+    </div>
+
+    <ol class="mt-14 grid gap-px overflow-hidden rounded-lg bg-bg/10 md:grid-cols-5">
+      {
+        t.process.steps.map((step) => (
+          <li class="bg-ink p-6 transition-colors duration-300 hover:bg-[#332b26]" data-reveal>
+            <span class="font-display text-2xl font-semibold text-accent">{step.n}</span>
+            <h3 class="mt-3 text-base font-semibold text-bg">{step.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-bg/70">{step.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <p class="mt-8 max-w-xl text-sm text-bg/55" data-reveal>
+      {
+        lang === 'ca'
+          ? 'En cap pas es publica res sense que una persona ho hagi revisat i tu ho hagis vist. Aquesta és la diferència amb un bot.'
+          : 'En ningún paso se publica nada sin que una persona lo haya revisado y tú lo hayas visto. Esa es la diferencia con un bot.'
+      }
+    </p>
+  </div>
+</section>

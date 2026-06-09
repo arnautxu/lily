@@ -1,0 +1,94 @@
+---
+import '../styles/global.css';
+import { ui, type Lang } from '../lib/i18n';
+import { site, contact, instagramLink } from '../lib/config';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+
+const canonical = new URL(lang === 'ca' ? '/' : '/es', site.url).href;
+const ogImage = new URL('/og-image.jpg', site.url).href; // PLACEHOLDER 1200×630
+
+const alternates = [
+  { hreflang: 'ca', href: new URL('/', site.url).href },
+  { hreflang: 'es', href: new URL('/es', site.url).href },
+  { hreflang: 'x-default', href: new URL('/', site.url).href },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: `${site.brand} · ${site.tagline}`,
+  description: t.meta.description,
+  url: canonical,
+  image: ogImage,
+  email: contact.email,
+  telephone: `+${contact.whatsappNumber}`,
+  areaServed: [
+    { '@type': 'City', name: 'Vic' },
+    { '@type': 'AdministrativeArea', name: 'Osona' },
+  ],
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: contact.city,
+    addressRegion: 'Barcelona',
+    addressCountry: 'ES',
+  },
+  knowsLanguage: ['ca', 'es'],
+  sameAs: [instagramLink],
+  priceRange: '€€',
+};
+---
+
+<!doctype html>
+<html lang={t.htmlLang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{t.meta.title}</title>
+    <meta name="description" content={t.meta.description} />
+    <link rel="canonical" href={canonical} />
+    {alternates.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={`${site.brand} · ${site.tagline}`} />
+    <meta property="og:title" content={t.meta.title} />
+    <meta property="og:description" content={t.meta.description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={lang === 'ca' ? 'ca_ES' : 'es_ES'} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={t.meta.ogAlt} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={t.meta.title} />
+    <meta name="twitter:description" content={t.meta.description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <meta name="theme-color" content="#fbf7f0" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-ink focus:px-4 focus:py-2 focus:text-bg"
+    >
+      {lang === 'ca' ? 'Salta al contingut' : 'Saltar al contenido'}
+    </a>
+    <slot />
+    <script>
+      import '../lib/motion.ts';
+    </script>
+  </body>
+</html>

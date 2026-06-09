@@ -1,0 +1,123 @@
+/* Fonts self-hosted (Fontsource) — millor LCP que CDN */
+@import '@fontsource-variable/fraunces';
+@import '@fontsource-variable/inter';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Colors com a triplets RGB perquè els modificadors d'opacitat de Tailwind
+     (ex. bg-accent/10) funcionin. */
+  --bg: 251 247 240; /* #FBF7F0 crema sorra */
+  --surface: 255 255 255; /* #FFFFFF */
+  --sand: 232 220 200; /* #E8DCC8 arena */
+  --ink: 43 36 32; /* #2B2420 espresso */
+  --ink-soft: 92 82 73; /* #5C5249 */
+  --accent: 198 90 54; /* #C65A36 terracota */
+  --accent-ink: 168 69 31; /* #A8451F terracota fosc */
+  --success: 79 122 82; /* #4F7A52 */
+
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 24px;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: rgb(var(--bg));
+    color: rgb(var(--ink));
+    font-family: '"Inter Variable"', system-ui, sans-serif;
+    font-optical-sizing: auto;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: '"Fraunces Variable"', Georgia, serif;
+    font-optical-sizing: auto;
+    color: rgb(var(--ink));
+    text-wrap: balance;
+  }
+
+  p { text-wrap: pretty; }
+
+  /* Focus visible — accessibilitat AA */
+  :focus-visible {
+    outline: 2px solid rgb(var(--accent-ink));
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: rgb(var(--accent));
+    color: #fff;
+  }
+}
+
+@layer components {
+  /* Botó primari: accent de fons + text crema (contrast AA validat) */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3
+           font-medium text-[0.975rem] leading-none transition duration-200
+           ease-out-soft focus-visible:outline-offset-4 will-change-transform;
+  }
+  .btn-primary {
+    @apply btn bg-accent text-[#fff] shadow-soft;
+  }
+  .btn-primary:hover {
+    background-color: rgb(var(--accent-ink));
+    box-shadow: 0 12px 28px -10px rgba(198, 90, 54, 0.5);
+    transform: translateY(-1px);
+  }
+  .btn-secondary {
+    @apply btn border border-ink/15 bg-surface text-ink;
+  }
+  .btn-secondary:hover {
+    border-color: rgb(var(--accent));
+    color: rgb(var(--accent-ink));
+    transform: translateY(-1px);
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-[0.78rem] font-semibold uppercase
+           tracking-[0.14em] text-accent-ink;
+  }
+
+  .card {
+    @apply rounded-lg border border-sand/70 bg-surface p-6 shadow-soft transition
+           duration-300 ease-out-soft;
+  }
+
+  .container-edge {
+    @apply mx-auto w-full max-w-content px-5 md:px-8;
+  }
+}
+
+/* Scroll-reveal base (CSS) — Motion One l'orquestra en JS, però aquest és el
+   fallback i l'estat inicial. */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(20px);
+}
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.55s var(--ease, cubic-bezier(0.22, 1, 0.36, 1)),
+    transform 0.55s var(--ease, cubic-bezier(0.22, 1, 0.36, 1));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  [data-reveal] { opacity: 1; transform: none; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
