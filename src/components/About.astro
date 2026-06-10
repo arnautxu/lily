@@ -20,12 +20,12 @@ const t = ui[lang];
                     loading="lazy" class="h-full w-full object-cover" /> -->
           <div class="grain-inset relative flex aspect-[4/5] items-end overflow-hidden bg-gradient-to-br from-[#5d7d3a] via-[#4d7c2f] to-[#2a3a20] p-6">
             <span
-              class="pointer-events-none absolute -right-8 -top-10 select-none font-display text-[11rem] font-semibold italic leading-none text-bg/15"
+              class="pointer-events-none absolute -right-8 -top-10 select-none font-display text-[11rem] italic leading-none text-[#f4efe4]/20"
               aria-hidden="true"
             >
               L.
             </span>
-            <p class="relative font-display text-xl font-medium italic text-bg/90">
+            <p class="relative font-display text-xl font-medium italic text-[#f4efe4]/95">
               {t.about.imageCaption}
             </p>
           </div>
@@ -41,12 +41,12 @@ const t = ui[lang];
 
     <div class="max-w-xl">
       <p class="eyebrow" data-reveal>{t.about.eyebrow}</p>
-      <h2 class="mt-5 text-h2 font-semibold" data-reveal>{t.about.title}</h2>
+      <h2 class="mt-5 text-h2" data-reveal>{t.about.title}</h2>
       {t.about.body.map((p) => <p class="mt-4 text-lg leading-relaxed text-ink-soft" data-reveal>{p}</p>)}
 
       <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3" data-reveal>
         <div>
-          <p class="font-display text-lg font-semibold">{t.about.signature}</p>
+          <p class="font-display text-lg">{t.about.signature}</p>
           <p class="text-sm text-ink-soft">{t.about.role}</p>
         </div>
         <a

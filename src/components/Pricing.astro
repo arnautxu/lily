@@ -16,7 +16,7 @@ const { tiers, extras } = pricing[lang];
   <div class="container-edge">
     <div class="mx-auto max-w-2xl text-center">
       <p class="eyebrow" data-reveal>{t.pricing.eyebrow}</p>
-      <h2 class="mt-5 text-h2 font-semibold" data-reveal>{t.pricing.title}</h2>
+      <h2 class="mt-5 text-h2" data-reveal>{t.pricing.title}</h2>
       <p class="mt-5 text-lg text-ink-soft" data-reveal>{t.pricing.lead}</p>
     </div>
 
@@ -28,31 +28,31 @@ const { tiers, extras } = pricing[lang];
             <article
               class={`relative flex h-full flex-col rounded-2xl border p-7 transition-all duration-500 ease-out-soft md:p-8 ${
                 dark
-                  ? 'overflow-hidden border-transparent bg-pine text-bg shadow-[0_30px_70px_-30px_rgb(28_40_22_/_0.7)] before:absolute before:inset-x-0 before:top-0 before:h-[3px] before:bg-coral lg:-mt-4 lg:mb-[-1rem]'
+                  ? 'border-accent/30 bg-bg-deep shadow-[0_40px_80px_-40px_oklch(0_0_0_/_0.7)] lg:-mt-4 lg:mb-[-1rem]'
                   : 'border-sand bg-surface shadow-diffuse'
               }`}
               data-reveal
               data-lift
             >
               {tier.featured && (
-                <span class="absolute right-7 top-7 rounded-full bg-coral px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-wide text-white">
+                <span class="absolute right-7 top-7 rounded-full bg-coral px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-wide text-bg-deep">
                   {t.pricing.featuredBadge}
                 </span>
               )}
-              <h3 class={`font-display text-h3 font-semibold ${dark ? 'text-bg' : 'text-ink'}`}>{tier.name}</h3>
-              <p class={`mt-1 text-sm ${dark ? 'text-bg/60' : 'text-ink-soft'}`}>{tier.tagline}</p>
+              <h3 class="font-display text-h3 text-ink">{tier.name}</h3>
+              <p class="mt-1 text-sm text-ink-soft">{tier.tagline}</p>
               <p class="mt-6 flex items-baseline gap-1">
-                <span class={`font-display font-semibold ${dark ? 'text-6xl text-bg' : 'text-5xl text-ink'}`}>{tier.price}</span>
-                <span class={`text-sm ${dark ? 'text-bg/60' : 'text-ink-soft'}`}>{t.pricing.perMonth}</span>
+                <span class={`font-display text-ink ${dark ? 'text-6xl' : 'text-5xl'}`}>{tier.price}</span>
+                <span class="text-sm text-ink-soft">{t.pricing.perMonth}</span>
               </p>
-              {tier.featured && <p class="mt-1.5 text-sm italic text-bg/55">{t.pricing.featuredNote}</p>}
+              {tier.featured && <p class="mt-1.5 text-sm italic text-ink-soft">{t.pricing.featuredNote}</p>}
               <ul class="mt-7 flex flex-1 flex-col gap-3.5 text-[0.95rem]">
                 {tier.features.map((f) => (
                   <li class="flex items-start gap-2.5">
                     <span class={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${dark ? 'bg-accent/25 text-accent' : 'bg-accent/[0.12] text-accent-ink'}`}>
                       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
                     </span>
-                    <span class={dark ? 'text-bg/80' : 'text-ink-soft'}>{f}</span>
+                    <span class="text-ink-soft">{f}</span>
                   </li>
                 ))}
               </ul>
@@ -75,13 +75,13 @@ const { tiers, extras } = pricing[lang];
 
     <!-- Extres -->
     <div class="mt-6 rounded-2xl border border-sand bg-surface/60 p-7 md:p-9" data-reveal>
-      <h3 class="font-display text-h3 font-semibold">{t.pricing.extrasTitle}</h3>
+      <h3 class="font-display text-h3">{t.pricing.extrasTitle}</h3>
       <ul class="mt-6 grid gap-x-10 gap-y-1 sm:grid-cols-2">
         {
           extras.map((e) => (
             <li class="flex items-center justify-between gap-4 border-b border-sand py-3 transition-colors hover:border-accent/40">
               <span class="text-ink-soft">{e.name}</span>
-              <span class="font-display font-semibold text-ink">{e.price}</span>
+              <span class="font-display text-ink">{e.price}</span>
             </li>
           ))
         }

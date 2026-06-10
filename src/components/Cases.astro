@@ -17,7 +17,7 @@ const avatarColors = ['bg-[#7d9468]', 'bg-[#8a6a4a]'];
   <div class="container-edge">
     <div class="max-w-2xl">
       <p class="eyebrow-bare" data-reveal>{t.cases.eyebrow}</p>
-      <h2 class="mt-5 text-display font-semibold" data-reveal>{t.cases.title}</h2>
+      <h2 class="mt-5 text-display" data-reveal>{t.cases.title}</h2>
       <p class="mt-5 text-lg text-ink-soft" data-reveal>{t.cases.lead}</p>
     </div>
 
@@ -36,15 +36,18 @@ const avatarColors = ['bg-[#7d9468]', 'bg-[#8a6a4a]'];
               {String(i + 1).padStart(2, '0')}
             </span>
 
-            <figure class={`relative min-w-0 ${i % 2 !== 0 ? 'lg:order-2' : ''}`} data-reveal>
+            <figure class={`relative min-w-0 ${i % 2 !== 0 ? 'lg:order-2' : ''}`}>
               <span class="quote-mark absolute -left-3 -top-10 md:-left-8" aria-hidden="true">
                 “
               </span>
-              <blockquote class="relative font-display text-[clamp(1.5rem,1.2rem+1.8vw,2.4rem)] font-medium italic leading-[1.25] tracking-[-0.01em] text-ink">
+              <blockquote
+                class="relative font-display text-[clamp(1.6rem,1.2rem+2vw,2.7rem)] italic leading-[1.22] tracking-[-0.01em] text-ink"
+                data-quote-scrub
+              >
                 {c.quote}
               </blockquote>
-              <figcaption class="mt-8">
-                <p class="flex items-center gap-2.5 font-display text-xl font-semibold">
+              <figcaption class="mt-8" data-reveal>
+                <p class="flex items-center gap-2.5 font-display text-xl">
                   <span class="inline-block h-1.5 w-1.5 rounded-full bg-coral" aria-hidden="true" />
                   {c.name}
                 </p>
@@ -59,6 +62,7 @@ const avatarColors = ['bg-[#7d9468]', 'bg-[#8a6a4a]'];
               class={`relative mx-auto w-full min-w-0 max-w-md ${i % 2 !== 0 ? 'lg:order-1' : ''}`}
               data-reveal
               data-tilt
+              data-parallax="0.06"
             >
               <InstaFeedMockup
                 name={c.name}

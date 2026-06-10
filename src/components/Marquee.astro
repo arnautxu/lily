@@ -11,18 +11,22 @@ const items =
     ? ['Restaurants', 'Perruqueries', 'Pediatria', 'Botigues de roba', 'Lutheria', 'Gimnasos', 'Clíniques de salut', 'Cafeteries', 'Floristeries']
     : ['Restaurantes', 'Peluquerías', 'Pediatría', 'Tiendas de ropa', 'Luthería', 'Gimnasios', 'Clínicas de salud', 'Cafeterías', 'Floristerías'];
 
-// Duplicat per al loop continu
+// Duplicat per al loop continu (GSAP fa el wrap a -50%)
 const loop = [...items, ...items];
 ---
 
-<section class="border-y border-sand/70 bg-surface/40 py-5" aria-hidden="true">
+<section class="overflow-hidden border-y border-sand/50 py-8 md:py-10" aria-hidden="true">
   <div class="marquee-mask overflow-hidden">
-    <div class="marquee">
+    <div class="flex w-max items-center gap-10 will-change-transform md:gap-16" data-marquee-track>
       {
-        loop.map((item) => (
-          <span class="flex items-center gap-12 whitespace-nowrap font-display text-xl text-ink-soft md:text-2xl">
+        loop.map((item, i) => (
+          <span
+            class={`flex items-center gap-10 whitespace-nowrap font-display text-3xl md:gap-16 md:text-5xl ${
+              i % 2 === 0 ? 'text-ink' : 'italic text-ink-soft/80'
+            }`}
+          >
             {item}
-            <span class="h-1.5 w-1.5 rounded-full bg-coral/70"></span>
+            <span class="h-2 w-2 rounded-full bg-coral/70"></span>
           </span>
         ))
       }

@@ -1,25 +1,42 @@
-/* Fonts self-hosted (Fontsource) — millor LCP que CDN */
-@import '@fontsource-variable/fraunces';
-@import '@fontsource-variable/geist';
+/* Display: Instrument Serif (Fontsource). Cos: Satoshi (self-hosted, vegeu @font-face). */
+@import '@fontsource/instrument-serif';
+@import '@fontsource/instrument-serif/400-italic.css';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/fonts/Satoshi-Variable.woff2') format('woff2');
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/fonts/Satoshi-VariableItalic.woff2') format('woff2');
+  font-weight: 300 900;
+  font-style: italic;
+  font-display: swap;
+}
+
 :root {
-  /* Verd editorial · colors com a triplets RGB perquè les opacitats de
-     Tailwind (ex. bg-accent/10) funcionin a tot arreu. */
-  --bg: 246 241 233; /* #F6F1E9 ivori càlid */
-  --surface: 252 250 245; /* #FCFAF5 */
-  --sand: 231 223 210; /* #E7DFD2 hairline / neutre */
-  --ink: 24 21 18; /* #181512 tinta */
-  --ink-soft: 107 98 88; /* #6B6258 */
-  --accent: 77 124 47; /* #4D7C2F verd herba */
-  --accent-ink: 56 92 34; /* #385C22 verd fosc (text/hover) */
-  --coral: 229 104 60; /* #E5683C pop */
-  --success: 47 107 51; /* #2F6B33 */
-  --pine: 28 40 22; /* #1C2816 verd pi profund (seccions fosques) */
-  --pine-soft: 42 58 32; /* #2A3A20 superfície sobre pine */
+  /* Drenched pine — components OKLCH (L C H) perquè les opacitats de
+     Tailwind (ex. bg-ink/10) funcionin via oklch(var(--x) / alpha).
+     Cap negre ni blanc pur: tots els neutres tenyits cap al to de marca. */
+  --bg: 23% 0.035 150; /* pi profund — la pàgina ÉS el color de marca */
+  --bg-deep: 18.5% 0.03 150; /* hero, bandes fosques, footer */
+  --surface: 27.5% 0.04 148; /* panells elevats */
+  --sand: 34% 0.04 146; /* hairlines / vores (nom conservat per compat) */
+  --ink: 95.5% 0.014 95; /* ivori càlid — text principal */
+  --ink-soft: 76% 0.03 120; /* salvia — text secundari */
+  --accent: 77% 0.135 135; /* verd fulla lluminós — acció */
+  --accent-ink: 86% 0.1 130; /* menta clara — hover/enllaços */
+  --coral: 71% 0.145 40; /* coral càlid — èmfasi */
+  --success: 75% 0.11 145;
+  --pine: 18.5% 0.03 150; /* àlies de bg-deep (classes existents) */
+  --pine-soft: 27.5% 0.04 148; /* àlies de surface */
 
   --r-sm: 10px;
   --r-md: 16px;
@@ -28,44 +45,46 @@
   --r-2xl: 40px;
 
   --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @layer base {
   html {
-    scroll-behavior: smooth;
+    /* Lenis és l'amo de l'scroll suau; el natiu queda en auto. */
+    scroll-behavior: auto;
     -webkit-text-size-adjust: 100%;
-    /* Guard contra scroll horizontal SENSE crear un context de scroll
-       (a diferència d'overflow-x:hidden, que trencava l'scroll d'àncores). */
     overflow-x: clip;
   }
 
   body {
-    background-color: rgb(var(--bg));
-    color: rgb(var(--ink));
-    font-family: '"Geist Variable"', system-ui, sans-serif;
-    line-height: 1.6;
+    background-color: oklch(var(--bg));
+    color: oklch(var(--ink));
+    font-family: 'Satoshi', system-ui, sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
 
   h1, h2, h3, h4 {
-    font-family: '"Fraunces Variable"', Georgia, serif;
-    font-optical-sizing: auto;
-    color: rgb(var(--ink));
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    color: oklch(var(--ink));
     text-wrap: balance;
   }
 
   p { text-wrap: pretty; }
 
   :focus-visible {
-    outline: 2px solid rgb(var(--accent-ink));
+    outline: 2px solid oklch(var(--accent));
     outline-offset: 3px;
     border-radius: 6px;
   }
 
   ::selection {
-    background: rgb(var(--accent));
-    color: #fff;
+    background: oklch(var(--accent));
+    color: oklch(var(--bg-deep));
   }
 }
 
@@ -75,15 +94,15 @@
   }
 
   .eyebrow {
-    @apply inline-flex items-center gap-2 rounded-full border border-ink/10 bg-surface/60
-           px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-accent-ink
+    @apply inline-flex items-center gap-2 rounded-full border border-ink/10 bg-ink/[0.04]
+           px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-accent
            backdrop-blur-sm;
   }
 
   /* Eyebrow sense píndola — per trencar la monotonia de seccions */
   .eyebrow-bare {
     @apply inline-flex items-center gap-2.5 text-[0.7rem] font-semibold uppercase
-           tracking-[0.22em] text-accent-ink;
+           tracking-[0.22em] text-accent;
   }
   .eyebrow-bare::before {
     content: '';
@@ -92,25 +111,25 @@
 
   /* Cometa editorial gegant per a pull-quotes */
   .quote-mark {
-    @apply pointer-events-none select-none font-display font-semibold leading-none text-accent/20;
+    @apply pointer-events-none select-none font-display leading-none text-ink/[0.08];
     font-size: clamp(4rem, 8vw, 7rem);
   }
 
   /* Numeral de secció sobredimensionat (decoratiu) */
   .section-num {
-    @apply pointer-events-none select-none font-display font-semibold leading-none;
+    @apply pointer-events-none select-none font-display leading-none;
     font-size: clamp(5rem, 12vw, 9rem);
-    color: rgb(var(--accent) / 0.08);
+    color: oklch(var(--ink) / 0.06);
   }
 
-  /* Camps de formulari amb focus ring premium */
+  /* Camps de formulari */
   .input {
-    @apply rounded-md border border-sand bg-bg px-3.5 py-2.5 text-ink outline-none
-           transition-all duration-300 placeholder:text-ink-soft/60;
+    @apply rounded-md border border-sand bg-bg-deep/50 px-3.5 py-2.5 text-ink outline-none
+           transition-all duration-300 placeholder:text-ink-soft/50;
   }
   .input:focus {
-    border-color: rgb(var(--accent));
-    box-shadow: 0 0 0 3px rgb(var(--accent) / 0.15);
+    border-color: oklch(var(--accent));
+    box-shadow: 0 0 0 3px oklch(var(--accent) / 0.18);
   }
 
   /* ── Botons ──────────────────────────────────────────────── */
@@ -127,19 +146,18 @@
     transform: translate(2px, -1px) scale(1.05);
   }
   .btn-primary {
-    @apply btn bg-accent text-white;
-    box-shadow: 0 14px 30px -14px rgb(var(--accent) / 0.7);
+    @apply btn bg-accent font-semibold text-bg-deep;
+    box-shadow: 0 10px 30px -12px oklch(var(--accent) / 0.35);
   }
-  .btn-primary .btn-ico { @apply bg-white/20; }
-  .btn-primary:hover { background-color: rgb(var(--accent-ink)); }
+  .btn-primary .btn-ico { @apply bg-bg-deep/15 text-bg-deep; }
+  .btn-primary:hover { background-color: oklch(var(--accent-ink)); }
 
   .btn-secondary {
-    @apply btn border border-ink/[0.12] bg-surface/70 text-ink backdrop-blur-sm;
+    @apply btn border border-ink/15 bg-ink/[0.05] text-ink;
   }
-  .btn-secondary .btn-ico { @apply bg-ink/5; }
-  .btn-secondary:hover { border-color: rgb(var(--accent) / 0.5); color: rgb(var(--accent-ink)); }
+  .btn-secondary .btn-ico { @apply bg-ink/10; }
+  .btn-secondary:hover { border-color: oklch(var(--accent) / 0.5); color: oklch(var(--accent-ink)); }
 
-  /* Variant simple (sense icona-bombolla) per a enllaços compactes */
   .btn-plain {
     @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full
            px-5 py-2.5 text-[0.9rem] font-medium leading-none transition duration-300
@@ -148,30 +166,32 @@
 
   /* ── Double-bezel (carcassa + nucli) ─────────────────────── */
   .bezel {
-    @apply rounded-2xl border border-ink/[0.08] bg-ink/[0.025] p-1.5;
+    @apply rounded-2xl border border-ink/10 bg-ink/[0.04] p-1.5;
   }
   .bezel-core {
     @apply rounded-xl bg-surface;
-    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.7);
+    box-shadow: inset 0 1px 0 oklch(var(--ink) / 0.08);
   }
 
   .card {
     @apply rounded-xl border border-sand bg-surface p-6 transition-all duration-500 ease-out-soft;
-    box-shadow: 0 18px 40px -28px rgb(var(--ink) / 0.18);
+    box-shadow: inset 0 1px 0 oklch(var(--ink) / 0.05), 0 30px 60px -30px oklch(0 0 0 / 0.5);
   }
   .card:hover {
-    border-color: rgb(var(--accent) / 0.35);
-    box-shadow: 0 26px 56px -30px rgb(var(--accent) / 0.3);
+    border-color: oklch(var(--accent) / 0.35);
   }
 
-  /* ── Marquee (kinetic) ───────────────────────────────────── */
-  .marquee {
-    @apply flex w-max items-center gap-12 will-change-transform;
-    animation: marquee 36s linear infinite;
-  }
   .marquee-mask {
     -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
     mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  }
+
+  /* ── Màscara de línia per a reveals tipogràfics ──────────── */
+  .line-mask {
+    @apply block overflow-hidden;
+  }
+  .line-mask > .line {
+    @apply block will-change-transform;
   }
 
   /* ── FAQ: animació d'obrir/tancar mantenint <details> natiu ── */
@@ -188,25 +208,15 @@
   }
 }
 
-/* ── Textura de gra reutilitzable dins de seccions (no fixed) ── */
-.grain-inset::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.05;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-/* ── Aura / mesh gradient orbs (subtil, càlid) ─────────────── */
+/* ── Bassals de llum càlida (escenografia, no glow) ─────────── */
 .aura::before {
   content: '';
   position: absolute;
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(40rem 30rem at 78% -8%, rgb(var(--accent) / 0.12), transparent 60%),
-    radial-gradient(34rem 26rem at 6% 12%, rgb(var(--coral) / 0.10), transparent 60%);
+    radial-gradient(44rem 32rem at 78% -8%, oklch(var(--accent) / 0.07), transparent 60%),
+    radial-gradient(36rem 28rem at 4% 18%, oklch(var(--coral) / 0.06), transparent 60%);
   pointer-events: none;
 }
 
@@ -216,34 +226,32 @@
   inset: 0;
   z-index: 40;
   pointer-events: none;
-  opacity: 0.035;
+  opacity: 0.05;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* ── Scroll-reveal (estat inicial; JS hi afegeix .is-visible) ──
+/* ── Textura de gra dins de seccions (no fixed) ────────────── */
+.grain-inset::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── Scroll-reveal (estat inicial; GSAP anima cap a visible) ──
    Amagat NOMÉS si hi ha JS (.js a <html>): sense JS es veu tot. */
 .js [data-reveal] {
   opacity: 0;
   transform: translateY(28px);
-  filter: blur(6px);
 }
 .js [data-reveal].is-visible {
   opacity: 1;
   transform: none;
-  filter: blur(0);
-  transition:
-    opacity 0.8s var(--ease-soft),
-    transform 0.8s var(--ease-soft),
-    filter 0.8s var(--ease-soft);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  .js [data-reveal], [data-reveal] { opacity: 1; transform: none; filter: none; }
-  .marquee, .animate-float, .animate-marquee { animation: none !important; }
-  .faq-answer { transition: none !important; }
-  *, *::before, *::after {
-    animation-duration: 0.001ms !important;
-    transition-duration: 0.001ms !important;
-  }
+/* Estat inicial dels reveals per clip (Services) */
+.js [data-clip-reveal] {
+  clip-path: inset(0 100% 0 0);
 }

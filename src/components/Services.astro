@@ -13,28 +13,32 @@ const t = ui[lang];
     <div class="grid items-end gap-8 md:grid-cols-[1.3fr_1fr]">
       <div>
         <p class="eyebrow-bare" data-reveal>{t.services.eyebrow}</p>
-        <h2 class="mt-5 max-w-2xl text-h2 font-semibold" data-reveal>{t.services.title}</h2>
+        <h2 class="mt-5 max-w-2xl text-h2" data-reveal>{t.services.title}</h2>
       </div>
       <p class="text-lg text-ink-soft md:pb-1" data-reveal>{t.services.lead}</p>
     </div>
 
     <!-- Índex editorial: files numerades amb hairlines -->
-    <div class="mt-14 border-t border-sand">
+    <div class="mt-14">
+      <div class="h-px w-full bg-sand" data-rule-reveal aria-hidden="true"></div>
       {
         t.services.items.map((item, i) => (
-          <article
-            class="group grid gap-3 border-b border-sand px-2 py-8 transition-colors duration-500 ease-out-soft hover:bg-surface md:grid-cols-[5rem_1fr_1.4fr] md:items-baseline md:gap-8 md:px-4 md:py-10"
-            data-reveal
-          >
-            <span
-              class="font-display text-3xl font-semibold text-accent/30 transition-colors duration-500 group-hover:text-accent md:text-4xl"
-              aria-hidden="true"
+          <>
+            <article
+              class="group grid gap-3 px-2 py-8 transition-colors duration-500 ease-out-soft hover:bg-ink/[0.04] md:grid-cols-[5rem_1fr_1.4fr] md:items-baseline md:gap-8 md:px-4 md:py-10"
+              data-clip-reveal
             >
-              {String(i + 1).padStart(2, '0')}
-            </span>
-            <h3 class="font-display text-2xl font-semibold md:text-3xl">{item.title}</h3>
-            <p class="text-ink-soft md:text-lg">{item.body}</p>
-          </article>
+              <span
+                class="font-display text-3xl text-ink/25 transition-colors duration-500 group-hover:text-accent md:text-4xl"
+                aria-hidden="true"
+              >
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <h3 class="font-display text-2xl text-ink md:text-3xl">{item.title}</h3>
+              <p class="text-ink-soft md:text-lg">{item.body}</p>
+            </article>
+            <div class="h-px w-full bg-sand" data-rule-reveal aria-hidden="true" />
+          </>
         ))
       }
     </div>

@@ -15,7 +15,7 @@ const f = t.contact.form;
   <div class="container-edge grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
     <div class="max-w-md lg:sticky lg:top-28 lg:self-start">
       <p class="eyebrow" data-reveal>{t.contact.eyebrow}</p>
-      <h2 class="mt-5 text-h2 font-semibold" data-reveal>{t.contact.title}</h2>
+      <h2 class="mt-5 text-h2" data-reveal>{t.contact.title}</h2>
       <p class="mt-4 text-lg text-ink-soft" data-reveal>{t.contact.lead}</p>
 
       <a href={wa} rel="noopener" class="btn-primary mt-7" data-reveal data-magnetic>
@@ -97,7 +97,7 @@ const f = t.contact.form;
 
         <button
           type="submit"
-          class="btn-plain mt-1 w-full bg-accent text-white transition-colors hover:bg-accent-ink sm:w-auto sm:justify-self-start"
+          class="btn-plain mt-1 w-full bg-accent font-semibold text-bg-deep transition-colors hover:bg-accent-ink sm:w-auto sm:justify-self-start"
           style="box-shadow: 0 14px 30px -14px rgb(var(--accent) / 0.7);"
           data-submit
         >
@@ -131,8 +131,8 @@ const f = t.contact.form;
   function showStatus(text, ok) {
     status.textContent = text;
     status.classList.remove('hidden');
-    status.style.background = ok ? 'rgba(79,122,82,.12)' : 'rgba(198,90,54,.12)';
-    status.style.color = ok ? 'var(--success)' : 'var(--accent-ink)';
+    status.style.background = ok ? 'oklch(var(--success) / 0.15)' : 'oklch(var(--coral) / 0.15)';
+    status.style.color = ok ? 'oklch(var(--success))' : 'oklch(var(--coral))';
   }
 
   form?.addEventListener('submit', async (e) => {

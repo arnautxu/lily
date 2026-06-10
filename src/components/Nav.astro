@@ -16,12 +16,12 @@ const homeHref = lang === 'ca' ? '/' : '/es';
 
 <header class="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4 md:pt-5">
   <nav
-    class="pointer-events-auto flex w-full max-w-content items-center justify-between gap-4 rounded-full border border-ink/[0.08] bg-bg/70 py-2 pl-5 pr-2 shadow-[0_10px_30px_-18px_rgb(24_21_18_/_0.4)] backdrop-blur-xl"
+    class="pointer-events-auto flex w-full max-w-content items-center justify-between gap-4 rounded-full border border-ink/10 bg-bg/70 py-2 pl-5 pr-2 shadow-[0_10px_30px_-18px_oklch(0_0_0_/_0.6)] backdrop-blur-xl"
     aria-label={t.nav.cta}
   >
     <a
       href={homeHref}
-      class="whitespace-nowrap font-display text-base font-semibold tracking-tight text-ink transition-colors hover:text-accent-ink md:text-[1.05rem]"
+      class="whitespace-nowrap font-display text-base tracking-tight text-ink transition-colors hover:text-accent-ink md:text-[1.05rem]"
     >
       {site.brand}<span class="text-accent">.</span>
     </a>
@@ -91,7 +91,7 @@ const homeHref = lang === 'ca' ? '/' : '/es';
           >
             <a
               href={l.href}
-              class="block py-2 font-display text-3xl font-semibold text-ink transition-colors hover:text-accent-ink"
+              class="block py-2 font-display text-3xl text-ink transition-colors hover:text-accent-ink"
               data-nav-close
             >
               {l.label}
