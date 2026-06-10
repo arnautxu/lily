@@ -9,29 +9,38 @@ export const ui = {
   ca: {
     htmlLang: 'ca',
     meta: {
-      title: 'Lídia Caldera · Instagram per a comerços de Vic i Osona',
+      title: 'Lídia Caldera · Gestió d\'Instagram per a negocis locals',
       description:
-        "Gestiono l'Instagram del teu comerç de Vic i Osona amb foto real i criteri editorial humà. Publiques constant, sense haver-hi de pensar. Escriu-me per WhatsApp.",
-      ogAlt: 'Lídia Caldera — màrqueting i comunicació per a comerços de Vic',
+        "Gestiono l'Instagram del teu negoci amb foto real i criteri editorial humà. Des de Vic, per a negocis de tot Catalunya. Publiques constant, sense haver-hi de pensar.",
+      ogAlt: 'Lídia Caldera — màrqueting i comunicació per a negocis locals',
     },
     nav: {
       links: [
         { href: '#que-fem', label: 'Què fem' },
         { href: '#com-treballem', label: 'Com treballem' },
+        { href: '#casos', label: 'Casos' },
         { href: '#tarifes', label: 'Tarifes' },
-        { href: '#feina', label: 'Feina' },
         { href: '#lidia', label: 'Qui sóc' },
       ],
       cta: 'Escriu-me',
       langLabel: 'Canviar idioma',
+      menuOpen: 'Obrir menú',
+      menuClose: 'Tancar menú',
     },
     hero: {
-      eyebrow: 'Instagram per a comerços de Vic i Osona',
-      title: "L'Instagram del teu negoci, cuidat per algú que coneix Vic",
+      eyebrow: 'Gestió d\'Instagram · feta a Vic',
+      titlePre: "L'Instagram del teu negoci,",
+      titleAccent: 'cuidat',
+      titlePost: 'per una persona de veritat.',
       lead: "Feed i stories amb foto real del teu local i text escrit per una persona, no per una màquina. Publiques constant cada setmana sense haver-hi de pensar — i et dediques al que se't dóna bé.",
       ctaPrimary: 'Escriu-me per WhatsApp',
-      ctaSecondary: 'Veure feina',
+      ctaSecondary: 'Veure casos reals',
       trust: 'Resposta el mateix dia · Sense permanència · Sóc de Vic',
+      feedName: 'El teu negoci',
+      feedHandle: 'elteunegoci',
+      feedStats: 'publicacions · seguidors · seguits',
+      chipLike: "M'agrada nou",
+      chipMessage: 'Missatge nou',
     },
     problem: {
       eyebrow: 'Et sona?',
@@ -59,7 +68,7 @@ export const ui = {
       items: [
         {
           title: 'Feed amb criteri',
-          body: 'Publicacions pensades per al teu públic de la comarca, amb foto real del teu local, els teus productes i la teva gent. Res de bancs d\'imatges.',
+          body: 'Publicacions pensades per al teu públic, amb foto real del teu local, els teus productes i la teva gent. Res de bancs d\'imatges.',
         },
         {
           title: 'Stories que mouen',
@@ -83,7 +92,7 @@ export const ui = {
         {
           n: '01',
           title: 'Coneixem el negoci',
-          body: 'Em passes una estona explicant-me com és, qui hi entra i què vols. Si pot ser, vinc al local: sóc aquí al costat.',
+          body: 'Em passes una estona explicant-me com és, qui hi entra i què vols. Si pot ser, vinc al local i ho veig amb els meus ulls.',
         },
         {
           n: '02',
@@ -107,32 +116,33 @@ export const ui = {
         },
       ],
     },
+    cases: {
+      eyebrow: 'Casos reals',
+      title: 'Dos negocis reals. Dues maneres de comprovar-ho.',
+      lead: 'No són logos inventats: són clients de veritat, amb nom i poble. La prova del que faig és la seva experiència.',
+    },
     pricing: {
       eyebrow: 'Tarifes',
       title: 'Comences per on et va bé. Puges quan et compensa.',
       lead: 'Sense permanència ni lletra petita. Tries el paquet i, si un mes vols més (o menys), ho parlem.',
       perMonth: '/mes',
       featuredBadge: 'El més triat',
+      featuredNote: 'El punt dolç entre presència i pressupost.',
       extrasTitle: 'Extres a la carta',
-      note: 'Preus orientatius (PLACEHOLDER) i sense IVA. El pressupost final depèn del volum i de la teva situació; t\'ho concreto en 5 minuts per WhatsApp.',
+      note: 'Preus orientatius i sense IVA. El pressupost final depèn del volum i de la teva situació; t\'ho concreto en 5 minuts per WhatsApp.',
       cta: 'El vull',
-    },
-    portfolio: {
-      eyebrow: 'Feina',
-      title: 'Mira-ho, no me\'n refiïs de la paraula.',
-      lead: 'Tres comerços d\'aquí amb qui treballo. La prova del que faig és el que ja s\'ha publicat.',
-      placeholderNote: 'PLACEHOLDER · substitueix per casos i imatges reals',
     },
     about: {
       eyebrow: 'Qui sóc',
       title: 'Sóc la Lídia. I sóc d\'aquí.',
       body: [
-        'No sóc una agència de Barcelona que et tracta com un número. Visc i treballo a Osona, conec els carrers pels quals passa la teva clientela i sé com es parla aquí.',
-        'Per això el teu Instagram no sonarà a corporatiu fred ni a robot. Sonarà a tu, amb la proximitat d\'algú que entén un comerç de poble perquè hi ha crescut.',
+        'No sóc una agència de Barcelona que et tracta com un número. Visc a Vic i treballo des d\'aquí amb negocis d\'arreu de Catalunya — d\'Osona a la Costa Brava i el Berguedà.',
+        'Per això el teu Instagram no sonarà a corporatiu fred ni a robot. Sonarà a tu, amb la proximitat d\'algú que entén un negoci de proximitat perquè hi ha crescut.',
       ],
       signature: 'Lídia Caldera',
       role: 'Màrqueting i comunicació · Vic, Osona',
-      imageAlt: 'PLACEHOLDER · foto real de la Lídia',
+      imageAlt: 'Lídia Caldera, màrqueting i comunicació',
+      imageCaption: 'Vic, Osona — des d\'on treballo',
     },
     faq: {
       eyebrow: 'Dubtes',
@@ -161,7 +171,7 @@ export const ui = {
       },
     },
     footer: {
-      tagline: 'Instagram amb cara i ulls per a comerços de Vic i Osona.',
+      tagline: 'Instagram amb cara i ulls per a negocis locals. Fet des de Vic.',
       nav: 'Navegació',
       contactTitle: 'Contacte',
       rights: 'Tots els drets reservats.',
@@ -173,29 +183,38 @@ export const ui = {
   es: {
     htmlLang: 'es',
     meta: {
-      title: 'Lídia Caldera · Instagram para comercios de Vic y Osona',
+      title: 'Lídia Caldera · Gestión de Instagram para negocios locales',
       description:
-        'Gestiono el Instagram de tu comercio en Vic y Osona con foto real y criterio editorial humano. Publicas constante, sin tener que pensarlo. Escríbeme por WhatsApp.',
-      ogAlt: 'Lídia Caldera — marketing y comunicación para comercios de Vic',
+        'Gestiono el Instagram de tu negocio con foto real y criterio editorial humano. Desde Vic, para negocios de toda Cataluña. Publicas constante, sin tener que pensarlo.',
+      ogAlt: 'Lídia Caldera — marketing y comunicación para negocios locales',
     },
     nav: {
       links: [
         { href: '#que-fem', label: 'Qué hacemos' },
         { href: '#com-treballem', label: 'Cómo trabajamos' },
+        { href: '#casos', label: 'Casos' },
         { href: '#tarifes', label: 'Tarifas' },
-        { href: '#feina', label: 'Trabajos' },
         { href: '#lidia', label: 'Quién soy' },
       ],
       cta: 'Escríbeme',
       langLabel: 'Cambiar idioma',
+      menuOpen: 'Abrir menú',
+      menuClose: 'Cerrar menú',
     },
     hero: {
-      eyebrow: 'Instagram para comercios de Vic y Osona',
-      title: 'El Instagram de tu negocio, cuidado por alguien que conoce Vic',
+      eyebrow: 'Gestión de Instagram · hecha en Vic',
+      titlePre: 'El Instagram de tu negocio,',
+      titleAccent: 'cuidado',
+      titlePost: 'por una persona de verdad.',
       lead: 'Feed y stories con foto real de tu local y textos escritos por una persona, no por una máquina. Publicas constante cada semana sin tener que pensarlo — y te dedicas a lo que se te da bien.',
       ctaPrimary: 'Escríbeme por WhatsApp',
-      ctaSecondary: 'Ver trabajos',
+      ctaSecondary: 'Ver casos reales',
       trust: 'Respuesta el mismo día · Sin permanencia · Soy de Vic',
+      feedName: 'Tu negocio',
+      feedHandle: 'tunegocio',
+      feedStats: 'publicaciones · seguidores · seguidos',
+      chipLike: 'Me gusta nuevo',
+      chipMessage: 'Mensaje nuevo',
     },
     problem: {
       eyebrow: '¿Te suena?',
@@ -223,7 +242,7 @@ export const ui = {
       items: [
         {
           title: 'Feed con criterio',
-          body: 'Publicaciones pensadas para tu público de la comarca, con foto real de tu local, tus productos y tu gente. Nada de bancos de imágenes.',
+          body: 'Publicaciones pensadas para tu público, con foto real de tu local, tus productos y tu gente. Nada de bancos de imágenes.',
         },
         {
           title: 'Stories que mueven',
@@ -247,7 +266,7 @@ export const ui = {
         {
           n: '01',
           title: 'Conocemos el negocio',
-          body: 'Me cuentas un rato cómo es, quién entra y qué quieres. Si puede ser, voy al local: estoy aquí al lado.',
+          body: 'Me cuentas un rato cómo es, quién entra y qué quieres. Si puede ser, voy al local y lo veo con mis ojos.',
         },
         {
           n: '02',
@@ -271,32 +290,33 @@ export const ui = {
         },
       ],
     },
+    cases: {
+      eyebrow: 'Casos reales',
+      title: 'Dos negocios reales. Dos maneras de comprobarlo.',
+      lead: 'No son logos inventados: son clientes de verdad, con nombre y pueblo. La prueba de lo que hago es su experiencia.',
+    },
     pricing: {
       eyebrow: 'Tarifas',
       title: 'Empiezas por donde te va bien. Subes cuando te compensa.',
       lead: 'Sin permanencia ni letra pequeña. Eliges el paquete y, si un mes quieres más (o menos), lo hablamos.',
       perMonth: '/mes',
       featuredBadge: 'El más elegido',
+      featuredNote: 'El punto dulce entre presencia y presupuesto.',
       extrasTitle: 'Extras a la carta',
-      note: 'Precios orientativos (PLACEHOLDER) y sin IVA. El presupuesto final depende del volumen y de tu situación; te lo concreto en 5 minutos por WhatsApp.',
+      note: 'Precios orientativos y sin IVA. El presupuesto final depende del volumen y de tu situación; te lo concreto en 5 minutos por WhatsApp.',
       cta: 'Lo quiero',
-    },
-    portfolio: {
-      eyebrow: 'Trabajos',
-      title: 'Míralo, no te fíes de mi palabra.',
-      lead: 'Tres comercios de aquí con los que trabajo. La prueba de lo que hago es lo que ya se ha publicado.',
-      placeholderNote: 'PLACEHOLDER · sustituye por casos e imágenes reales',
     },
     about: {
       eyebrow: 'Quién soy',
       title: 'Soy Lídia. Y soy de aquí.',
       body: [
-        'No soy una agencia de Barcelona que te trata como un número. Vivo y trabajo en Osona, conozco las calles por las que pasa tu clientela y sé cómo se habla aquí.',
-        'Por eso tu Instagram no sonará a corporativo frío ni a robot. Sonará a ti, con la cercanía de alguien que entiende un comercio de pueblo porque ha crecido en uno.',
+        'No soy una agencia de Barcelona que te trata como un número. Vivo en Vic y trabajo desde aquí con negocios de toda Cataluña — de Osona a la Costa Brava y el Berguedà.',
+        'Por eso tu Instagram no sonará a corporativo frío ni a robot. Sonará a ti, con la cercanía de alguien que entiende un negocio de proximidad porque ha crecido en uno.',
       ],
       signature: 'Lídia Caldera',
       role: 'Marketing y comunicación · Vic, Osona',
-      imageAlt: 'PLACEHOLDER · foto real de Lídia',
+      imageAlt: 'Lídia Caldera, marketing y comunicación',
+      imageCaption: 'Vic, Osona — desde donde trabajo',
     },
     faq: {
       eyebrow: 'Dudas',
@@ -325,7 +345,7 @@ export const ui = {
       },
     },
     footer: {
-      tagline: 'Instagram con cara y ojos para comercios de Vic y Osona.',
+      tagline: 'Instagram con cara y ojos para negocios locales. Hecho desde Vic.',
       nav: 'Navegación',
       contactTitle: 'Contacto',
       rights: 'Todos los derechos reservados.',

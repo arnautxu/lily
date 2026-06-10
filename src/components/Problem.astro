@@ -10,12 +10,12 @@ const t = ui[lang];
 
 <section class="py-24 md:py-32">
   <div class="container-edge">
-    <div class="grid items-end gap-8 md:grid-cols-[1.3fr_1fr]">
-      <div>
-        <p class="eyebrow" data-reveal>{t.problem.eyebrow}</p>
-        <h2 class="mt-5 max-w-2xl text-h2 font-semibold" data-reveal>{t.problem.title}</h2>
-      </div>
-      <p class="text-lg text-ink-soft md:pb-1" data-reveal>{t.problem.lead}</p>
+    <div class="mx-auto max-w-3xl text-center">
+      <p class="font-display text-[clamp(2rem,1.4rem+2.6vw,3.4rem)] font-medium italic text-accent-ink" data-reveal>
+        {t.problem.eyebrow}
+      </p>
+      <h2 class="mt-4 text-h2 font-semibold" data-reveal>{t.problem.title}</h2>
+      <p class="mx-auto mt-5 max-w-xl text-lg text-ink-soft" data-reveal>{t.problem.lead}</p>
     </div>
 
     <div class="mt-14 grid gap-4 md:grid-cols-6 md:grid-rows-2">

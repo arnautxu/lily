@@ -1,0 +1,73 @@
+---
+/**
+ * Mockup de feed d'Instagram plausible (chrome de perfil + graella de tiles).
+ * SWAP POINT: quan hi hagi captures reals, substituir les tiles per
+ * <img src="/images/..." class="h-full w-full object-cover" loading="lazy" />
+ * mantenint aspect-square i el rounded.
+ */
+import type { FeedTile } from '../data/cases';
+
+interface Props {
+  name: string;
+  handle: string;
+  stats: string;
+  tiles: FeedTile[];
+  /** Color de l'avatar (classe Tailwind) */
+  avatarBg?: string;
+}
+const { name, handle, stats, tiles, avatarBg = 'bg-accent' } = Astro.props;
+const initial = name.charAt(0).toUpperCase();
+---
+
+<div class="bezel">
+  <div class="bezel-core overflow-hidden">
+    <!-- Chrome de perfil IG -->
+    <div class="flex items-center gap-3 border-b border-sand/70 px-4 py-3.5">
+      <span
+        class={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${avatarBg} font-display text-lg font-semibold text-white ring-2 ring-coral/60 ring-offset-2 ring-offset-surface`}
+        aria-hidden="true"
+      >
+        {initial}
+      </span>
+      <div class="min-w-0">
+        <p class="truncate text-sm font-semibold leading-tight text-ink">@{handle}</p>
+        <p class="truncate text-[0.7rem] leading-tight text-ink-soft">{stats}</p>
+      </div>
+      <span
+        class="ml-auto rounded-md bg-accent px-2.5 py-1 text-[0.65rem] font-semibold text-white"
+        aria-hidden="true"
+      >
+        {name}
+      </span>
+    </div>
+
+    <!-- Graella de feed 3×3 -->
+    <div class="grid grid-cols-3 gap-1 p-1">
+      {
+        tiles.map((tile) => (
+          <div class={`relative aspect-square overflow-hidden rounded-[6px] ${tile.bg ?? ''}`}>
+            {/* SWAP POINT: substituir el contingut de la tile per una <img> real */}
+            {tile.kind === 'type' && (
+              <span
+                class={`flex h-full w-full items-center justify-center p-2 text-center font-display text-[0.72rem] font-semibold leading-tight md:text-[0.85rem] ${tile.fg ?? 'text-ink'}`}
+              >
+                {tile.text}
+              </span>
+            )}
+            {tile.kind === 'duotone' && (
+              <span class="absolute inset-0 opacity-25 mix-blend-soft-light grain-inset" />
+            )}
+            {tile.kind === 'reel' && (
+              <span class="flex h-full w-full flex-col items-center justify-center gap-1 bg-[#1d1a16] text-bg/90">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M8 6.5v11l9-5.5-9-5.5Z" />
+                </svg>
+                <span class="text-[0.6rem] font-medium uppercase tracking-[0.16em]">{tile.text}</span>
+              </span>
+            )}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>

@@ -14,12 +14,10 @@ const { tiers, extras } = pricing[lang];
 
 <section id="tarifes" class="scroll-mt-24 py-24 md:py-32">
   <div class="container-edge">
-    <div class="grid items-end gap-8 md:grid-cols-[1.3fr_1fr]">
-      <div>
-        <p class="eyebrow" data-reveal>{t.pricing.eyebrow}</p>
-        <h2 class="mt-5 max-w-2xl text-h2 font-semibold" data-reveal>{t.pricing.title}</h2>
-      </div>
-      <p class="text-lg text-ink-soft md:pb-1" data-reveal>{t.pricing.lead}</p>
+    <div class="mx-auto max-w-2xl text-center">
+      <p class="eyebrow" data-reveal>{t.pricing.eyebrow}</p>
+      <h2 class="mt-5 text-h2 font-semibold" data-reveal>{t.pricing.title}</h2>
+      <p class="mt-5 text-lg text-ink-soft" data-reveal>{t.pricing.lead}</p>
     </div>
 
     <div class="mt-14 grid items-stretch gap-4 lg:grid-cols-3">
@@ -30,7 +28,7 @@ const { tiers, extras } = pricing[lang];
             <article
               class={`relative flex h-full flex-col rounded-2xl border p-7 transition-all duration-500 ease-out-soft md:p-8 ${
                 dark
-                  ? 'border-transparent bg-ink text-bg shadow-[0_30px_70px_-30px_rgb(24_21_18_/_0.6)] lg:-mt-4 lg:mb-[-1rem]'
+                  ? 'overflow-hidden border-transparent bg-pine text-bg shadow-[0_30px_70px_-30px_rgb(28_40_22_/_0.7)] before:absolute before:inset-x-0 before:top-0 before:h-[3px] before:bg-coral lg:-mt-4 lg:mb-[-1rem]'
                   : 'border-sand bg-surface shadow-diffuse'
               }`}
               data-reveal
@@ -44,9 +42,10 @@ const { tiers, extras } = pricing[lang];
               <h3 class={`font-display text-h3 font-semibold ${dark ? 'text-bg' : 'text-ink'}`}>{tier.name}</h3>
               <p class={`mt-1 text-sm ${dark ? 'text-bg/60' : 'text-ink-soft'}`}>{tier.tagline}</p>
               <p class="mt-6 flex items-baseline gap-1">
-                <span class={`font-display text-5xl font-semibold ${dark ? 'text-bg' : 'text-ink'}`}>{tier.price}</span>
+                <span class={`font-display font-semibold ${dark ? 'text-6xl text-bg' : 'text-5xl text-ink'}`}>{tier.price}</span>
                 <span class={`text-sm ${dark ? 'text-bg/60' : 'text-ink-soft'}`}>{t.pricing.perMonth}</span>
               </p>
+              {tier.featured && <p class="mt-1.5 text-sm italic text-bg/55">{t.pricing.featuredNote}</p>}
               <ul class="mt-7 flex flex-1 flex-col gap-3.5 text-[0.95rem]">
                 {tier.features.map((f) => (
                   <li class="flex items-start gap-2.5">

@@ -20,7 +20,7 @@ const items = faq[lang];
     <div class="divide-y divide-sand/70" data-reveal>
       {
         items.map((item) => (
-          <details class="group py-5">
+          <details class="group py-5" data-faq>
             <summary
               class="flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-medium text-ink transition-colors hover:text-accent-ink"
             >
@@ -34,10 +34,43 @@ const items = faq[lang];
                 </svg>
               </span>
             </summary>
-            <p class="mt-3 max-w-2xl leading-relaxed text-ink-soft">{item.a}</p>
+            <div class="faq-answer">
+              <div>
+                <p class="mt-3 max-w-2xl leading-relaxed text-ink-soft">{item.a}</p>
+              </div>
+            </div>
           </details>
         ))
       }
     </div>
   </div>
 </section>
+
+<script>
+  // Anima l'obrir/tancar dels <details> mantenint la semàntica nativa:
+  // en obrir, posem `open` i després la classe que dispara la transició de
+  // grid-template-rows; en tancar, invertim i esperem el transitionend.
+  document.querySelectorAll<HTMLDetailsElement>('[data-faq]').forEach((details) => {
+    const summary = details.querySelector('summary');
+    const answer = details.querySelector<HTMLElement>('.faq-answer');
+    if (!summary || !answer) return;
+
+    summary.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (details.open) {
+        details.classList.remove('is-open');
+        const finish = () => {
+          if (!details.classList.contains('is-open')) details.open = false;
+        };
+        answer.addEventListener('transitionend', finish, { once: true });
+        // Fallback si la transició no es dispara (reduced motion, interrupcions)
+        setTimeout(finish, 450);
+      } else {
+        details.open = true;
+        // Reflow forçat perquè la transició parteixi de 0fr
+        void answer.offsetHeight;
+        details.classList.add('is-open');
+      }
+    });
+  });
+</script>

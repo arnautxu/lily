@@ -46,7 +46,7 @@ const homeHref = lang === 'ca' ? '/' : '/es';
         href={otherHref}
         hreflang={otherLang}
         aria-label={t.nav.langLabel}
-        class="btn-plain border border-ink/[0.12] text-ink-soft hover:border-accent/50 hover:text-accent-ink"
+        class="hidden btn-plain border border-ink/[0.12] text-ink-soft hover:border-accent/50 hover:text-accent-ink sm:inline-flex"
       >
         {otherLabel}
       </a>
@@ -58,6 +58,123 @@ const homeHref = lang === 'ca' ? '/' : '/es';
           </svg>
         </span>
       </a>
+      <button
+        id="nav-toggle"
+        type="button"
+        class="flex h-11 w-11 items-center justify-center rounded-full border border-ink/[0.12] text-ink md:hidden"
+        aria-expanded="false"
+        aria-controls="nav-overlay"
+        aria-label={t.nav.menuOpen}
+      >
+        <span class="relative block h-3.5 w-5" aria-hidden="true">
+          <span class="nav-bar absolute left-0 top-0 block h-[2px] w-full rounded-full bg-current transition-all duration-300 ease-out-soft"></span>
+          <span class="nav-bar absolute bottom-0 left-0 block h-[2px] w-full rounded-full bg-current transition-all duration-300 ease-out-soft"></span>
+        </span>
+      </button>
     </div>
   </nav>
 </header>
+
+<!-- Overlay del menú mòbil (fora del wrapper pointer-events-none) -->
+<div
+  id="nav-overlay"
+  class="invisible fixed inset-0 z-40 flex flex-col bg-bg px-6 pb-8 pt-28 opacity-0 transition-all duration-300 ease-out-soft md:hidden"
+  hidden
+>
+  <nav aria-label={t.footer.nav}>
+    <ul class="grid gap-2">
+      {
+        t.nav.links.map((l, i) => (
+          <li
+            class="nav-overlay-item translate-y-4 opacity-0 transition-all duration-500 ease-out-soft"
+            style={`transition-delay: ${80 + i * 50}ms`}
+          >
+            <a
+              href={l.href}
+              class="block py-2 font-display text-3xl font-semibold text-ink transition-colors hover:text-accent-ink"
+              data-nav-close
+            >
+              {l.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+
+  <div class="mt-auto grid gap-4">
+    <a
+      href={otherHref}
+      hreflang={otherLang}
+      aria-label={t.nav.langLabel}
+      class="btn-plain w-fit border border-ink/[0.12] text-ink-soft"
+    >
+      {otherLabel}
+    </a>
+    <a href={wa} rel="noopener" class="btn-primary w-full justify-between" data-nav-close>
+      {t.nav.cta}
+      <span class="btn-ico" aria-hidden="true">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7 17 17 7M9 7h8v8" />
+        </svg>
+      </span>
+    </a>
+  </div>
+</div>
+
+<style>
+  /* Hamburguesa → X */
+  #nav-toggle[aria-expanded='true'] .nav-bar:first-child {
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+  }
+  #nav-toggle[aria-expanded='true'] .nav-bar:last-child {
+    bottom: 50%;
+    transform: translateY(50%) rotate(-45deg);
+  }
+  #nav-overlay.is-open {
+    visibility: visible;
+    opacity: 1;
+  }
+  #nav-overlay.is-open .nav-overlay-item {
+    transform: none;
+    opacity: 1;
+  }
+</style>
+
+<script define:vars={{ labelOpen: t.nav.menuOpen, labelClose: t.nav.menuClose }}>
+  const toggle = document.getElementById('nav-toggle');
+  const overlay = document.getElementById('nav-overlay');
+
+  function setOpen(open) {
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? labelClose : labelOpen);
+    document.body.style.overflow = open ? 'hidden' : '';
+    if (open) {
+      overlay.hidden = false;
+      // Reflow forçat perquè la transició d'entrada s'apliqui
+      void overlay.offsetHeight;
+      overlay.classList.add('is-open');
+    } else {
+      overlay.classList.remove('is-open');
+      const finish = () => {
+        if (toggle.getAttribute('aria-expanded') === 'false') overlay.hidden = true;
+      };
+      overlay.addEventListener('transitionend', finish, { once: true });
+      // Fallback si la transició no es dispara
+      setTimeout(finish, 400);
+    }
+  }
+
+  toggle?.addEventListener('click', () => {
+    setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+  });
+
+  overlay?.querySelectorAll('[data-nav-close]').forEach((el) => {
+    el.addEventListener('click', () => setOpen(false));
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') setOpen(false);
+  });
+</script>

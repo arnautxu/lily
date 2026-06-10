@@ -18,6 +18,8 @@
   --accent-ink: 56 92 34; /* #385C22 verd fosc (text/hover) */
   --coral: 229 104 60; /* #E5683C pop */
   --success: 47 107 51; /* #2F6B33 */
+  --pine: 28 40 22; /* #1C2816 verd pi profund (seccions fosques) */
+  --pine-soft: 42 58 32; /* #2A3A20 superfície sobre pine */
 
   --r-sm: 10px;
   --r-md: 16px;
@@ -76,6 +78,39 @@
     @apply inline-flex items-center gap-2 rounded-full border border-ink/10 bg-surface/60
            px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-accent-ink
            backdrop-blur-sm;
+  }
+
+  /* Eyebrow sense píndola — per trencar la monotonia de seccions */
+  .eyebrow-bare {
+    @apply inline-flex items-center gap-2.5 text-[0.7rem] font-semibold uppercase
+           tracking-[0.22em] text-accent-ink;
+  }
+  .eyebrow-bare::before {
+    content: '';
+    @apply inline-block h-1.5 w-1.5 rounded-full bg-coral;
+  }
+
+  /* Cometa editorial gegant per a pull-quotes */
+  .quote-mark {
+    @apply pointer-events-none select-none font-display font-semibold leading-none text-accent/20;
+    font-size: clamp(4rem, 8vw, 7rem);
+  }
+
+  /* Numeral de secció sobredimensionat (decoratiu) */
+  .section-num {
+    @apply pointer-events-none select-none font-display font-semibold leading-none;
+    font-size: clamp(5rem, 12vw, 9rem);
+    color: rgb(var(--accent) / 0.08);
+  }
+
+  /* Camps de formulari amb focus ring premium */
+  .input {
+    @apply rounded-md border border-sand bg-bg px-3.5 py-2.5 text-ink outline-none
+           transition-all duration-300 placeholder:text-ink-soft/60;
+  }
+  .input:focus {
+    border-color: rgb(var(--accent));
+    box-shadow: 0 0 0 3px rgb(var(--accent) / 0.15);
   }
 
   /* ── Botons ──────────────────────────────────────────────── */
@@ -138,6 +173,29 @@
     -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
     mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
   }
+
+  /* ── FAQ: animació d'obrir/tancar mantenint <details> natiu ── */
+  .faq-answer {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.4s var(--ease-soft);
+  }
+  .faq-answer > div {
+    overflow: hidden;
+  }
+  details.is-open .faq-answer {
+    grid-template-rows: 1fr;
+  }
+}
+
+/* ── Textura de gra reutilitzable dins de seccions (no fixed) ── */
+.grain-inset::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 /* ── Aura / mesh gradient orbs (subtil, càlid) ─────────────── */
@@ -183,6 +241,7 @@
   html { scroll-behavior: auto; }
   .js [data-reveal], [data-reveal] { opacity: 1; transform: none; filter: none; }
   .marquee, .animate-float, .animate-marquee { animation: none !important; }
+  .faq-answer { transition: none !important; }
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
     transition-duration: 0.001ms !important;

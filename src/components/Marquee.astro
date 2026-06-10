@@ -8,8 +8,8 @@ const { lang } = Astro.props;
 
 const items =
   lang === 'ca'
-    ? ['Restaurants', 'Perruqueries', 'Estètica', 'Botigues de roba', 'Gimnasos', 'Clíniques de salut', 'Cafeteries', 'Floristeries']
-    : ['Restaurantes', 'Peluquerías', 'Estética', 'Tiendas de ropa', 'Gimnasios', 'Clínicas de salud', 'Cafeterías', 'Floristerías'];
+    ? ['Restaurants', 'Perruqueries', 'Pediatria', 'Botigues de roba', 'Lutheria', 'Gimnasos', 'Clíniques de salut', 'Cafeteries', 'Floristeries']
+    : ['Restaurantes', 'Peluquerías', 'Pediatría', 'Tiendas de ropa', 'Luthería', 'Gimnasios', 'Clínicas de salud', 'Cafeterías', 'Floristerías'];
 
 // Duplicat per al loop continu
 const loop = [...items, ...items];
@@ -31,6 +31,6 @@ const loop = [...items, ...items];
 </section>
 <p class="sr-only">
   {lang === 'ca'
-    ? 'Treballo amb restaurants, perruqueries i estètica, botigues de roba, gimnasos i clíniques de salut de Vic i Osona.'
-    : 'Trabajo con restaurantes, peluquerías y estética, tiendas de ropa, gimnasios y clínicas de salud de Vic y Osona.'}
+    ? 'Treballo amb restaurants, perruqueries, pediatria, botigues de roba, lutheria, gimnasos i clíniques de salut de tot Catalunya.'
+    : 'Trabajo con restaurantes, peluquerías, pediatría, tiendas de ropa, luthería, gimnasios y clínicas de salud de toda Cataluña.'}
 </p>

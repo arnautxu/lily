@@ -3,7 +3,7 @@ import type { Lang } from '../lib/i18n';
 export interface Tier {
   id: string;
   name: string;
-  /** PLACEHOLDER · preu orientatiu */
+  /** Preu orientatiu — validar amb la Lídia abans de publicar */
   price: string;
   tagline: string;
   features: string[];
@@ -21,7 +21,7 @@ export const pricing: Record<Lang, { tiers: Tier[]; extras: Extra[] }> = {
       {
         id: 'entrada',
         name: 'Porta d\'entrada',
-        price: '—€', // PLACEHOLDER
+        price: '225€',
         tagline: 'Per estar present sense complicar-te.',
         features: [
           '8 publicacions de feed al mes',
@@ -33,7 +33,7 @@ export const pricing: Record<Lang, { tiers: Tier[]; extras: Extra[] }> = {
       {
         id: 'creixement',
         name: 'Creixement',
-        price: '—€', // PLACEHOLDER
+        price: '395€',
         tagline: 'El pack que tria la majoria.',
         featured: true,
         features: [
@@ -47,7 +47,7 @@ export const pricing: Record<Lang, { tiers: Tier[]; extras: Extra[] }> = {
       {
         id: 'complet',
         name: 'Complet',
-        price: '—€', // PLACEHOLDER
+        price: '575€',
         tagline: 'Presència forta i amb dades.',
         features: [
           '16 publicacions + 4 reels al mes',
@@ -59,10 +59,10 @@ export const pricing: Record<Lang, { tiers: Tier[]; extras: Extra[] }> = {
       },
     ],
     extras: [
-      { name: 'Reel addicional', price: '—€' },
-      { name: 'Sessió de fotos al local', price: '—€' },
-      { name: 'Campanya per a data assenyalada', price: '—€' },
-      { name: 'Disseny de cartell / promoció', price: '—€' },
+      { name: 'Reel addicional', price: '45€' },
+      { name: 'Sessió de fotos al local', price: '140€' },
+      { name: 'Campanya per a data assenyalada', price: '95€' },
+      { name: 'Disseny de cartell / promoció', price: '40€' },
     ],
   },
   es: {
@@ -70,7 +70,7 @@ export const pricing: Record<Lang, { tiers: Tier[]; extras: Extra[] }> = {
       {
         id: 'entrada',
         name: 'Puerta de entrada',
-        price: '—€', // PLACEHOLDER
+        price: '225€',
         tagline: 'Para estar presente sin complicarte.',
         features: [
           '8 publicaciones de feed al mes',
@@ -82,7 +82,7 @@ export const pricing: Record<Lang, { tiers: Tier[]; extras: Extra[] }> = {
       {
         id: 'creixement',
         name: 'Crecimiento',
-        price: '—€', // PLACEHOLDER
+        price: '395€',
         tagline: 'El pack que elige la mayoría.',
         featured: true,
         features: [
@@ -96,7 +96,7 @@ export const pricing: Record<Lang, { tiers: Tier[]; extras: Extra[] }> = {
       {
         id: 'complet',
         name: 'Completo',
-        price: '—€', // PLACEHOLDER
+        price: '575€',
         tagline: 'Presencia fuerte y con datos.',
         features: [
           '16 publicaciones + 4 reels al mes',
@@ -108,10 +108,10 @@ export const pricing: Record<Lang, { tiers: Tier[]; extras: Extra[] }> = {
       },
     ],
     extras: [
-      { name: 'Reel adicional', price: '—€' },
-      { name: 'Sesión de fotos en el local', price: '—€' },
-      { name: 'Campaña para fecha señalada', price: '—€' },
-      { name: 'Diseño de cartel / promoción', price: '—€' },
+      { name: 'Reel adicional', price: '45€' },
+      { name: 'Sesión de fotos en el local', price: '140€' },
+      { name: 'Campaña para fecha señalada', price: '95€' },
+      { name: 'Diseño de cartel / promoción', price: '40€' },
     ],
   },
 };

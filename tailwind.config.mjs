@@ -13,6 +13,8 @@ export default {
         'accent-ink': 'rgb(var(--accent-ink) / <alpha-value>)',
         coral: 'rgb(var(--coral) / <alpha-value>)',
         success: 'rgb(var(--success) / <alpha-value>)',
+        pine: 'rgb(var(--pine) / <alpha-value>)',
+        'pine-soft': 'rgb(var(--pine-soft) / <alpha-value>)',
       },
       fontFamily: {
         display: ['"Fraunces Variable"', 'Georgia', 'serif'],

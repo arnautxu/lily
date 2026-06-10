@@ -1,6 +1,8 @@
 ---
 import { ui, type Lang } from '../lib/i18n';
 import { whatsappLink } from '../lib/config';
+import InstaFeedMockup from './InstaFeedMockup.astro';
+import type { FeedTile } from '../data/cases';
 
 interface Props {
   lang: Lang;
@@ -9,28 +11,47 @@ const { lang } = Astro.props;
 const t = ui[lang];
 const wa = whatsappLink(lang);
 
-// 6 cel·les que omplen una graella 3×3 perfecta (la primera és 2×2).
-const tiles = [
-  { c: 'bg-[#cf6b43]', span: 'col-span-2 row-span-2' },
-  { c: 'bg-[#5d7d3a]', span: '' },
-  { c: 'bg-[#e7dfd2]', span: '' },
-  { c: 'bg-[#4d7c2f]', span: '' },
-  { c: 'bg-[#d8c9b2]', span: '' },
-  { c: 'bg-[#8a7a66]', span: '' },
-];
+// Feed genèric "el teu negoci" — barreja de sectors perquè qualsevol s'hi vegi.
+// SWAP POINT: quan hi hagi captures reals, substituir per { kind: 'image', src: '/images/...' }
+const heroTiles: FeedTile[] =
+  lang === 'ca'
+    ? [
+        { kind: 'duotone', bg: 'bg-gradient-to-br from-[#cf6b43] to-[#9c4e2e]' },
+        { kind: 'type', text: 'Obert avui', bg: 'bg-[#f7f3ea]', fg: 'text-[#385c22]' },
+        { kind: 'duotone', bg: 'bg-gradient-to-br from-[#a8bd92] to-[#6f8a58]' },
+        { kind: 'reel', text: 'Reel' },
+        { kind: 'duotone', bg: 'bg-gradient-to-br from-[#d8c9b2] to-[#b09a7b]' },
+        { kind: 'type', text: 'Novetat de la setmana', bg: 'bg-[#eef1e6]', fg: 'text-[#3f5233]' },
+        { kind: 'duotone', bg: 'bg-gradient-to-br from-[#e8dcc8] to-[#cdbb9d]' },
+        { kind: 'type', text: 'Demana hora', bg: 'bg-[#fcfaf5]', fg: 'text-[#cf6b43]' },
+        { kind: 'block', bg: 'bg-[#4d7c2f]' },
+      ]
+    : [
+        { kind: 'duotone', bg: 'bg-gradient-to-br from-[#cf6b43] to-[#9c4e2e]' },
+        { kind: 'type', text: 'Abierto hoy', bg: 'bg-[#f7f3ea]', fg: 'text-[#385c22]' },
+        { kind: 'duotone', bg: 'bg-gradient-to-br from-[#a8bd92] to-[#6f8a58]' },
+        { kind: 'reel', text: 'Reel' },
+        { kind: 'duotone', bg: 'bg-gradient-to-br from-[#d8c9b2] to-[#b09a7b]' },
+        { kind: 'type', text: 'Novedad de la semana', bg: 'bg-[#eef1e6]', fg: 'text-[#3f5233]' },
+        { kind: 'duotone', bg: 'bg-gradient-to-br from-[#e8dcc8] to-[#cdbb9d]' },
+        { kind: 'type', text: 'Pide hora', bg: 'bg-[#fcfaf5]', fg: 'text-[#cf6b43]' },
+        { kind: 'block', bg: 'bg-[#4d7c2f]' },
+      ];
 ---
 
 <section class="aura relative overflow-hidden">
   <div
     class="container-edge grid items-center gap-12 pb-16 pt-32 md:pb-24 md:pt-40 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14"
   >
-    <div class="max-w-2xl">
+    <div class="min-w-0 max-w-2xl lg:relative lg:z-10">
       <p class="eyebrow" data-reveal>
         <span class="inline-block h-1.5 w-1.5 animate-float rounded-full bg-accent"></span>
         {t.hero.eyebrow}
       </p>
-      <h1 class="mt-6 font-display text-mega font-semibold" data-reveal>
-        {t.hero.title}
+      <h1 class="mt-6 font-display text-mega font-semibold lg:max-w-none lg:-mr-24" data-reveal>
+        {t.hero.titlePre}
+        <em class="font-display italic text-accent-ink">{t.hero.titleAccent}</em>
+        {t.hero.titlePost}
       </h1>
       <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink-soft" data-reveal>
         {t.hero.lead}
@@ -42,7 +63,7 @@ const tiles = [
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.49.07-1.12.1-1.8-.11-.42-.13-.95-.31-1.64-.61-2.88-1.24-4.76-4.14-4.9-4.33-.14-.19-1.17-1.56-1.17-2.97s.74-2.11 1-2.4c.26-.29.57-.36.76-.36l.55.01c.18.01.41-.07.64.49.24.58.82 2 .89 2.14.07.14.12.31.02.5-.43.84-.88 1.05-.41.93-.12.58.17.29.74 1.22 1.59 1.98 1.09.97 2.01 1.27 2.3 1.42.29.14.46.12.63-.07.17-.19.72-.84.91-1.13.19-.29.39-.24.64-.14.26.09 1.66.78 1.95.93.29.14.48.21.55.34.07.12.07.72-.17 1.4Z"/></svg>
           </span>
         </a>
-        <a href="#feina" class="btn-secondary" data-magnetic>
+        <a href="#casos" class="btn-secondary" data-magnetic>
           {t.hero.ctaSecondary}
           <span class="btn-ico" aria-hidden="true">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -52,21 +73,36 @@ const tiles = [
       <p class="mt-7 text-sm text-ink-soft/90" data-reveal>{t.hero.trust}</p>
     </div>
 
-    <!-- Bento de feed (double-bezel) — PLACEHOLDER fotos reals -->
-    <div class="relative" data-reveal>
-      <div class="bezel" data-parallax="0.06">
-        <div class="bezel-core grid grid-cols-3 grid-rows-3 gap-2.5 p-2.5">
-          {
-            tiles.map((tile) => (
-              <div class={`${tile.c} ${tile.span} aspect-square overflow-hidden rounded-[12px]`} />
-            ))
-          }
-        </div>
+    <!-- Mockup de feed (double-bezel) — SWAP POINT: substituir tiles per captures reals -->
+    <div class="relative min-w-0" data-reveal>
+      <div data-parallax="0.06">
+        <InstaFeedMockup
+          name={t.hero.feedName}
+          handle={t.hero.feedHandle}
+          stats={t.hero.feedStats}
+          tiles={heroTiles}
+        />
       </div>
+
+      <!-- Chips flotants qualitatius -->
       <span
-        class="absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-sand bg-bg/90 px-3 py-1 text-[0.68rem] font-medium text-ink-soft backdrop-blur-sm"
+        class="absolute -left-4 top-28 hidden animate-float items-center gap-2 rounded-full border border-sand bg-surface/95 px-3.5 py-2 text-xs font-medium text-ink shadow-soft backdrop-blur-sm sm:inline-flex"
+        aria-hidden="true"
       >
-        {lang === 'ca' ? 'PLACEHOLDER · feed real del teu negoci' : 'PLACEHOLDER · feed real de tu negocio'}
+        <span class="flex h-6 w-6 items-center justify-center rounded-full bg-coral/15 text-coral">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.6-9.7-9C.7 8.6 2.6 5 6 5c2 0 3.3 1 4 2.2C10.7 6 12 5 14 5c3.4 0 5.3 3.6 3.7 7-2.2 4.4-9.7 9-9.7 9Z"/></svg>
+        </span>
+        {t.hero.chipLike}
+      </span>
+      <span
+        class="absolute -right-3 bottom-14 hidden animate-float items-center gap-2 rounded-full border border-sand bg-surface/95 px-3.5 py-2 text-xs font-medium text-ink shadow-soft backdrop-blur-sm sm:inline-flex"
+        style="animation-delay: -3.5s"
+        aria-hidden="true"
+      >
+        <span class="flex h-6 w-6 items-center justify-center rounded-full bg-accent/15 text-accent-ink">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.6 8.6 0 0 1-3.4-.7L3 21l1.8-5.6a8.4 8.4 0 1 1 16.2-3.9Z"/></svg>
+        </span>
+        {t.hero.chipMessage}
       </span>
     </div>
   </div>

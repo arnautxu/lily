@@ -1,0 +1,76 @@
+---
+import { ui, type Lang } from '../lib/i18n';
+import { cases } from '../data/cases';
+import InstaFeedMockup from './InstaFeedMockup.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = ui[lang];
+const items = cases[lang];
+
+const avatarColors = ['bg-[#7d9468]', 'bg-[#8a6a4a]'];
+---
+
+<section id="casos" class="scroll-mt-24 overflow-hidden border-t border-sand/70 py-28 md:py-40">
+  <div class="container-edge">
+    <div class="max-w-2xl">
+      <p class="eyebrow-bare" data-reveal>{t.cases.eyebrow}</p>
+      <h2 class="mt-5 text-display font-semibold" data-reveal>{t.cases.title}</h2>
+      <p class="mt-5 text-lg text-ink-soft" data-reveal>{t.cases.lead}</p>
+    </div>
+
+    <div class="mt-20 flex flex-col gap-24 md:gap-32">
+      {
+        items.map((c, i) => (
+          <article
+            class={`relative grid items-center gap-10 lg:gap-16 ${
+              i % 2 === 0 ? 'lg:grid-cols-[1.1fr_0.9fr]' : 'lg:grid-cols-[0.9fr_1.1fr]'
+            }`}
+          >
+            <span
+              class={`section-num absolute -top-14 hidden lg:block ${i % 2 === 0 ? '-left-6' : '-right-6'}`}
+              aria-hidden="true"
+            >
+              {String(i + 1).padStart(2, '0')}
+            </span>
+
+            <figure class={`relative min-w-0 ${i % 2 !== 0 ? 'lg:order-2' : ''}`} data-reveal>
+              <span class="quote-mark absolute -left-3 -top-10 md:-left-8" aria-hidden="true">
+                “
+              </span>
+              <blockquote class="relative font-display text-[clamp(1.5rem,1.2rem+1.8vw,2.4rem)] font-medium italic leading-[1.25] tracking-[-0.01em] text-ink">
+                {c.quote}
+              </blockquote>
+              <figcaption class="mt-8">
+                <p class="flex items-center gap-2.5 font-display text-xl font-semibold">
+                  <span class="inline-block h-1.5 w-1.5 rounded-full bg-coral" aria-hidden="true" />
+                  {c.name}
+                </p>
+                <p class="mt-1 text-sm uppercase tracking-[0.16em] text-accent-ink">
+                  {c.sector} · {c.town}
+                </p>
+                <p class="mt-3 text-ink-soft">{c.kicker}</p>
+              </figcaption>
+            </figure>
+
+            <div
+              class={`relative mx-auto w-full min-w-0 max-w-md ${i % 2 !== 0 ? 'lg:order-1' : ''}`}
+              data-reveal
+              data-tilt
+            >
+              <InstaFeedMockup
+                name={c.name}
+                handle={c.feed.handle}
+                stats={c.feed.stats}
+                tiles={c.feed.tiles}
+                avatarBg={avatarColors[i % avatarColors.length]}
+              />
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

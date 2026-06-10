@@ -7,7 +7,7 @@ interface Props {
 }
 const { lang } = Astro.props;
 const t = ui[lang];
-const year = 2026; // PLACEHOLDER · actualitza l'any si cal
+const year = new Date().getFullYear(); // Es fixa en el moment del build (SSG)
 ---
 
 <footer class="border-t border-sand bg-bg py-16">
