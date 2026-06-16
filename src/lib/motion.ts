@@ -20,7 +20,7 @@ function initReveal() {
       animate(
         vis,
         { opacity: [0, 1], transform: ['translateY(28px)', 'translateY(0)'], filter: ['blur(6px)', 'blur(0px)'] },
-        { duration: 0.8, easing: EASE, delay: stagger(0.07) },
+        { duration: 0.8, ease: EASE, delay: stagger(0.07) },
       );
       vis.forEach((el) => {
         el.classList.add('is-visible');
@@ -41,19 +41,19 @@ function initMagnetic() {
       const r = el.getBoundingClientRect();
       const x = (e.clientX - r.left - r.width / 2) * strength;
       const y = (e.clientY - r.top - r.height / 2) * strength;
-      animate(el, { transform: `translate(${x}px, ${y}px)` }, { duration: 0.25, easing: EASE });
+      animate(el, { transform: `translate(${x}px, ${y}px)` }, { duration: 0.25, ease: EASE });
     });
     el.addEventListener('pointerleave', () => {
-      animate(el, { transform: 'translate(0px, 0px)' }, { duration: 0.5, easing: EASE });
+      animate(el, { transform: 'translate(0px, 0px)' }, { duration: 0.5, ease: EASE });
     });
   });
 
   document.querySelectorAll<HTMLElement>('[data-lift]').forEach((el) => {
     el.addEventListener('pointerenter', () =>
-      animate(el, { transform: 'translateY(-6px)' }, { duration: 0.3, easing: EASE }),
+      animate(el, { transform: 'translateY(-6px)' }, { duration: 0.3, ease: EASE }),
     );
     el.addEventListener('pointerleave', () =>
-      animate(el, { transform: 'translateY(0px)' }, { duration: 0.4, easing: EASE }),
+      animate(el, { transform: 'translateY(0px)' }, { duration: 0.4, ease: EASE }),
     );
   });
 }
@@ -71,14 +71,14 @@ function initTilt() {
       animate(
         el,
         { transform: `perspective(900px) rotateY(${px * max}deg) rotateX(${-py * max}deg) scale(1.02)` },
-        { duration: 0.3, easing: EASE },
+        { duration: 0.3, ease: EASE },
       );
     });
     el.addEventListener('pointerleave', () =>
       animate(
         el,
         { transform: 'perspective(900px) rotateY(0deg) rotateX(0deg) scale(1)' },
-        { duration: 0.5, easing: EASE },
+        { duration: 0.5, ease: EASE },
       ),
     );
   });

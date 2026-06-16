@@ -40,14 +40,14 @@
   body {
     background-color: rgb(var(--bg));
     color: rgb(var(--ink));
-    font-family: '"Geist Variable"', system-ui, sans-serif;
+    font-family: 'Geist Variable', system-ui, sans-serif;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
 
   h1, h2, h3, h4 {
-    font-family: '"Fraunces Variable"', Georgia, serif;
+    font-family: 'Fraunces Variable', Georgia, serif;
     font-optical-sizing: auto;
     color: rgb(var(--ink));
     text-wrap: balance;
