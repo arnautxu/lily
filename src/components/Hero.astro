@@ -1,6 +1,6 @@
 ---
 import { ui, type Lang } from '../lib/i18n';
-import { whatsappLink } from '../lib/config';
+import { whatsappLink, contact } from '../lib/config';
 
 interface Props {
   lang: Lang;
@@ -9,15 +9,20 @@ const { lang } = Astro.props;
 const t = ui[lang];
 const wa = whatsappLink(lang);
 
-// 6 cel·les que omplen una graella 3×3 perfecta (la primera és 2×2).
+// Feed bento (3×3, primera cel·la 2×2). Degradats càlids per donar profunditat.
 const tiles = [
-  { c: 'bg-[#cf6b43]', span: 'col-span-2 row-span-2' },
-  { c: 'bg-[#5d7d3a]', span: '' },
-  { c: 'bg-[#e7dfd2]', span: '' },
-  { c: 'bg-[#4d7c2f]', span: '' },
-  { c: 'bg-[#d8c9b2]', span: '' },
-  { c: 'bg-[#8a7a66]', span: '' },
+  { g: 'from-[#d9774d] to-[#b04a23]', span: 'col-span-2 row-span-2', post: true },
+  { g: 'from-[#6b8f42] to-[#46622b]', span: '' },
+  { g: 'from-[#e7dccb] to-[#d6c6ad]', span: '' },
+  { g: 'from-[#5a7d36] to-[#3c5622]', span: '' },
+  { g: 'from-[#ddccb2] to-[#c7b48f]', span: '' },
+  { g: 'from-[#8a7a66] to-[#5e5142]', span: '' },
 ];
+// Anelles de stories (estil Instagram)
+const stories = ['from-[#e5683c] to-[#c2410c]', 'from-[#4d7c2f] to-[#385c22]', 'from-[#caa15a] to-[#a8782f]', 'from-[#8a7a66] to-[#5e5142]'];
+
+const chipText = lang === 'ca' ? 'Publicat avui · 9:00' : 'Publicado hoy · 9:00';
+const liveText = lang === 'ca' ? 'En directe' : 'En directo';
 ---
 
 <section class="aura relative overflow-hidden">
@@ -49,20 +54,84 @@ const tiles = [
           </span>
         </a>
       </div>
-      <p class="mt-7 text-sm text-ink-soft/90" data-reveal>{t.hero.trust}</p>
+      <p class="mt-7 flex items-center gap-2 text-sm text-ink-soft/90" data-reveal>
+        <span class="relative flex h-2 w-2">
+          <span class="pulse-dot absolute inline-flex h-full w-full rounded-full bg-accent/60"></span>
+          <span class="relative inline-flex h-2 w-2 rounded-full bg-accent"></span>
+        </span>
+        {t.hero.trust}
+      </p>
     </div>
 
-    <!-- Bento de feed (double-bezel) — PLACEHOLDER fotos reals -->
-    <div class="relative" data-reveal>
-      <div class="bezel" data-parallax="0.06">
-        <div class="bezel-core grid grid-cols-3 grid-rows-3 gap-2.5 p-2.5">
-          {
-            tiles.map((tile) => (
-              <div class={`${tile.c} ${tile.span} aspect-square overflow-hidden rounded-[12px]`} />
-            ))
-          }
+    <!-- Mockup de feed (double-bezel) — PLACEHOLDER fotos reals -->
+    <div class="relative">
+      <div class="bezel hero-frame" data-parallax="0.05">
+        <div class="bezel-core p-3 md:p-4">
+          <!-- Capçalera de perfil -->
+          <div class="hero-pop mb-3 flex items-center gap-3" style="--i:0">
+            <span class="h-9 w-9 rounded-full bg-gradient-to-tr from-coral to-accent p-[2px]">
+              <span class="block h-full w-full rounded-full bg-surface"></span>
+            </span>
+            <div class="leading-tight">
+              <p class="text-[0.82rem] font-semibold text-ink">@{contact.instagram}</p>
+              <p class="text-[0.68rem] text-ink-soft">{contact.city} · {contact.region}</p>
+            </div>
+            <span class="ml-auto inline-flex items-center gap-1.5 rounded-full bg-accent/10 px-2.5 py-1 text-[0.62rem] font-semibold uppercase tracking-wide text-accent-ink">
+              <span class="h-1.5 w-1.5 rounded-full bg-coral pulse-dot"></span>
+              {liveText}
+            </span>
+          </div>
+
+          <!-- Stories -->
+          <div class="mb-3 flex gap-3">
+            {
+              stories.map((g, i) => (
+                <span class={`hero-pop block h-12 w-12 shrink-0 rounded-full bg-gradient-to-tr ${g} p-[2.5px]`} style={`--i:${i + 1}`}>
+                  <span class="block h-full w-full rounded-full bg-surface p-[2px]">
+                    <span class="block h-full w-full rounded-full bg-sand/70"></span>
+                  </span>
+                </span>
+              ))
+            }
+          </div>
+
+          <!-- Feed bento -->
+          <div class="grid grid-cols-3 grid-rows-3 gap-2">
+            {
+              tiles.map((tile, i) => (
+                <div
+                  class={`hero-pop relative aspect-square overflow-hidden rounded-[12px] bg-gradient-to-br ${tile.g} ${tile.span}`}
+                  style={`--i:${i + 5}`}
+                >
+                  {tile.post && (
+                    <div class="absolute inset-x-0 bottom-0 flex items-center gap-3 bg-gradient-to-t from-black/45 to-transparent p-3 text-white">
+                      <span class="inline-flex items-center gap-1 text-xs font-medium">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7.5-4.6-10-9.2C.5 8.6 2 5 5.4 5c2 0 3.3 1.2 4.1 2.4C10.3 6.2 11.6 5 13.6 5 17 5 18.5 8.6 17 11.8 14.5 16.4 12 21 12 21Z"/></svg>
+                        1.2k
+                      </span>
+                      <span class="inline-flex items-center gap-1 text-xs font-medium">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.5 7.5L3 21l1.9-5A8.5 8.5 0 1 1 21 11.5Z"/></svg>
+                        84
+                      </span>
+                    </div>
+                  )}
+                </div>
+              ))
+            }
+          </div>
         </div>
       </div>
+
+      <!-- Chip flotant: reforça la constància -->
+      <div class="hero-live absolute -left-4 top-1/3 hidden sm:block">
+        <div class="hero-live-inner flex items-center gap-2.5 rounded-full border border-sand bg-surface/95 py-2 pl-2.5 pr-4 shadow-soft backdrop-blur-sm">
+          <span class="flex h-7 w-7 items-center justify-center rounded-full bg-accent/12 text-accent-ink">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+          </span>
+          <span class="text-[0.78rem] font-medium text-ink">{chipText}</span>
+        </div>
+      </div>
+
       <span
         class="absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-sand bg-bg/90 px-3 py-1 text-[0.68rem] font-medium text-ink-soft backdrop-blur-sm"
       >

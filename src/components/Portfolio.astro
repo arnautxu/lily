@@ -1,18 +1,30 @@
 ---
+import { Image } from 'astro:assets';
 import { ui, type Lang } from '../lib/i18n';
-import { portfolio } from '../data/portfolio';
+import luthier from '../assets/guitarras/luthier-retrat.png';
+import roseta from '../assets/guitarras/roseta-detall.png';
+import clamps from '../assets/guitarras/clamps-roseta.png';
+import eines from '../assets/guitarras/eines-formons.png';
+import cos from '../assets/guitarras/cos-encolat.png';
+import flatlay from '../assets/guitarras/flatlay-tapa.png';
 
 interface Props {
   lang: Lang;
 }
 const { lang } = Astro.props;
 const t = ui[lang];
-const pieces = portfolio[lang];
-const tints = ['from-[#cf6b43] to-[#a8451f]', 'from-[#5d7d3a] to-[#385c22]', 'from-[#8a7a66] to-[#4b4036]'];
+const cs = t.portfolio.caseStudy;
+
+const blocks = [
+  { label: cs.challengeLabel, body: cs.challenge },
+  { label: cs.approachLabel, body: cs.approach },
+  { label: cs.resultLabel, body: cs.result },
+];
 ---
 
 <section id="feina" class="aura scroll-mt-24 py-24 md:py-32">
   <div class="container-edge">
+    <!-- Capçalera secció -->
     <div class="grid items-end gap-8 md:grid-cols-[1.3fr_1fr]">
       <div>
         <p class="eyebrow" data-reveal>{t.portfolio.eyebrow}</p>
@@ -21,29 +33,105 @@ const tints = ['from-[#cf6b43] to-[#a8451f]', 'from-[#5d7d3a] to-[#385c22]', 'fr
       <p class="text-lg text-ink-soft md:pb-1" data-reveal>{t.portfolio.lead}</p>
     </div>
 
-    <div class="mt-14 grid gap-6 md:grid-cols-3">
-      {
-        pieces.map((piece, i) => (
-          <figure class="group" data-reveal>
-            <div class="bezel" data-tilt>
-              <div class="bezel-core overflow-hidden">
-                <div class={`relative aspect-[4/5] bg-gradient-to-br ${tints[i]} overflow-hidden`}>
-                  {/* PLACEHOLDER · <img src={piece.image} alt={piece.imageAlt} width="640" height="800"
-                       loading="lazy" class="h-full w-full object-cover" /> */}
-                  <span class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/55 to-transparent p-4 text-xs font-medium text-white/90">
-                    {t.portfolio.placeholderNote}
-                  </span>
+    <!-- ── Case study ──────────────────────────────────────── -->
+    <article class="mt-16">
+      <p class="eyebrow" data-reveal>
+        <span class="inline-block h-1.5 w-1.5 rounded-full bg-coral"></span>
+        {cs.tag}
+      </p>
+
+      <!-- Split: retrat + relat -->
+      <div class="mt-6 grid items-center gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:gap-14">
+        <figure class="bezel" data-tilt data-reveal>
+          <div class="bezel-core relative aspect-[4/5] overflow-hidden">
+            <Image
+              src={luthier}
+              alt={cs.portraitAlt}
+              widths={[480, 900]}
+              sizes="(max-width: 1024px) 90vw, 440px"
+              class="absolute inset-0 h-full w-full object-cover"
+            />
+          </div>
+        </figure>
+
+        <div class="max-w-xl" data-reveal>
+          <h3 class="font-display text-h2 font-semibold leading-[1.05]">{cs.title}</h3>
+          <p class="mt-5 text-lg leading-relaxed text-ink-soft">{cs.intro}</p>
+
+          <dl class="mt-8 grid gap-6 sm:grid-cols-3">
+            {
+              blocks.map((b) => (
+                <div>
+                  <dt class="text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-accent-ink">
+                    {b.label}
+                  </dt>
+                  <dd class="mt-2 text-[0.95rem] leading-relaxed text-ink-soft">{b.body}</dd>
                 </div>
-              </div>
-            </div>
-            <figcaption class="mt-5 px-1">
-              <p class="text-xs font-semibold uppercase tracking-[0.14em] text-accent-ink">{piece.sector}</p>
-              <p class="mt-1.5 font-display text-xl font-semibold">{piece.client}</p>
-              <p class="mt-1 text-sm text-ink-soft">{piece.result}</p>
-            </figcaption>
-          </figure>
-        ))
-      }
-    </div>
+              ))
+            }
+          </dl>
+
+          <div
+            class="mt-8 inline-flex items-center gap-3 rounded-full border border-sand bg-surface py-2 pl-3 pr-4 shadow-soft"
+          >
+            <span class="font-display text-2xl font-semibold leading-none text-accent-ink">{cs.resultStat}</span>
+            <span class="text-sm text-ink-soft">{cs.resultStatLabel}</span>
+            <span class="rounded-full bg-coral/10 px-2 py-0.5 text-[0.58rem] font-semibold uppercase tracking-wide text-coral">
+              Placeholder
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bento de detalls -->
+      <div class="mt-4 grid gap-4 md:grid-cols-3 md:grid-rows-2" data-reveal>
+        <figure class="group relative row-span-2 overflow-hidden rounded-2xl">
+          <Image src={cos} alt={cs.captions.cos} widths={[420, 760]} sizes="(max-width: 768px) 90vw, 340px" class="h-full min-h-[18rem] w-full object-cover transition-transform duration-700 ease-out-soft group-hover:scale-[1.04]" />
+          <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/70 to-transparent p-4 text-[0.78rem] font-medium text-bg">
+            {cs.captions.cos}
+          </figcaption>
+        </figure>
+
+        <figure class="group relative col-span-2 overflow-hidden rounded-2xl">
+          <Image src={clamps} alt={cs.captions.clamps} widths={[640, 1100]} sizes="(max-width: 768px) 90vw, 640px" class="h-full min-h-[12rem] w-full object-cover transition-transform duration-700 ease-out-soft group-hover:scale-[1.04]" />
+          <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/70 to-transparent p-4 text-[0.78rem] font-medium text-bg">
+            {cs.captions.clamps}
+          </figcaption>
+        </figure>
+
+        <figure class="group relative overflow-hidden rounded-2xl">
+          <Image src={roseta} alt={cs.captions.roseta} widths={[360, 640]} sizes="(max-width: 768px) 45vw, 300px" class="h-full min-h-[10rem] w-full object-cover transition-transform duration-700 ease-out-soft group-hover:scale-[1.04]" />
+          <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/70 to-transparent p-4 text-[0.78rem] font-medium text-bg">
+            {cs.captions.roseta}
+          </figcaption>
+        </figure>
+
+        <figure class="group relative overflow-hidden rounded-2xl">
+          <Image src={eines} alt={cs.captions.eines} widths={[360, 640]} sizes="(max-width: 768px) 45vw, 300px" class="h-full min-h-[10rem] w-full object-cover transition-transform duration-700 ease-out-soft group-hover:scale-[1.04]" />
+          <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/70 to-transparent p-4 text-[0.78rem] font-medium text-bg">
+            {cs.captions.eines}
+          </figcaption>
+        </figure>
+      </div>
+
+      <!-- Banner flat-lay + pull quote -->
+      <figure class="mt-4 overflow-hidden rounded-2xl" data-reveal>
+        <div class="relative">
+          <Image
+            src={flatlay}
+            alt={cs.bannerCaption}
+            widths={[768, 1280, 1600]}
+            sizes="(max-width: 1280px) 100vw, 1216px"
+            class="h-full max-h-[28rem] w-full object-cover"
+          />
+          <div class="absolute inset-0 bg-gradient-to-tr from-ink/75 via-ink/30 to-transparent"></div>
+          <figcaption class="absolute inset-0 flex flex-col justify-end gap-3 p-6 md:max-w-xl md:p-10">
+            <p class="font-display text-2xl font-semibold leading-snug text-bg md:text-3xl">{cs.quote}</p>
+            <p class="text-sm text-bg/70">{cs.quoteAuthor}</p>
+          </figcaption>
+        </div>
+        <figcaption class="px-1 pt-3 text-[0.78rem] text-ink-soft/80">{cs.bannerCaption}</figcaption>
+      </figure>
+    </article>
   </div>
 </section>

@@ -120,8 +120,36 @@ export const ui = {
     portfolio: {
       eyebrow: 'Feina',
       title: 'Mira-ho, no me\'n refiïs de la paraula.',
-      lead: 'Tres comerços d\'aquí amb qui treballo. La prova del que faig és el que ja s\'ha publicat.',
+      lead: 'Un cas real, explicat de prop. La prova del que faig és el que ja s\'ha publicat.',
       placeholderNote: 'PLACEHOLDER · substitueix per casos i imatges reals',
+      caseStudy: {
+        tag: 'Cas · Taller de guitarres · Osona',
+        title: 'El que es fa a mà s\'ha d\'ensenyar a mà',
+        intro:
+          'Un luthier que fa guitarres que valen mesos de feina. El seu Instagram, en canvi, no ho explicava. Vam baixar al taller a documentar-ho de veritat.',
+        portraitAlt: 'El luthier sostenint una guitarra clàssica acabada al seu taller',
+        challengeLabel: 'El repte',
+        challenge:
+          'Mans excepcionals, presència invisible. Penjava una foto cada mes, mal il·luminada, i la feina no es veia enlloc.',
+        approachLabel: 'Què vam fer',
+        approach:
+          'Una sessió al taller: la fusta, els formons, els clamps, la roseta. Foto real i peus de foto escrits a mà, amb el seu vocabulari, no el d\'un robot.',
+        resultLabel: 'El resultat',
+        result:
+          'Un feed que fa olor de serradures. Ara la gent entén per què una guitarra seva costa el que costa — i pregunta abans de comprar a fora.',
+        resultStat: '×3',
+        resultStatLabel: 'consultes al taller', // PLACEHOLDER · dada real
+        captions: {
+          roseta: 'La roseta, dibuixada peça a peça',
+          clamps: 'Encolat: dotze clamps i molta paciència',
+          eines: 'Els formons, esmolats cada matí',
+          cos: 'El cos, just abans de tancar la tapa',
+        },
+        quote:
+          '«Per primer cop el meu Instagram s\'assembla al que faig amb les mans.»',
+        quoteAuthor: 'PLACEHOLDER · nom del client',
+        bannerCaption: 'Tapa i fons, llestos per muntar — foto real del procés',
+      },
     },
     about: {
       eyebrow: 'Qui sóc',
@@ -284,8 +312,35 @@ export const ui = {
     portfolio: {
       eyebrow: 'Trabajos',
       title: 'Míralo, no te fíes de mi palabra.',
-      lead: 'Tres comercios de aquí con los que trabajo. La prueba de lo que hago es lo que ya se ha publicado.',
+      lead: 'Un caso real, contado de cerca. La prueba de lo que hago es lo que ya se ha publicado.',
       placeholderNote: 'PLACEHOLDER · sustituye por casos e imágenes reales',
+      caseStudy: {
+        tag: 'Caso · Taller de guitarras · Osona',
+        title: 'Lo que se hace a mano hay que enseñarlo a mano',
+        intro:
+          'Un luthier que hace guitarras que valen meses de trabajo. Su Instagram, en cambio, no lo contaba. Bajamos al taller a documentarlo de verdad.',
+        portraitAlt: 'El luthier sosteniendo una guitarra clásica acabada en su taller',
+        challengeLabel: 'El reto',
+        challenge:
+          'Manos excepcionales, presencia invisible. Subía una foto al mes, mal iluminada, y el trabajo no se veía por ningún lado.',
+        approachLabel: 'Qué hicimos',
+        approach:
+          'Una sesión en el taller: la madera, los formones, los clamps, la roseta. Foto real y pies de foto escritos a mano, con su vocabulario, no el de un robot.',
+        resultLabel: 'El resultado',
+        result:
+          'Un feed que huele a serrín. Ahora la gente entiende por qué una guitarra suya cuesta lo que cuesta — y pregunta antes de comprar fuera.',
+        resultStat: '×3',
+        resultStatLabel: 'consultas al taller', // PLACEHOLDER · dato real
+        captions: {
+          roseta: 'La roseta, dibujada pieza a pieza',
+          clamps: 'Encolado: doce clamps y mucha paciencia',
+          eines: 'Los formones, afilados cada mañana',
+          cos: 'El cuerpo, justo antes de cerrar la tapa',
+        },
+        quote: '«Por primera vez mi Instagram se parece a lo que hago con las manos.»',
+        quoteAuthor: 'PLACEHOLDER · nombre del cliente',
+        bannerCaption: 'Tapa y fondo, listos para montar — foto real del proceso',
+      },
     },
     about: {
       eyebrow: 'Quién soy',

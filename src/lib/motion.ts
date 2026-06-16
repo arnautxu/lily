@@ -1,6 +1,4 @@
 import { animate, stagger } from 'motion';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const reduced =
@@ -34,7 +32,7 @@ function initReveal() {
   els.forEach((el) => io.observe(el));
 }
 
-/* ── Magnetic buttons + soft lift on cards ─────────────────── */
+/* ── Magnetic buttons + soft lift on cards (ease-out, sense rebot) ── */
 function initMagnetic() {
   if (reduced) return;
   document.querySelectorAll<HTMLElement>('[data-magnetic]').forEach((el) => {
@@ -46,7 +44,7 @@ function initMagnetic() {
       animate(el, { transform: `translate(${x}px, ${y}px)` }, { duration: 0.25, easing: EASE });
     });
     el.addEventListener('pointerleave', () => {
-      animate(el, { transform: 'translate(0px, 0px)' }, { duration: 0.6, easing: [0.34, 1.56, 0.64, 1] });
+      animate(el, { transform: 'translate(0px, 0px)' }, { duration: 0.5, easing: EASE });
     });
   });
 
@@ -80,54 +78,48 @@ function initTilt() {
       animate(
         el,
         { transform: 'perspective(900px) rotateY(0deg) rotateX(0deg) scale(1)' },
-        { duration: 0.6, easing: [0.34, 1.56, 0.64, 1] },
+        { duration: 0.5, easing: EASE },
       ),
     );
   });
 }
 
-/* ── GSAP ScrollTrigger: sticky-stack del procés + parallax ── */
-function initScrollTrigger() {
+/* ── Sticky-stack: escala les targetes inferiors quan la següent
+   les cobreix. Scroll passiu + rAF (lleuger, sense llibreria). ── */
+function initStack() {
   if (reduced) return;
-  gsap.registerPlugin(ScrollTrigger);
+  const stack = document.querySelector('[data-stack]');
+  if (!stack) return;
+  const cards = Array.from(stack.querySelectorAll<HTMLElement>('[data-stack-card]'));
+  if (cards.length < 2) return;
+  const STICK = 130; // ~ top-28 (112px) + marge
 
-  // Subtle parallax on elements with [data-parallax]
-  document.querySelectorAll<HTMLElement>('[data-parallax]').forEach((el) => {
-    const speed = parseFloat(el.dataset.parallax || '0.15');
-    gsap.to(el, {
-      yPercent: -speed * 100,
-      ease: 'none',
-      scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true },
-    });
-  });
-
-  // Sticky stacking cards (process steps)
-  const stack = document.querySelector<HTMLElement>('[data-stack]');
-  if (stack) {
-    const cards = Array.from(stack.querySelectorAll<HTMLElement>('[data-stack-card]'));
-    cards.forEach((card, i) => {
-      if (i === cards.length - 1) return;
-      gsap.to(card, {
-        scale: 0.94,
-        opacity: 0.55,
-        filter: 'blur(2px)',
-        ease: 'none',
-        scrollTrigger: {
-          trigger: cards[i + 1],
-          start: 'top 22%',
-          end: 'top 8%',
-          scrub: true,
-        },
-      });
-    });
-  }
+  let ticking = false;
+  const update = () => {
+    for (let i = 0; i < cards.length - 1; i++) {
+      const covered = cards[i + 1].getBoundingClientRect().top <= STICK + 8;
+      cards[i].classList.toggle('stacked', covered);
+    }
+    ticking = false;
+  };
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    },
+    { passive: true },
+  );
+  update();
 }
 
 function init() {
   initReveal();
   initMagnetic();
   initTilt();
-  initScrollTrigger();
+  initStack();
 }
 
 if (document.readyState === 'loading') {

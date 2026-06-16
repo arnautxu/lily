@@ -1,6 +1,6 @@
-/* Fonts self-hosted (Fontsource) — millor LCP que CDN */
-@import '@fontsource-variable/fraunces';
-@import '@fontsource-variable/geist';
+/* Fonts self-hosted (Fontsource) — només l'eix de pes (woff2 més lleuger). */
+@import '@fontsource-variable/fraunces/wght.css';
+@import '@fontsource-variable/geist/wght.css';
 
 @tailwind base;
 @tailwind components;
@@ -162,6 +162,52 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
+/* ── Hero: entrada coreografiada + vida perpètua ───────────── */
+@keyframes heroPop {
+  from { opacity: 0; transform: translateY(16px) scale(0.96); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes heroFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes heroChip {
+  from { opacity: 0; transform: translateY(10px) scale(0.92); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.6); }
+}
+
+/* opacity-only a la carcassa (no toca transform → no xoca amb el parallax GSAP) */
+.js .hero-frame { animation: heroFade 0.6s var(--ease-soft) both; }
+.js .hero-pop {
+  opacity: 0;
+  animation: heroPop 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--i, 0) * 58ms + 0.1s);
+}
+.hero-live { opacity: 0; animation: heroChip 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.95s; }
+.hero-live-inner { animation: heroFloat 6s ease-in-out infinite 1.7s; }
+.pulse-dot { animation: pulseDot 1.9s ease-in-out infinite; transform-origin: center; }
+
+/* ── Sticky-stack del procés (escala via JS lleuger, sense GSAP) ── */
+[data-stack-card] {
+  transition:
+    transform 0.45s var(--ease-soft),
+    opacity 0.45s var(--ease-soft),
+    filter 0.45s var(--ease-soft);
+}
+[data-stack-card].stacked {
+  transform: scale(0.955);
+  opacity: 0.6;
+  filter: blur(1px);
+}
+
 /* ── Scroll-reveal (estat inicial; JS hi afegeix .is-visible) ──
    Amagat NOMÉS si hi ha JS (.js a <html>): sense JS es veu tot. */
 .js [data-reveal] {
@@ -182,7 +228,8 @@
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .js [data-reveal], [data-reveal] { opacity: 1; transform: none; filter: none; }
-  .marquee, .animate-float, .animate-marquee { animation: none !important; }
+  .js .hero-pop, .js .hero-frame, .hero-live { opacity: 1 !important; transform: none !important; animation: none !important; }
+  .hero-live-inner, .pulse-dot, .marquee, .animate-float, .animate-marquee { animation: none !important; }
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
     transition-duration: 0.001ms !important;
