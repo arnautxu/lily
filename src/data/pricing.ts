@@ -3,7 +3,6 @@ import type { Lang } from '../lib/i18n';
 export interface Tier {
   id: string;
   name: string;
-  /** PLACEHOLDER · preu orientatiu */
   price: string;
   tagline: string;
   features: string[];
@@ -19,99 +18,101 @@ export const pricing: Record<Lang, { tiers: Tier[]; extras: Extra[] }> = {
   ca: {
     tiers: [
       {
-        id: 'entrada',
-        name: 'Porta d\'entrada',
-        price: '—€', // PLACEHOLDER
-        tagline: 'Per estar present sense complicar-te.',
+        id: 'iniciacio',
+        name: 'Iniciació',
+        price: '190 €',
+        tagline: 'Per començar a tenir presència de veritat.',
         features: [
-          '8 publicacions de feed al mes',
-          'Stories 2 dies per setmana',
-          'Text revisat per una persona',
-          'Calendari mensual i vist-i-plau',
+          '8 publicacions al mes',
+          '2 històries per setmana',
+          'Textos amb criteri',
+          'Calendari mensual',
         ],
       },
       {
         id: 'creixement',
         name: 'Creixement',
-        price: '—€', // PLACEHOLDER
-        tagline: 'El pack que tria la majoria.',
+        price: '320 €',
+        tagline: 'El pas natural quan vols créixer.',
         featured: true,
         features: [
-          '12 publicacions de feed al mes',
-          '2 reels al mes',
-          'Stories cada dia laborable',
-          'Community management (respondre missatges)',
-          'Calendari i revisió humana de tot',
+          '12 publicacions al mes',
+          'Stories tota la setmana',
+          '1 reel al mes',
+          'Textos i calendari',
+          'Revisió i ajustos cada mes',
         ],
       },
       {
-        id: 'complet',
-        name: 'Complet',
-        price: '—€', // PLACEHOLDER
-        tagline: 'Presència forta i amb dades.',
+        id: 'complert',
+        name: 'Complert',
+        price: '470 €',
+        tagline: 'Presència forta i amb seguiment.',
         features: [
-          '16 publicacions + 4 reels al mes',
-          'Stories diàries i campanyes puntuals',
-          'Community management complet',
-          'Report mensual amb què ha funcionat',
-          'Sessió de fotos trimestral al local',
+          '16 publicacions al mes',
+          'Stories diàries',
+          '2 reels al mes',
+          'Report mensual de resultats',
+          'Sessió de fotos puntual',
         ],
       },
     ],
     extras: [
-      { name: 'Reel addicional', price: '—€' },
-      { name: 'Sessió de fotos al local', price: '—€' },
-      { name: 'Campanya per a data assenyalada', price: '—€' },
-      { name: 'Disseny de cartell / promoció', price: '—€' },
+      { name: 'Reel (guió, contingut i edició)', price: '45 €' },
+      { name: 'Sessió de fotos', price: '120 €' },
+      { name: 'Campanya (Nadal, rebaixes, estiu…)', price: '150 €' },
+      { name: 'Cartell / peça gràfica puntual', price: '35 €' },
+      { name: 'Report mensual', price: '40 €' },
     ],
   },
   es: {
     tiers: [
       {
-        id: 'entrada',
-        name: 'Puerta de entrada',
-        price: '—€', // PLACEHOLDER
-        tagline: 'Para estar presente sin complicarte.',
+        id: 'iniciacio',
+        name: 'Iniciación',
+        price: '190 €',
+        tagline: 'Para empezar a tener presencia de verdad.',
         features: [
-          '8 publicaciones de feed al mes',
-          'Stories 2 días por semana',
-          'Texto revisado por una persona',
-          'Calendario mensual y visto bueno',
+          '8 publicaciones al mes',
+          '2 historias por semana',
+          'Textos con criterio',
+          'Calendario mensual',
         ],
       },
       {
         id: 'creixement',
         name: 'Crecimiento',
-        price: '—€', // PLACEHOLDER
-        tagline: 'El pack que elige la mayoría.',
+        price: '320 €',
+        tagline: 'El paso natural cuando quieres crecer.',
         featured: true,
         features: [
-          '12 publicaciones de feed al mes',
-          '2 reels al mes',
-          'Stories cada día laborable',
-          'Community management (responder mensajes)',
-          'Calendario y revisión humana de todo',
+          '12 publicaciones al mes',
+          'Stories toda la semana',
+          '1 reel al mes',
+          'Textos y calendario',
+          'Revisión y ajustes cada mes',
         ],
       },
       {
-        id: 'complet',
+        id: 'complert',
         name: 'Completo',
-        price: '—€', // PLACEHOLDER
-        tagline: 'Presencia fuerte y con datos.',
+        price: '470 €',
+        tagline: 'Presencia fuerte y con seguimiento.',
         features: [
-          '16 publicaciones + 4 reels al mes',
-          'Stories diarias y campañas puntuales',
-          'Community management completo',
-          'Informe mensual con qué ha funcionado',
-          'Sesión de fotos trimestral en el local',
+          '16 publicaciones al mes',
+          'Stories diarias',
+          '2 reels al mes',
+          'Informe mensual de resultados',
+          'Sesión de fotos puntual',
         ],
       },
     ],
     extras: [
-      { name: 'Reel adicional', price: '—€' },
-      { name: 'Sesión de fotos en el local', price: '—€' },
-      { name: 'Campaña para fecha señalada', price: '—€' },
-      { name: 'Diseño de cartel / promoción', price: '—€' },
+      { name: 'Reel (guion, contenido y edición)', price: '45 €' },
+      { name: 'Sesión de fotos', price: '120 €' },
+      { name: 'Campaña (Navidad, rebajas, verano…)', price: '150 €' },
+      { name: 'Cartel / pieza gráfica puntual', price: '35 €' },
+      { name: 'Informe mensual', price: '40 €' },
     ],
   },
 };

@@ -7,7 +7,8 @@ interface Props {
 const { lang } = Astro.props;
 const t = ui[lang];
 
-const icons = ['grid', 'play', 'pen', 'calendar'];
+// Ordre alineat amb services.items: Feed, Text, Stories, Calendari
+const icons = ['grid', 'pen', 'play', 'calendar'];
 ---
 
 <section id="que-fem" class="scroll-mt-24 py-24 md:py-32">
