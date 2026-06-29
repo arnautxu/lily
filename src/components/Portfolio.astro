@@ -1,11 +1,9 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import { ui, type Lang } from '../lib/i18n';
+import { CylinderCarousel } from './react/CylinderCarousel.tsx';
+import MetricsCarousel from './react/MetricsCarousel.tsx';
 import luthier from '../assets/guitarras/luthier-retrat.png';
-import roseta from '../assets/guitarras/roseta-detall.png';
-import clamps from '../assets/guitarras/clamps-roseta.png';
-import eines from '../assets/guitarras/eines-formons.png';
-import cos from '../assets/guitarras/cos-encolat.png';
 import flatlay from '../assets/guitarras/flatlay-tapa.png';
 
 interface Props {
@@ -15,14 +13,42 @@ const { lang } = Astro.props;
 const t = ui[lang];
 const cs = t.portfolio.caseStudy;
 
+// Totes les fotos reals (feed + taller) per al CylinderCarousel, optimitzades.
+const galleryMods = {
+  ...import.meta.glob('../assets/feed/*.jpeg', { eager: true, import: 'default' }),
+  ...import.meta.glob('../assets/guitarras/*.png', { eager: true, import: 'default' }),
+};
+const galleryEntries = Object.entries(galleryMods).sort(([a], [b]) => a.localeCompare(b));
+const feedImages = await Promise.all(
+  galleryEntries.map(async ([, mod], i) => {
+    const img = await getImage({ src: mod as Parameters<typeof getImage>[0]['src'], width: 560 });
+    return { src: img.src, alt: `${cs.tag} · ${i + 1}` };
+  }),
+);
+
 const blocks = [
   { label: cs.challengeLabel, body: cs.challenge },
   { label: cs.approachLabel, body: cs.approach },
   { label: cs.resultLabel, body: cs.result },
 ];
+
+// Mètriques per al carrusel (dades serialitzables → la illa hi posa icones).
+const statN = parseFloat(cs.resultStat.replace(/[^\d.]/g, '')) || 0;
+const statPrefix = cs.resultStat.replace(/[\d.].*$/, '');
+const metricIcons = ['reach', 'likes', 'users'] as const;
+const metricsData = [
+  { prefix: statPrefix, value: String(statN), suffix: '', label: cs.resultStatLabel, icon: 'chat' },
+  ...cs.metrics.map((m, i) => ({
+    prefix: m.prefix,
+    value: String(m.n),
+    suffix: m.suffix,
+    label: m.label,
+    icon: metricIcons[i] ?? 'reach',
+  })),
+];
 ---
 
-<section id="feina" class="aura scroll-mt-24 py-24 md:py-32">
+<section id="feina" class="aura scroll-mt-24 section">
   <div class="container-edge">
     <!-- Capçalera secció -->
     <div class="grid items-end gap-8 md:grid-cols-[1.3fr_1fr]">
@@ -30,7 +56,7 @@ const blocks = [
         <p class="eyebrow" data-reveal>{t.portfolio.eyebrow}</p>
         <h2 class="mt-5 max-w-2xl text-h2 font-semibold" data-reveal>{t.portfolio.title}</h2>
       </div>
-      <p class="text-lg text-ink-soft md:pb-1" data-reveal>{t.portfolio.lead}</p>
+      <p class="lead" data-reveal>{t.portfolio.lead}</p>
     </div>
 
     <!-- ── Case study ──────────────────────────────────────── -->
@@ -71,47 +97,39 @@ const blocks = [
             }
           </dl>
 
-          <div
-            class="mt-8 inline-flex items-center gap-3 rounded-full border border-sand bg-surface py-2 pl-3 pr-4 shadow-soft"
-          >
-            <span class="font-display text-2xl font-semibold leading-none text-accent-ink">{cs.resultStat}</span>
-            <span class="text-sm text-ink-soft">{cs.resultStatLabel}</span>
-            <span class="rounded-full bg-coral/10 px-2 py-0.5 text-[0.58rem] font-semibold uppercase tracking-wide text-coral">
-              Placeholder
-            </span>
-          </div>
         </div>
       </div>
 
-      <!-- Bento de detalls -->
-      <div class="mt-4 grid gap-4 md:grid-cols-3 md:grid-rows-2" data-reveal>
-        <figure class="group relative row-span-2 overflow-hidden rounded-2xl">
-          <Image src={cos} alt={cs.captions.cos} widths={[420, 760]} sizes="(max-width: 768px) 90vw, 340px" class="h-full min-h-[18rem] w-full object-cover transition-transform duration-700 ease-out-soft group-hover:scale-[1.04]" />
-          <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/70 to-transparent p-4 text-[0.78rem] font-medium text-bg">
-            {cs.captions.cos}
-          </figcaption>
-        </figure>
+      <!-- ── Resultats · card de mètriques (liquid glass) sobre el carrusel circular ── -->
+      <div class="section-body" data-reveal>
+        <div class="mx-auto max-w-xl text-center">
+          <p class="label inline-flex items-center gap-2 text-accent-ink">
+            <span class="inline-block h-1.5 w-1.5 rounded-full bg-accent"></span>
+            {cs.resultsTitle}
+          </p>
+          <h3 class="mt-3 text-h2 font-semibold">
+            {lang === 'ca' ? 'Números que parlen sols.' : 'Números que hablan solos.'}
+          </h3>
+        </div>
 
-        <figure class="group relative col-span-2 overflow-hidden rounded-2xl">
-          <Image src={clamps} alt={cs.captions.clamps} widths={[640, 1100]} sizes="(max-width: 768px) 90vw, 640px" class="h-full min-h-[12rem] w-full object-cover transition-transform duration-700 ease-out-soft group-hover:scale-[1.04]" />
-          <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/70 to-transparent p-4 text-[0.78rem] font-medium text-bg">
-            {cs.captions.clamps}
-          </figcaption>
-        </figure>
+        <!-- Mòbil: carrusel a dalt + dades a sota · Desktop: card centrada a sobre -->
+        <div class="relative mt-10 overflow-hidden md:mt-12">
+          <CylinderCarousel
+            className="min-h-[360px] md:min-h-[500px]"
+            images={feedImages}
+            cardWidth={240}
+            animationDuration={42}
+          />
+          <div
+            class="mt-6 flex justify-center px-4 md:pointer-events-none md:absolute md:inset-0 md:mt-0 md:items-center"
+          >
+            <div class="pointer-events-auto flex w-full max-w-[340px] justify-center">
+              <MetricsCarousel client:load metrics={metricsData} baseWidth={300} />
+            </div>
+          </div>
+        </div>
 
-        <figure class="group relative overflow-hidden rounded-2xl">
-          <Image src={roseta} alt={cs.captions.roseta} widths={[360, 640]} sizes="(max-width: 768px) 45vw, 300px" class="h-full min-h-[10rem] w-full object-cover transition-transform duration-700 ease-out-soft group-hover:scale-[1.04]" />
-          <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/70 to-transparent p-4 text-[0.78rem] font-medium text-bg">
-            {cs.captions.roseta}
-          </figcaption>
-        </figure>
-
-        <figure class="group relative overflow-hidden rounded-2xl">
-          <Image src={eines} alt={cs.captions.eines} widths={[360, 640]} sizes="(max-width: 768px) 45vw, 300px" class="h-full min-h-[10rem] w-full object-cover transition-transform duration-700 ease-out-soft group-hover:scale-[1.04]" />
-          <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/70 to-transparent p-4 text-[0.78rem] font-medium text-bg">
-            {cs.captions.eines}
-          </figcaption>
-        </figure>
+        <p class="mx-auto mt-6 max-w-md text-center text-sm text-ink-soft/70">{cs.resultsNote}</p>
       </div>
 
       <!-- Banner flat-lay + pull quote -->

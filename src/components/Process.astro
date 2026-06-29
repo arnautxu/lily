@@ -8,18 +8,18 @@ const { lang } = Astro.props;
 const t = ui[lang];
 ---
 
-<section id="com-treballem" class="scroll-mt-24 bg-ink py-24 text-bg md:py-32">
+<section id="com-treballem" class="section scroll-mt-24 bg-ink text-bg">
   <div class="container-edge">
     <div class="grid items-end gap-8 md:grid-cols-[1.2fr_1fr]">
       <div>
         <p class="eyebrow border-white/10 bg-white/5 text-coral" data-reveal>{t.process.eyebrow}</p>
         <h2 class="mt-5 max-w-2xl text-h2 font-semibold text-bg" data-reveal>{t.process.title}</h2>
       </div>
-      <p class="text-lg text-bg/70 md:pb-1" data-reveal>{t.process.lead}</p>
+      <p class="lead text-bg/70" data-reveal>{t.process.lead}</p>
     </div>
 
     <!-- Sticky stack (GSAP escala les targetes anteriors en scroll) -->
-    <div class="relative mt-16" data-stack>
+    <div class="section-body relative" data-stack>
       {
         t.process.steps.map((step, i) => (
           <article
@@ -28,15 +28,15 @@ const t = ui[lang];
             style={`box-shadow: 0 -8px 40px -20px rgb(0 0 0 / 0.6);`}
           >
             <div class="grid gap-6 md:grid-cols-[auto_1fr] md:items-start md:gap-10">
-              <span class="font-display text-5xl font-semibold text-accent md:text-7xl">{step.n}</span>
+              <span class="font-display text-display font-semibold text-accent">{step.n}</span>
               <div class="max-w-2xl">
-                <h3 class="font-display text-2xl font-semibold text-bg md:text-3xl">{step.title}</h3>
+                <h3 class="font-display text-h3 font-semibold text-bg">{step.title}</h3>
                 <p class="mt-3 text-bg/70 md:text-lg">{step.body}</p>
                 <div
                   class="mt-6 h-px w-full bg-gradient-to-r from-accent/60 to-transparent"
                   aria-hidden="true"
                 />
-                <p class="mt-3 text-xs uppercase tracking-[0.18em] text-bg/35">
+                <p class="label mt-3 text-bg/35">
                   {String(i + 1).padStart(2, '0')} / {String(t.process.steps.length).padStart(2, '0')}
                 </p>
               </div>

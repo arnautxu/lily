@@ -115,11 +115,77 @@ function initStack() {
   update();
 }
 
+/* ── Comptadors animats (count-up en entrar a viewport) ────── */
+function initCounters() {
+  const els = Array.from(document.querySelectorAll<HTMLElement>('[data-counter]'));
+  if (!els.length) return;
+  const fmt = (el: HTMLElement, v: number) =>
+    (el.dataset.prefix || '') + Math.round(v).toLocaleString('ca-ES') + (el.dataset.suffix || '');
+  els.forEach((el) => {
+    const to = parseFloat(el.dataset.to || '0');
+    if (reduced) {
+      el.textContent = fmt(el, to);
+      return;
+    }
+    el.textContent = fmt(el, 0);
+    const io = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          obs.unobserve(el);
+          const dur = 1100;
+          const t0 = performance.now();
+          const ease = (x: number) => 1 - Math.pow(1 - x, 3);
+          const tick = (now: number) => {
+            const p = Math.min(1, (now - t0) / dur);
+            el.textContent = fmt(el, to * ease(p));
+            if (p < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        });
+      },
+      { threshold: 0.4 },
+    );
+    io.observe(el);
+  });
+}
+
+/* ── Barres comparatives (scaleX en entrar a viewport) ─────── */
+function initBars() {
+  const els = Array.from(document.querySelectorAll<HTMLElement>('[data-bar]'));
+  if (!els.length) return;
+  els.forEach((el) => {
+    el.style.transformOrigin = 'left';
+    if (reduced) {
+      el.style.transform = 'scaleX(1)';
+      return;
+    }
+    el.style.transform = 'scaleX(0)';
+    const io = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          obs.unobserve(el);
+          animate(
+            el,
+            { transform: ['scaleX(0)', 'scaleX(1)'] },
+            { duration: 1, ease: EASE, delay: parseFloat(el.dataset.delay || '0') },
+          );
+        });
+      },
+      { threshold: 0.4 },
+    );
+    io.observe(el);
+  });
+}
+
 function init() {
   initReveal();
   initMagnetic();
   initTilt();
   initStack();
+  initCounters();
+  initBars();
 }
 
 if (document.readyState === 'loading') {

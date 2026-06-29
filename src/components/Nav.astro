@@ -16,14 +16,14 @@ const homeHref = lang === 'ca' ? '/' : '/es';
 
 <header class="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4 md:pt-5">
   <nav
-    class="pointer-events-auto flex w-full max-w-content items-center justify-between gap-4 rounded-full border border-ink/[0.08] bg-bg/70 py-2 pl-5 pr-2 shadow-[0_10px_30px_-18px_rgb(24_21_18_/_0.4)] backdrop-blur-xl"
+    class="pointer-events-auto flex w-full max-w-content items-center justify-between gap-3 rounded-full border border-ink/[0.08] bg-bg/70 py-2 pl-4 pr-2 shadow-[0_10px_30px_-18px_rgb(24_21_18_/_0.4)] backdrop-blur-xl md:gap-4 md:pl-5"
     aria-label={t.nav.cta}
   >
     <a
       href={homeHref}
       class="whitespace-nowrap font-display text-base font-semibold tracking-tight text-ink transition-colors hover:text-accent-ink md:text-[1.05rem]"
     >
-      {site.brand}<span class="text-accent">.</span>
+      {site.brand}<span class="text-accent-ink">.</span>
     </a>
 
     <ul class="hidden items-center gap-7 md:flex">
@@ -46,12 +46,12 @@ const homeHref = lang === 'ca' ? '/' : '/es';
         href={otherHref}
         hreflang={otherLang}
         aria-label={t.nav.langLabel}
-        class="btn-plain border border-ink/[0.12] text-ink-soft hover:border-accent/50 hover:text-accent-ink"
+        class="btn-plain border border-ink/[0.12] text-ink-soft hover:border-accent/50 hover:text-accent-ink max-sm:!px-3.5"
       >
         {otherLabel}
       </a>
-      <a href={wa} rel="noopener" class="btn-primary !py-2">
-        {t.nav.cta}
+      <a href={wa} rel="noopener" aria-label={t.nav.cta} class="btn-primary !py-2 max-sm:!pl-2.5">
+        <span class="hidden sm:inline">{t.nav.cta}</span>
         <span class="btn-ico" aria-hidden="true">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M7 17 17 7M9 7h8v8" />

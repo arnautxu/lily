@@ -1,5 +1,6 @@
 ---
 import { ui, type Lang } from '../lib/i18n';
+import EtSonaRotator from './react/EtSonaRotator.tsx';
 
 interface Props {
   lang: Lang;
@@ -8,36 +9,19 @@ const { lang } = Astro.props;
 const t = ui[lang];
 ---
 
-<section class="py-24 md:py-32">
+<section class="section">
   <div class="container-edge">
     <div class="grid items-end gap-8 md:grid-cols-[1.3fr_1fr]">
       <div>
         <p class="eyebrow" data-reveal>{t.problem.eyebrow}</p>
         <h2 class="mt-5 max-w-2xl text-h2 font-semibold" data-reveal>{t.problem.title}</h2>
       </div>
-      <p class="text-lg text-ink-soft md:pb-1" data-reveal>{t.problem.lead}</p>
+      <p class="lead" data-reveal>{t.problem.lead}</p>
     </div>
 
-    <div class="mt-14 grid gap-4 md:grid-cols-6 md:grid-rows-2">
-      {
-        t.problem.items.map((item, i) => (
-          <article
-            class={`card flex flex-col justify-between gap-10 ${
-              i === 0 ? 'md:col-span-4 md:row-span-2 md:gap-16' : 'md:col-span-2'
-            }`}
-            data-reveal
-            data-lift
-          >
-            <span class={`font-display font-semibold text-accent/25 ${i === 0 ? 'text-7xl' : 'text-4xl'}`}>
-              {String(i + 1).padStart(2, '0')}
-            </span>
-            <div>
-              <h3 class={`font-semibold ${i === 0 ? 'text-2xl md:text-3xl' : 'text-h3'}`}>{item.title}</h3>
-              <p class="mt-2 text-ink-soft">{item.body}</p>
-            </div>
-          </article>
-        ))
-      }
+    <!-- Un sol text que va canviant (flip-text de Vengeance UI · illa React) -->
+    <div class="mt-16 md:mt-20" data-reveal>
+      <EtSonaRotator client:visible items={t.problem.items} label={t.problem.eyebrow} />
     </div>
   </div>
 </section>

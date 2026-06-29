@@ -1,6 +1,13 @@
 ---
 import { ui, type Lang } from '../lib/i18n';
-import { whatsappLink, contact } from '../lib/config';
+import { whatsappLink } from '../lib/config';
+import ImageTrail from './ImageTrail.astro';
+import luthier from '../assets/guitarras/luthier-retrat.png';
+import flatlay from '../assets/guitarras/flatlay-tapa.png';
+import roseta from '../assets/guitarras/roseta-detall.png';
+import clamps from '../assets/guitarras/clamps-roseta.png';
+import eines from '../assets/guitarras/eines-formons.png';
+import cos from '../assets/guitarras/cos-encolat.png';
 
 interface Props {
   lang: Lang;
@@ -9,134 +16,89 @@ const { lang } = Astro.props;
 const t = ui[lang];
 const wa = whatsappLink(lang);
 
-// Feed bento (3×3, primera cel·la 2×2). Degradats càlids per donar profunditat.
-const tiles = [
-  { g: 'from-[#d9774d] to-[#b04a23]', span: 'col-span-2 row-span-2', post: true },
-  { g: 'from-[#6b8f42] to-[#46622b]', span: '' },
-  { g: 'from-[#e7dccb] to-[#d6c6ad]', span: '' },
-  { g: 'from-[#5a7d36] to-[#3c5622]', span: '' },
-  { g: 'from-[#ddccb2] to-[#c7b48f]', span: '' },
-  { g: 'from-[#8a7a66] to-[#5e5142]', span: '' },
+// Fotos reals del case study (taller de guitarres) per al rastre.
+const trailImages = [
+  { src: cos.src, alt: '' },
+  { src: roseta.src, alt: '' },
+  { src: clamps.src, alt: '' },
+  { src: eines.src, alt: '' },
+  { src: flatlay.src, alt: '' },
+  { src: luthier.src, alt: '' },
 ];
-// Anelles de stories (estil Instagram)
-const stories = ['from-[#e5683c] to-[#c2410c]', 'from-[#4d7c2f] to-[#385c22]', 'from-[#caa15a] to-[#a8782f]', 'from-[#8a7a66] to-[#5e5142]'];
+const restingImages = trailImages.slice(0, 4);
 
-const chipText = lang === 'ca' ? 'Publicat avui · 9:00' : 'Publicado hoy · 9:00';
-const liveText = lang === 'ca' ? 'En directe' : 'En directo';
+const hintText = lang === 'ca' ? 'Mou el cursor pel hero' : 'Mueve el cursor por el hero';
 ---
 
 <section class="aura relative overflow-hidden">
-  <div
-    class="container-edge grid items-center gap-12 pb-16 pt-32 md:pb-24 md:pt-40 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14"
+  <ImageTrail
+    images={trailImages}
+    threshold={46}
+    minDelay={26}
+    duration={1100}
+    maxItems={14}
+    rotationRange={34}
+    class="block"
   >
-    <div class="max-w-2xl">
-      <p class="eyebrow" data-reveal>
-        <span class="inline-block h-1.5 w-1.5 animate-float rounded-full bg-accent"></span>
-        {t.hero.eyebrow}
-      </p>
-      <h1 class="mt-6 font-display text-mega font-semibold" data-reveal>
-        {t.hero.title}
-      </h1>
-      <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink-soft" data-reveal>
-        {t.hero.lead}
-      </p>
-      <div class="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center" data-reveal>
-        <a href={wa} rel="noopener" class="btn-primary" data-magnetic>
-          {t.hero.ctaPrimary}
-          <span class="btn-ico" aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.49.07-1.12.1-1.8-.11-.42-.13-.95-.31-1.64-.61-2.88-1.24-4.76-4.14-4.9-4.33-.14-.19-1.17-1.56-1.17-2.97s.74-2.11 1-2.4c.26-.29.57-.36.76-.36l.55.01c.18.01.41-.07.64.49.24.58.82 2 .89 2.14.07.14.12.31.02.5-.43.84-.88 1.05-.41.93-.12.58.17.29.74 1.22 1.59 1.98 1.09.97 2.01 1.27 2.3 1.42.29.14.46.12.63-.07.17-.19.72-.84.91-1.13.19-.29.39-.24.64-.14.26.09 1.66.78 1.95.93.29.14.48.21.55.34.07.12.07.72-.17 1.4Z"/></svg>
+    <div
+      class="container-edge flex min-h-[80vh] flex-col justify-center pb-20 pt-32 md:min-h-[88vh] md:pt-40"
+    >
+      <div class="relative z-40 max-w-3xl">
+        <p class="eyebrow" data-reveal>
+          <span class="inline-block h-1.5 w-1.5 animate-float rounded-full bg-accent"></span>
+          {t.hero.eyebrow}
+        </p>
+        <h1 class="mt-6 font-display text-mega font-semibold" data-reveal>
+          {t.hero.title}
+        </h1>
+        <p class="lead mt-6" data-reveal>
+          {t.hero.lead}
+        </p>
+        <div class="mt-9 flex flex-col items-start gap-3 sm:flex-row sm:items-center" data-reveal>
+          <a href={wa} rel="noopener" class="btn-primary" data-magnetic>
+            {t.hero.ctaPrimary}
+            <span class="btn-ico" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm5.8 14.16c-.24.68-1.4 1.3-1.93 1.38-.49.07-1.12.1-1.8-.11-.42-.13-.95-.31-1.64-.61-2.88-1.24-4.76-4.14-4.9-4.33-.14-.19-1.17-1.56-1.17-2.97s.74-2.11 1-2.4c.26-.29.57-.36.76-.36l.55.01c.18.01.41-.07.64.49.24.58.82 2 .89 2.14.07.14.12.31.02.5-.43.84-.88 1.05-.41.93-.12.58.17.29.74 1.22 1.59 1.98 1.09.97 2.01 1.27 2.3 1.42.29.14.46.12.63-.07.17-.19.72-.84.91-1.13.19-.29.39-.24.64-.14.26.09 1.66.78 1.95.93.29.14.48.21.55.34.07.12.07.72-.17 1.4Z"/></svg>
+            </span>
+          </a>
+          <a href="#feina" class="btn-secondary" data-magnetic>
+            {t.hero.ctaSecondary}
+            <span class="btn-ico" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+          </a>
+        </div>
+        <p class="mt-7 flex items-center gap-2 text-sm text-ink-soft/90" data-reveal>
+          <span class="relative flex h-2 w-2">
+            <span class="pulse-dot absolute inline-flex h-full w-full rounded-full bg-accent/60"></span>
+            <span class="relative inline-flex h-2 w-2 rounded-full bg-accent"></span>
           </span>
-        </a>
-        <a href="#feina" class="btn-secondary" data-magnetic>
-          {t.hero.ctaSecondary}
-          <span class="btn-ico" aria-hidden="true">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </span>
-        </a>
+          {t.hero.trust}
+        </p>
       </div>
-      <p class="mt-7 flex items-center gap-2 text-sm text-ink-soft/90" data-reveal>
-        <span class="relative flex h-2 w-2">
-          <span class="pulse-dot absolute inline-flex h-full w-full rounded-full bg-accent/60"></span>
-          <span class="relative inline-flex h-2 w-2 rounded-full bg-accent"></span>
-        </span>
-        {t.hero.trust}
-      </p>
+
+      <!-- Collage del case study · només mòbil (sense hover) -->
+      <div class="relative z-40 mt-12 grid grid-cols-2 gap-2 lg:hidden">
+        {
+          restingImages.map((im) => (
+            <img
+              src={im.src}
+              alt={im.alt}
+              loading="lazy"
+              draggable={false}
+              class="aspect-square w-full rounded-xl object-cover"
+            />
+          ))
+        }
+      </div>
     </div>
 
-    <!-- Mockup de feed (double-bezel) — PLACEHOLDER fotos reals -->
-    <div class="relative">
-      <div class="bezel hero-frame">
-        <div class="bezel-core p-3 md:p-4">
-          <!-- Capçalera de perfil -->
-          <div class="hero-pop mb-3 flex items-center gap-3" style="--i:0">
-            <span class="h-9 w-9 rounded-full bg-gradient-to-tr from-coral to-accent p-[2px]">
-              <span class="block h-full w-full rounded-full bg-surface"></span>
-            </span>
-            <div class="leading-tight">
-              <p class="text-[0.82rem] font-semibold text-ink">@{contact.instagram}</p>
-              <p class="text-[0.68rem] text-ink-soft">{contact.city} · {contact.region}</p>
-            </div>
-            <span class="ml-auto inline-flex items-center gap-1.5 rounded-full bg-accent/10 px-2.5 py-1 text-[0.62rem] font-semibold uppercase tracking-wide text-accent-ink">
-              <span class="h-1.5 w-1.5 rounded-full bg-coral pulse-dot"></span>
-              {liveText}
-            </span>
-          </div>
-
-          <!-- Stories -->
-          <div class="mb-3 flex gap-3">
-            {
-              stories.map((g, i) => (
-                <span class={`hero-pop block h-12 w-12 shrink-0 rounded-full bg-gradient-to-tr ${g} p-[2.5px]`} style={`--i:${i + 1}`}>
-                  <span class="block h-full w-full rounded-full bg-surface p-[2px]">
-                    <span class="block h-full w-full rounded-full bg-sand/70"></span>
-                  </span>
-                </span>
-              ))
-            }
-          </div>
-
-          <!-- Feed bento -->
-          <div class="grid grid-cols-3 grid-rows-3 gap-2">
-            {
-              tiles.map((tile, i) => (
-                <div
-                  class={`hero-pop relative aspect-square overflow-hidden rounded-[12px] bg-gradient-to-br ${tile.g} ${tile.span}`}
-                  style={`--i:${i + 5}`}
-                >
-                  {tile.post && (
-                    <div class="absolute inset-x-0 bottom-0 flex items-center gap-3 bg-gradient-to-t from-black/45 to-transparent p-3 text-white">
-                      <span class="inline-flex items-center gap-1 text-xs font-medium">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7.5-4.6-10-9.2C.5 8.6 2 5 5.4 5c2 0 3.3 1.2 4.1 2.4C10.3 6.2 11.6 5 13.6 5 17 5 18.5 8.6 17 11.8 14.5 16.4 12 21 12 21Z"/></svg>
-                        1.2k
-                      </span>
-                      <span class="inline-flex items-center gap-1 text-xs font-medium">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.5 7.5L3 21l1.9-5A8.5 8.5 0 1 1 21 11.5Z"/></svg>
-                        84
-                      </span>
-                    </div>
-                  )}
-                </div>
-              ))
-            }
-          </div>
-        </div>
-      </div>
-
-      <!-- Chip flotant: reforça la constància -->
-      <div class="hero-live absolute -left-4 top-1/3 hidden sm:block">
-        <div class="hero-live-inner flex items-center gap-2.5 rounded-full border border-sand bg-surface/95 py-2 pl-2.5 pr-4 shadow-soft backdrop-blur-sm">
-          <span class="flex h-7 w-7 items-center justify-center rounded-full bg-accent/12 text-accent-ink">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
-          </span>
-          <span class="text-[0.78rem] font-medium text-ink">{chipText}</span>
-        </div>
-      </div>
-
-      <span
-        class="absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-sand bg-bg/90 px-3 py-1 text-[0.68rem] font-medium text-ink-soft backdrop-blur-sm"
-      >
-        {lang === 'ca' ? 'PLACEHOLDER · feed real del teu negoci' : 'PLACEHOLDER · feed real de tu negocio'}
-      </span>
-    </div>
-  </div>
+    <!-- Hint d'interacció a tot el hero (només desktop) -->
+    <span
+      class="pointer-events-none absolute bottom-5 right-5 z-40 hidden items-center gap-1.5 rounded-full bg-ink/80 px-3 py-1.5 text-[0.7rem] font-medium text-bg backdrop-blur-sm lg:inline-flex"
+    >
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 3 7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/></svg>
+      {hintText}
+    </span>
+  </ImageTrail>
 </section>

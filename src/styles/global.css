@@ -1,5 +1,5 @@
-/* Fonts self-hosted (Fontsource) — només l'eix de pes (woff2 més lleuger). */
-@import '@fontsource-variable/fraunces/wght.css';
+/* Fonts self-hosted (Fontsource) — només l'eix de pes (woff2 més lleuger).
+   Geist per a tot: titulars i cos (look modern, menys editorial). */
 @import '@fontsource-variable/geist/wght.css';
 
 @tailwind base;
@@ -7,23 +7,23 @@
 @tailwind utilities;
 
 :root {
-  /* Verd editorial · colors com a triplets RGB perquè les opacitats de
-     Tailwind (ex. bg-accent/10) funcionin a tot arreu. */
-  --bg: 246 241 233; /* #F6F1E9 ivori càlid */
-  --surface: 252 250 245; /* #FCFAF5 */
-  --sand: 231 223 210; /* #E7DFD2 hairline / neutre */
-  --ink: 24 21 18; /* #181512 tinta */
-  --ink-soft: 107 98 88; /* #6B6258 */
-  --accent: 77 124 47; /* #4D7C2F verd herba */
-  --accent-ink: 56 92 34; /* #385C22 verd fosc (text/hover) */
-  --coral: 229 104 60; /* #E5683C pop */
+  /* Lima · neutres nets + acent verd àcid. Colors com a triplets RGB
+     perquè les opacitats de Tailwind (ex. bg-accent/10) funcionin arreu. */
+  --bg: 245 245 243; /* #F5F5F3 blanc trencat fred */
+  --surface: 255 255 255; /* #FFFFFF */
+  --sand: 230 230 225; /* #E6E6E1 hairline / neutre */
+  --ink: 18 19 17; /* #121311 gairebé negre */
+  --ink-soft: 91 92 87; /* #5B5C57 */
+  --accent: 180 228 24; /* #B4E418 lima elèctric (sempre amb text fosc) */
+  --accent-ink: 76 102 8; /* #4C6608 oliva fosc (text/enllaços sobre clar) */
+  --coral: 229 104 60; /* #E5683C pop càlid (secundari, ús puntual) */
   --success: 47 107 51; /* #2F6B33 */
 
-  --r-sm: 10px;
-  --r-md: 16px;
-  --r-lg: 24px;
-  --r-xl: 32px;
-  --r-2xl: 40px;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 18px;
+  --r-xl: 24px;
+  --r-2xl: 30px;
 
   --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -47,8 +47,9 @@
   }
 
   h1, h2, h3, h4 {
-    font-family: 'Fraunces Variable', Georgia, serif;
-    font-optical-sizing: auto;
+    font-family: 'Geist Variable', system-ui, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.025em;
     color: rgb(var(--ink));
     text-wrap: balance;
   }
@@ -63,7 +64,7 @@
 
   ::selection {
     background: rgb(var(--accent));
-    color: #fff;
+    color: rgb(var(--ink));
   }
 }
 
@@ -72,10 +73,33 @@
     @apply mx-auto w-full max-w-content px-5 md:px-8;
   }
 
+  /* ── Ritme vertical (padding de secció fluid + variants) ──── */
+  .section {
+    padding-block: clamp(4.5rem, 3.5rem + 5vw, 8.5rem);
+  }
+  .section--tight {
+    padding-block: clamp(3rem, 2.5rem + 2vw, 5rem);
+  }
+  .section--lg {
+    padding-block: clamp(6rem, 4.5rem + 6vw, 10rem);
+  }
+  /* Capçalera de secció → cos: un sol valor coherent */
+  .section-body {
+    margin-top: clamp(2.5rem, 2rem + 2vw, 4rem);
+  }
+
+  /* ── Tipografia semàntica ─────────────────────────────────── */
+  .lead {
+    @apply text-lead text-ink-soft;
+    max-width: 60ch;
+  }
+  .label {
+    @apply text-label font-semibold uppercase;
+  }
+
   .eyebrow {
     @apply inline-flex items-center gap-2 rounded-full border border-ink/10 bg-surface/60
-           px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-accent-ink
-           backdrop-blur-sm;
+           px-3 py-1 text-label font-semibold uppercase text-accent-ink backdrop-blur-sm;
   }
 
   /* ── Botons ──────────────────────────────────────────────── */
@@ -92,11 +116,12 @@
     transform: translate(2px, -1px) scale(1.05);
   }
   .btn-primary {
-    @apply btn bg-accent text-white;
-    box-shadow: 0 14px 30px -14px rgb(var(--accent) / 0.7);
+    @apply btn bg-accent text-ink;
+    box-shadow: 0 12px 28px -16px rgb(var(--ink) / 0.28);
   }
-  .btn-primary .btn-ico { @apply bg-white/20; }
-  .btn-primary:hover { background-color: rgb(var(--accent-ink)); }
+  .btn-primary .btn-ico { @apply bg-ink/10; }
+  .btn-primary:hover { background-color: rgb(var(--ink)); color: rgb(var(--accent)); }
+  .btn-primary:hover .btn-ico { background-color: rgb(var(--accent) / 0.25); }
 
   .btn-secondary {
     @apply btn border border-ink/[0.12] bg-surface/70 text-ink backdrop-blur-sm;
@@ -150,6 +175,112 @@
     radial-gradient(40rem 30rem at 78% -8%, rgb(var(--accent) / 0.12), transparent 60%),
     radial-gradient(34rem 26rem at 6% 12%, rgb(var(--coral) / 0.10), transparent 60%);
   pointer-events: none;
+}
+
+/* ── Flip text (Vengeance UI · CSS exacte del component, que la registry no inclou) ── */
+.flip-char {
+  color: inherit;
+  -webkit-text-fill-color: transparent;
+  vertical-align: middle;
+  height: 1.2em;
+  line-height: 1.2em;
+  animation: flip var(--flip-duration, 2.2s) var(--flip-delay, 0s) var(--flip-iteration, infinite) ease;
+}
+.flip-char::before,
+.flip-char::after {
+  content: attr(data-char);
+  color: inherit;
+  -webkit-text-fill-color: currentColor;
+  backface-visibility: hidden;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  animation: fade var(--flip-duration, 2.2s) var(--flip-delay, 0s) var(--flip-iteration, infinite) ease;
+}
+.flip-char::after {
+  transform: translate(-50%, -50%) translateZ(0.6em);
+}
+.flip-char::before {
+  opacity: 0;
+  --opacity: 1;
+  transform: translate(-50%, -50%) rotateX(-90deg) translateZ(0.6em);
+}
+@keyframes flip {
+  0% { transform: rotateX(0); }
+  25%, 100% { transform: rotateX(90deg); }
+}
+@keyframes fade {
+  0% { opacity: 1; }
+  30%, 100% { opacity: var(--opacity, 0); }
+}
+.et-fade { animation: etFade 0.6s var(--ease-soft) both; }
+@keyframes etFade {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .flip-char { animation: none; }
+  .et-fade { animation: none; }
+}
+
+/* ── Barra de progrés del stepper "Et sona?" ───────────────── */
+.etsona-bar {
+  transform: scaleX(0);
+  animation-name: etsonaFill;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  will-change: transform;
+}
+@keyframes etsonaFill {
+  to { transform: scaleX(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .etsona-bar { animation: none; transform: scaleX(1); }
+}
+
+/* ── Accordion (FAQ · alçada animada estil animate-ui) ─────── */
+.faq-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s var(--ease-soft);
+}
+.faq-panel > div { overflow: hidden; }
+.faq-panel[data-open] { grid-template-rows: 1fr; }
+.faq-trigger .faq-chevron { transition: transform 0.3s var(--ease-soft); }
+.faq-trigger[aria-expanded='true'] .faq-chevron { transform: rotate(180deg); }
+@media (prefers-reduced-motion: reduce) {
+  .faq-panel { transition: none; }
+}
+
+/* ── Image trail (rastre d'imatges al hover) ───────────────── */
+.image-trail-item {
+  position: absolute;
+  width: 8rem;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 14px;
+  box-shadow: 0 22px 48px -16px rgb(var(--ink) / 0.5);
+  will-change: transform, opacity;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ── Strands (orb Siri · WebGL) ────────────────────────────── */
+.strands-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.strands-container canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
 }
 
 /* ── Film grain (fix, no afecta scroll) ────────────────────── */

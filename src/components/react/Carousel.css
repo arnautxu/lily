@@ -1,0 +1,140 @@
+/* Carousel · adaptat a la marca (Lima): cards fosques, número gran, accent lima. */
+.carousel-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  padding: 16px;
+  --outer-r: 24px;
+  --p-distance: 12px;
+}
+
+.carousel-track {
+  display: flex;
+}
+
+.carousel-item {
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  min-height: 16rem;
+  border-radius: 24px;
+  overflow: hidden;
+  cursor: grab;
+  /* Liquid glass: tint fosc translúcid + blur + vora i highlight interns */
+  background: rgb(var(--ink) / 0.5);
+  backdrop-filter: blur(22px) saturate(150%);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+  border: 1px solid rgb(255 255 255 / 0.14);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.18),
+    inset 0 0 0 1px rgb(255 255 255 / 0.04),
+    0 40px 80px -40px rgb(0 0 0 / 0.7);
+}
+
+.carousel-item:active {
+  cursor: grabbing;
+}
+
+.carousel-item.round {
+  background-color: rgb(var(--ink));
+  position: relative;
+  bottom: 0.1em;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.carousel-item-header {
+  margin-bottom: 16px;
+  padding: 24px 24px 0;
+}
+
+.carousel-item-header.round {
+  padding: 0;
+  margin: 0;
+}
+
+.carousel-icon-container {
+  display: flex;
+  height: 44px;
+  width: 44px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: rgb(var(--accent));
+}
+
+.carousel-icon {
+  height: 22px;
+  width: 22px;
+  color: rgb(var(--ink));
+}
+
+.carousel-item-content {
+  padding: 0 24px 26px;
+}
+
+.carousel-item-title {
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: clamp(2.6rem, 2rem + 2vw, 3.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  color: rgb(var(--bg));
+  font-variant-numeric: tabular-nums;
+}
+
+.carousel-item-description {
+  font-size: 15px;
+  line-height: 1.4;
+  color: rgb(var(--bg) / 0.6);
+}
+
+.carousel-indicators-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.carousel-indicators-container.round {
+  position: absolute;
+  z-index: 2;
+  bottom: 3em;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.carousel-indicators {
+  margin-top: 18px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.carousel-indicator {
+  height: 8px;
+  width: 8px;
+  border: none;
+  padding: 0;
+  appearance: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 150ms;
+  background-color: rgb(var(--ink) / 0.18);
+}
+
+.carousel-indicator:focus-visible {
+  outline: 2px solid rgb(var(--accent-ink));
+  outline-offset: 2px;
+}
+
+.carousel-indicator.active {
+  background-color: rgb(var(--accent));
+}
+
+.carousel-indicator.inactive {
+  background-color: rgb(var(--ink) / 0.18);
+}

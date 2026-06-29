@@ -11,17 +11,17 @@ const t = ui[lang];
 const icons = ['grid', 'pen', 'play', 'calendar'];
 ---
 
-<section id="que-fem" class="scroll-mt-24 py-24 md:py-32">
+<section id="que-fem" class="scroll-mt-24 section">
   <div class="container-edge">
     <div class="grid items-end gap-8 md:grid-cols-[1.3fr_1fr]">
       <div>
         <p class="eyebrow" data-reveal>{t.services.eyebrow}</p>
         <h2 class="mt-5 max-w-2xl text-h2 font-semibold" data-reveal>{t.services.title}</h2>
       </div>
-      <p class="text-lg text-ink-soft md:pb-1" data-reveal>{t.services.lead}</p>
+      <p class="lead" data-reveal>{t.services.lead}</p>
     </div>
 
-    <div class="mt-14 grid gap-4 sm:grid-cols-2">
+    <div class="section-body grid gap-4 sm:grid-cols-2">
       {
         t.services.items.map((item, i) => (
           <article class="card flex gap-5 md:p-8" data-reveal data-lift>

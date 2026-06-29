@@ -15,7 +15,7 @@ export default {
         success: 'rgb(var(--success) / <alpha-value>)',
       },
       fontFamily: {
-        display: ['"Fraunces Variable"', 'Georgia', 'serif'],
+        display: ['"Geist Variable"', 'system-ui', 'sans-serif'],
         sans: ['"Geist Variable"', 'system-ui', 'sans-serif'],
       },
       maxWidth: {
@@ -35,10 +35,14 @@ export default {
         'inset-hi': 'inset 0 1px 0 rgb(255 255 255 / 0.6)',
       },
       fontSize: {
-        mega: ['clamp(2.8rem, 1.4rem + 6vw, 6rem)', { lineHeight: '0.98', letterSpacing: '-0.03em' }],
-        display: ['clamp(2.4rem, 1.6rem + 3.6vw, 4rem)', { lineHeight: '1.02', letterSpacing: '-0.025em' }],
-        h2: ['clamp(1.9rem, 1.3rem + 2.2vw, 3rem)', { lineHeight: '1.08', letterSpacing: '-0.02em' }],
-        h3: ['clamp(1.25rem, 1.1rem + 0.6vw, 1.6rem)', { lineHeight: '1.18', letterSpacing: '-0.01em' }],
+        // Escala modular única (ratio ~1.25, fluida amb clamp).
+        mega: ['clamp(2.6rem, 1.6rem + 4.5vw, 5rem)', { lineHeight: '0.98', letterSpacing: '-0.03em' }],
+        display: ['clamp(2rem, 1.4rem + 3vw, 3.25rem)', { lineHeight: '1', letterSpacing: '-0.03em' }],
+        h2: ['clamp(1.75rem, 1.2rem + 2vw, 2.75rem)', { lineHeight: '1.06', letterSpacing: '-0.02em' }],
+        h3: ['clamp(1.35rem, 1.05rem + 1.1vw, 1.85rem)', { lineHeight: '1.12', letterSpacing: '-0.015em' }],
+        h4: ['1.125rem', { lineHeight: '1.25', letterSpacing: '-0.01em' }],
+        lead: ['clamp(1.05rem, 1rem + 0.35vw, 1.2rem)', { lineHeight: '1.6' }],
+        label: ['0.72rem', { lineHeight: '1', letterSpacing: '0.16em' }],
       },
       transitionTimingFunction: {
         'out-soft': 'cubic-bezier(0.22, 1, 0.36, 1)',

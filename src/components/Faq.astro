@@ -10,34 +10,87 @@ const t = ui[lang];
 const items = faq[lang];
 ---
 
-<section class="border-t border-sand py-24 md:py-32">
+<section class="border-t border-sand section">
   <div class="container-edge grid gap-10 lg:grid-cols-[0.6fr_1fr] lg:gap-16">
     <div class="lg:sticky lg:top-24 lg:self-start">
       <p class="eyebrow" data-reveal>{t.faq.eyebrow}</p>
       <h2 class="mt-4 text-h2 font-semibold" data-reveal>{t.faq.title}</h2>
     </div>
 
-    <div class="divide-y divide-sand/70" data-reveal>
+    <div class="divide-y divide-sand/70" data-accordion data-reveal>
       {
-        items.map((item) => (
-          <details class="group py-5">
-            <summary
-              class="flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-medium text-ink transition-colors hover:text-accent-ink"
-            >
-              {item.q}
-              <span
-                class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-sand text-accent-ink transition-transform duration-300 group-open:rotate-45"
-                aria-hidden="true"
+        items.map((item, i) => (
+          <div class="py-2">
+            <h3>
+              <button
+                type="button"
+                class="faq-trigger flex w-full cursor-pointer items-center justify-between gap-4 py-4 text-left text-lg font-medium text-ink transition-colors hover:text-accent-ink"
+                aria-expanded="false"
+                aria-controls={`faq-panel-${i}`}
+                id={`faq-trigger-${i}`}
+                data-acc-trigger
               >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
-                  <path d="M12 5v14M5 12h14" />
-                </svg>
-              </span>
-            </summary>
-            <p class="mt-3 max-w-2xl leading-relaxed text-ink-soft">{item.a}</p>
-          </details>
+                {item.q}
+                <span
+                  class="faq-chevron flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-sand text-accent-ink"
+                  aria-hidden="true"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m6 9 6 6 6-6" />
+                  </svg>
+                </span>
+              </button>
+            </h3>
+            <div
+              class="faq-panel"
+              id={`faq-panel-${i}`}
+              role="region"
+              aria-labelledby={`faq-trigger-${i}`}
+              data-acc-panel
+            >
+              <div>
+                <p class="max-w-2xl pb-5 leading-relaxed text-ink-soft">{item.a}</p>
+              </div>
+            </div>
+          </div>
         ))
       }
     </div>
   </div>
 </section>
+
+<script>
+  const initAccordion = (root: HTMLElement) => {
+    const triggers = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-acc-trigger]'));
+
+    const panelOf = (btn: HTMLButtonElement) =>
+      document.getElementById(btn.getAttribute('aria-controls') || '');
+    const close = (btn: HTMLButtonElement) => {
+      btn.setAttribute('aria-expanded', 'false');
+      panelOf(btn)?.removeAttribute('data-open');
+    };
+    const open = (btn: HTMLButtonElement) => {
+      btn.setAttribute('aria-expanded', 'true');
+      panelOf(btn)?.setAttribute('data-open', '');
+    };
+
+    triggers.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const isOpen = btn.getAttribute('aria-expanded') === 'true';
+        // Accordion: un sol obert alhora.
+        triggers.forEach((other) => other !== btn && close(other));
+        if (isOpen) close(btn);
+        else open(btn);
+      });
+    });
+  };
+
+  const boot = () =>
+    document.querySelectorAll<HTMLElement>('[data-accordion]').forEach(initAccordion);
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+</script>

@@ -1,0 +1,139 @@
+---
+/**
+ * ImageTrail — port vanilla (Astro) del component de Vengeance UI.
+ * En moure el cursor, deixa un rastre d'imatges amb spring physics
+ * (Motion One) que desapareixen. Respecta prefers-reduced-motion.
+ * El contingut de repòs (slot) també fa de fallback a mòbil.
+ */
+interface TrailImg {
+  src: string;
+  alt?: string;
+}
+interface Props {
+  images: (string | TrailImg)[];
+  threshold?: number;
+  minDelay?: number;
+  duration?: number;
+  maxItems?: number;
+  rotationRange?: number;
+  itemClass?: string;
+  class?: string;
+}
+const {
+  images,
+  threshold = 80,
+  minDelay = 50,
+  duration = 1000,
+  maxItems = 8,
+  rotationRange = 40,
+  itemClass = '',
+  class: className = '',
+} = Astro.props;
+
+const norm = images.map((i) => (typeof i === 'string' ? { src: i, alt: '' } : i));
+const cfg = { threshold, minDelay, duration, maxItems, rotationRange, itemClass, images: norm };
+---
+
+<div class={`image-trail relative overflow-hidden ${className}`} data-image-trail={JSON.stringify(cfg)}>
+  <slot />
+  <div class="pointer-events-none absolute inset-0 z-30 overflow-hidden" data-trail-overlay></div>
+</div>
+
+<script>
+  import { animate } from 'motion';
+
+  const SPRING = { type: 'spring', stiffness: 260, damping: 22 } as const;
+
+  const initImageTrail = () => {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) return;
+
+    document
+      .querySelectorAll<HTMLElement>('[data-image-trail]:not([data-trail-ready])')
+      .forEach((el) => {
+        el.setAttribute('data-trail-ready', '');
+        let cfg: any = {};
+        try {
+          cfg = JSON.parse(el.getAttribute('data-image-trail') || '{}');
+        } catch {
+          return;
+        }
+        const images: { src: string; alt: string }[] = cfg.images || [];
+        if (!images.length) return;
+
+        const overlay = el.querySelector<HTMLElement>('[data-trail-overlay]');
+        if (!overlay) return;
+
+        const threshold = Math.max(0, cfg.threshold ?? 80);
+        const minDelay = Math.max(0, cfg.minDelay ?? 50);
+        const duration = Math.max(0, cfg.duration ?? 1000);
+        const maxItems = Math.max(0, Math.floor(cfg.maxItems ?? 8));
+        const rotationRange = Math.max(0, cfg.rotationRange ?? 40);
+        const itemClass: string = cfg.itemClass || '';
+
+        let lastX = 0;
+        let lastY = 0;
+        let hasLast = false;
+        let lastTime = 0;
+        let idx = 0;
+
+        el.addEventListener('pointermove', (e) => {
+          if (!maxItems) return;
+          const b = el.getBoundingClientRect();
+          const x = e.clientX - b.left;
+          const y = e.clientY - b.top;
+          const now = performance.now();
+
+          if (hasLast) {
+            const dist = Math.hypot(x - lastX, y - lastY);
+            if (dist < threshold || now - lastTime < minDelay) return;
+          }
+
+          const img = images[idx % images.length];
+          idx++;
+          lastX = x;
+          lastY = y;
+          hasLast = true;
+          lastTime = now;
+
+          const rot = Math.random() * rotationRange - rotationRange / 2;
+          const base = `translate(-50%, -50%) rotate(${rot}deg)`;
+
+          const node = document.createElement('img');
+          node.src = img.src;
+          node.alt = img.alt || '';
+          node.draggable = false;
+          node.className = `image-trail-item ${itemClass}`.trim();
+          node.style.left = `${x}px`;
+          node.style.top = `${y}px`;
+          node.style.opacity = '0';
+          node.style.transform = `${base} scale(0.82)`;
+          overlay.appendChild(node);
+
+          while (overlay.children.length > maxItems) {
+            overlay.firstElementChild?.remove();
+          }
+
+          animate(node, { opacity: 1, transform: `${base} scale(1)` }, SPRING);
+
+          window.setTimeout(() => {
+            animate(
+              node,
+              { opacity: 0, transform: `translate(-50%, -50%) rotate(${rot * 0.75}deg) scale(0.5)` },
+              { duration: 0.4, ease: [0.42, 0, 0.58, 1] },
+            ).finished.then(() => node.remove());
+          }, duration);
+        });
+
+        el.addEventListener('pointerleave', () => {
+          hasLast = false;
+        });
+      });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initImageTrail);
+  } else {
+    initImageTrail();
+  }
+</script>

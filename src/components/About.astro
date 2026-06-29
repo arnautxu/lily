@@ -9,27 +9,29 @@ const { lang } = Astro.props;
 const t = ui[lang];
 ---
 
-<section id="lidia" class="scroll-mt-24 py-24 md:py-32">
+<section id="lidia" class="scroll-mt-24 section">
   <div class="container-edge grid items-center gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
-    <!-- Foto placeholder (double-bezel + float) -->
+    <!-- Foto de la Lídia (double-bezel) -->
     <div class="relative mx-auto w-full max-w-sm lg:mx-0" data-reveal>
       <div class="bezel">
-        <div class="bezel-core overflow-hidden">
-          <div class="aspect-[4/5] bg-gradient-to-br from-[#5d7d3a] via-[#4d7c2f] to-[#385c22]">
-            {/* PLACEHOLDER · <img src="/images/lidia.jpg" alt={t.about.imageAlt} width="480" height="600"
-                 loading="lazy" class="h-full w-full object-cover" /> */}
-          </div>
+        <div class="bezel-core aspect-[4/5] overflow-hidden bg-gradient-to-br from-[#5d7d3a] via-[#4d7c2f] to-[#385c22]">
+          <img
+            src="/lidia.jpeg"
+            alt={t.about.signature}
+            width="908"
+            height="1124"
+            loading="lazy"
+            class="h-full w-full object-cover"
+            onerror="this.style.display='none'"
+          />
         </div>
       </div>
-      <span class="absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-sand bg-bg/90 px-3 py-1 text-[0.68rem] font-medium text-ink-soft backdrop-blur-sm">
-        {t.about.imageAlt}
-      </span>
     </div>
 
     <div class="max-w-xl">
       <p class="eyebrow" data-reveal>{t.about.eyebrow}</p>
       <h2 class="mt-5 text-h2 font-semibold" data-reveal>{t.about.title}</h2>
-      {t.about.body.map((p) => <p class="mt-4 text-lg leading-relaxed text-ink-soft" data-reveal>{p}</p>)}
+      {t.about.body.map((p) => <p class="lead mt-4" data-reveal>{p}</p>)}
 
       <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3" data-reveal>
         <div>

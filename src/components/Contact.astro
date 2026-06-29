@@ -11,12 +11,12 @@ const wa = whatsappLink(lang);
 const f = t.contact.form;
 ---
 
-<section id="contacte" class="scroll-mt-24 border-t border-sand bg-surface/40 py-24 md:py-32">
+<section id="contacte" class="section section--lg scroll-mt-24 border-t border-sand bg-surface/40">
   <div class="container-edge grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
     <div class="max-w-md lg:sticky lg:top-28 lg:self-start">
       <p class="eyebrow" data-reveal>{t.contact.eyebrow}</p>
       <h2 class="mt-5 text-h2 font-semibold" data-reveal>{t.contact.title}</h2>
-      <p class="mt-4 text-lg text-ink-soft" data-reveal>{t.contact.lead}</p>
+      <p class="lead mt-4" data-reveal>{t.contact.lead}</p>
 
       <a href={wa} rel="noopener" class="btn-primary mt-7" data-reveal data-magnetic>
         {t.contact.waCta}
@@ -97,8 +97,8 @@ const f = t.contact.form;
 
         <button
           type="submit"
-          class="btn-plain mt-1 w-full bg-accent text-white transition-colors hover:bg-accent-ink sm:w-auto sm:justify-self-start"
-          style="box-shadow: 0 14px 30px -14px rgb(var(--accent) / 0.7);"
+          class="btn-plain mt-1 w-full bg-accent text-ink transition-colors hover:bg-ink hover:text-accent sm:w-auto sm:justify-self-start"
+          style="box-shadow: 0 12px 28px -16px rgb(var(--ink) / 0.28);"
           data-submit
         >
           {f.submit}

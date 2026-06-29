@@ -12,17 +12,17 @@ const wa = whatsappLink(lang);
 const { tiers, extras } = pricing[lang];
 ---
 
-<section id="tarifes" class="scroll-mt-24 py-24 md:py-32">
+<section id="tarifes" class="scroll-mt-24 section">
   <div class="container-edge">
     <div class="grid items-end gap-8 md:grid-cols-[1.3fr_1fr]">
       <div>
         <p class="eyebrow" data-reveal>{t.pricing.eyebrow}</p>
         <h2 class="mt-5 max-w-2xl text-h2 font-semibold" data-reveal>{t.pricing.title}</h2>
       </div>
-      <p class="text-lg text-ink-soft md:pb-1" data-reveal>{t.pricing.lead}</p>
+      <p class="lead" data-reveal>{t.pricing.lead}</p>
     </div>
 
-    <div class="mt-14 grid items-stretch gap-4 lg:grid-cols-3">
+    <div class="section-body grid items-stretch gap-4 lg:grid-cols-3">
       {
         tiers.map((tier) => {
           const dark = tier.featured;
@@ -37,14 +37,14 @@ const { tiers, extras } = pricing[lang];
               data-lift
             >
               {tier.featured && (
-                <span class="absolute right-7 top-7 rounded-full bg-coral px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-wide text-white">
+                <span class="label absolute right-7 top-7 rounded-full bg-coral px-3 py-1 text-white">
                   {t.pricing.featuredBadge}
                 </span>
               )}
               <h3 class={`font-display text-h3 font-semibold ${dark ? 'text-bg' : 'text-ink'}`}>{tier.name}</h3>
               <p class={`mt-1 text-sm ${dark ? 'text-bg/60' : 'text-ink-soft'}`}>{tier.tagline}</p>
               <p class="mt-6 flex items-baseline gap-1">
-                <span class={`font-display text-5xl font-semibold ${dark ? 'text-bg' : 'text-ink'}`}>{tier.price}</span>
+                <span class={`font-display text-display font-semibold ${dark ? 'text-bg' : 'text-ink'}`}>{tier.price}</span>
                 <span class={`text-sm ${dark ? 'text-bg/60' : 'text-ink-soft'}`}>{t.pricing.perMonth}</span>
               </p>
               <ul class="mt-7 flex flex-1 flex-col gap-3.5 text-[0.95rem]">
