@@ -28,13 +28,12 @@ const { tiers, extras } = pricing[lang];
           const dark = tier.featured;
           return (
             <article
-              class={`relative flex h-full flex-col rounded-2xl border p-7 transition-all duration-500 ease-out-soft md:p-8 ${
+              class={`relative flex h-full flex-col rounded-2xl border p-7 transition-[box-shadow,border-color] duration-300 ease-out-soft md:p-8 ${
                 dark
-                  ? 'border-transparent bg-ink text-bg shadow-[0_30px_70px_-30px_rgb(24_21_18_/_0.6)] lg:-mt-4 lg:mb-[-1rem]'
-                  : 'border-sand bg-surface shadow-diffuse'
+                  ? 'border-transparent bg-ink text-bg shadow-[0_30px_70px_-30px_rgb(24_21_18_/_0.6)] hover:shadow-[0_40px_90px_-28px_rgb(24_21_18_/_0.75)] lg:-mt-4 lg:mb-[-1rem]'
+                  : 'border-sand bg-surface shadow-diffuse hover:border-accent/40 hover:shadow-lift'
               }`}
               data-reveal
-              data-lift
             >
               {tier.featured && (
                 <span class="label absolute right-7 top-7 rounded-full bg-coral px-3 py-1 text-white">

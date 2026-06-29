@@ -18,8 +18,8 @@ export const ui = {
       links: [
         { href: '#que-fem', label: 'Què fem' },
         { href: '#com-treballem', label: 'Com treballem' },
-        { href: '#tarifes', label: 'Tarifes' },
         { href: '#feina', label: 'Feina' },
+        { href: '#tarifes', label: 'Tarifes' },
         { href: '#lidia', label: 'Qui sóc' },
       ],
       cta: 'Escriu-me',
@@ -237,8 +237,8 @@ export const ui = {
       links: [
         { href: '#que-fem', label: 'Qué hacemos' },
         { href: '#com-treballem', label: 'Cómo trabajamos' },
-        { href: '#tarifes', label: 'Tarifas' },
         { href: '#feina', label: 'Trabajos' },
+        { href: '#tarifes', label: 'Tarifas' },
         { href: '#lidia', label: 'Quién soy' },
       ],
       cta: 'Escríbeme',
