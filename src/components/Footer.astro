@@ -1,6 +1,6 @@
 ---
 import { ui, type Lang } from '../lib/i18n';
-import { site, contact, instagramLink } from '../lib/config';
+import { site, contact } from '../lib/config';
 
 interface Props {
   lang: Lang;
@@ -36,7 +36,6 @@ const year = 2026; // PLACEHOLDER · actualitza l'any si cal
       <h3 class="text-xs font-semibold uppercase tracking-wide text-ink-soft">{t.footer.contactTitle}</h3>
       <ul class="mt-3 grid gap-2 text-sm">
         <li><a href={`mailto:${contact.email}`} class="text-ink transition-colors hover:text-accent-ink">{contact.email}</a></li>
-        <li><a href={instagramLink} rel="noopener" class="text-ink transition-colors hover:text-accent-ink">@{contact.instagram}</a></li>
         <li class="text-ink-soft">{contact.city}, {contact.region}</li>
       </ul>
     </div>

@@ -20,7 +20,7 @@ export const pricing: Record<Lang, { tiers: Tier[]; extras: Extra[] }> = {
       {
         id: 'iniciacio',
         name: 'Iniciació',
-        price: '190 €',
+        price: '120 €',
         tagline: 'Per començar a tenir presència de veritat.',
         features: [
           '8 publicacions al mes',
@@ -32,7 +32,7 @@ export const pricing: Record<Lang, { tiers: Tier[]; extras: Extra[] }> = {
       {
         id: 'creixement',
         name: 'Creixement',
-        price: '320 €',
+        price: '200 €',
         tagline: 'El pas natural quan vols créixer.',
         featured: true,
         features: [
@@ -46,7 +46,7 @@ export const pricing: Record<Lang, { tiers: Tier[]; extras: Extra[] }> = {
       {
         id: 'complert',
         name: 'Complert',
-        price: '470 €',
+        price: '250 €',
         tagline: 'Presència forta i amb seguiment.',
         features: [
           '16 publicacions al mes',
@@ -70,7 +70,7 @@ export const pricing: Record<Lang, { tiers: Tier[]; extras: Extra[] }> = {
       {
         id: 'iniciacio',
         name: 'Iniciación',
-        price: '190 €',
+        price: '120 €',
         tagline: 'Para empezar a tener presencia de verdad.',
         features: [
           '8 publicaciones al mes',
@@ -82,7 +82,7 @@ export const pricing: Record<Lang, { tiers: Tier[]; extras: Extra[] }> = {
       {
         id: 'creixement',
         name: 'Crecimiento',
-        price: '320 €',
+        price: '200 €',
         tagline: 'El paso natural cuando quieres crecer.',
         featured: true,
         features: [
@@ -96,7 +96,7 @@ export const pricing: Record<Lang, { tiers: Tier[]; extras: Extra[] }> = {
       {
         id: 'complert',
         name: 'Completo',
-        price: '470 €',
+        price: '250 €',
         tagline: 'Presencia fuerte y con seguimiento.',
         features: [
           '16 publicaciones al mes',
