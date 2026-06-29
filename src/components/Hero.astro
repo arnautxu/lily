@@ -25,8 +25,6 @@ const trailImages = [
   { src: flatlay.src, alt: '' },
   { src: luthier.src, alt: '' },
 ];
-const restingImages = trailImages.slice(0, 4);
-
 const hintText = lang === 'ca' ? 'Mou el cursor pel hero' : 'Mueve el cursor por el hero';
 ---
 
@@ -75,21 +73,6 @@ const hintText = lang === 'ca' ? 'Mou el cursor pel hero' : 'Mueve el cursor por
           </span>
           {t.hero.trust}
         </p>
-      </div>
-
-      <!-- Collage del case study · només mòbil (sense hover) -->
-      <div class="relative z-40 mt-12 grid grid-cols-2 gap-2 lg:hidden">
-        {
-          restingImages.map((im) => (
-            <img
-              src={im.src}
-              alt={im.alt}
-              loading="lazy"
-              draggable={false}
-              class="aspect-square w-full rounded-xl object-cover"
-            />
-          ))
-        }
       </div>
     </div>
 

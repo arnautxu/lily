@@ -13,10 +13,10 @@ export const site = {
 };
 
 export const contact = {
-  // PLACEHOLDER · número en format internacional sense símbols, ex. 34600112233
-  whatsappNumber: '34600000000',
-  // PLACEHOLDER · email de contacte
-  email: 'hola@lidiacaldera.com',
+  // Número en format internacional sense símbols
+  whatsappNumber: '34619862217',
+  // Email de contacte
+  email: 'lidiacaldera09@gmail.com',
   // PLACEHOLDER · handle d'Instagram sense @
   instagram: 'lidiacaldera',
   // Ubicació (per a SEO local i confiança)

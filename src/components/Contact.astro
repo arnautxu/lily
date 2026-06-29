@@ -1,6 +1,6 @@
 ---
 import { ui, type Lang } from '../lib/i18n';
-import { whatsappLink, forms, contact } from '../lib/config';
+import { whatsappLink, contact } from '../lib/config';
 
 interface Props {
   lang: Lang;
@@ -30,14 +30,13 @@ const f = t.contact.form;
       </p>
     </div>
 
-    <!-- Formulari Web3Forms -->
+    <!-- Formulari → FormSubmit (envia a contact.email, sense API key) -->
     <div class="rounded-2xl border border-sand bg-surface p-6 shadow-diffuse md:p-8" data-reveal>
       <p class="mb-5 text-sm font-medium text-ink-soft">{t.contact.orForm}</p>
       <form id="contact-form" class="grid gap-4" novalidate>
-        <!-- Web3Forms access key — PLACEHOLDER (omple a src/lib/config.ts) -->
-        <input type="hidden" name="access_key" value={forms.web3formsKey} />
-        <input type="hidden" name="subject" value="Nou contacte des de la web · Lídia Caldera" />
-        <input type="hidden" name="from_name" value="Web Lídia Caldera" />
+        <input type="hidden" name="_subject" value="Nou contacte des de la web · Lídia Caldera" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_template" value="table" />
         <!-- Honeypot antispam (ocult als humans) -->
         <input
           type="checkbox"
@@ -118,6 +117,7 @@ const f = t.contact.form;
 
 <script
   define:vars={{
+    endpoint: `https://formsubmit.co/ajax/${contact.email}`,
     msgOk: f.ok,
     msgErr: f.error,
     msgSending: f.sending,
@@ -148,13 +148,13 @@ const f = t.contact.form;
     btn.textContent = msgSending;
 
     try {
-      const res = await fetch('https://api.web3forms.com/submit', {
+      const res = await fetch(endpoint, {
         method: 'POST',
         headers: { Accept: 'application/json' },
         body: new FormData(form),
       });
       const data = await res.json();
-      if (data.success) {
+      if (String(data.success) === 'true') {
         form.reset();
         showStatus(msgOk, true);
       } else {
