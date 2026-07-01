@@ -162,6 +162,12 @@ export const ui = {
         growthBefore: { label: 'Abans', n: 1200, display: '1.200' },
         growthAfter: { label: 'Amb la Lídia', n: 5100, display: '5.100' },
       },
+      moreSamples: {
+        eyebrow: 'Més mostres',
+        title: 'Altres comptes, la mateixa cura.',
+        lead: 'Una selecció de feina real per a altres negocis. Cada projecte, amb el seu to.',
+        tag: 'Mostra',
+      },
     },
     about: {
       eyebrow: 'Qui sóc',
@@ -380,6 +386,12 @@ export const ui = {
         growthLabel: 'Alcance mensual medio',
         growthBefore: { label: 'Antes', n: 1200, display: '1.200' },
         growthAfter: { label: 'Con Lídia', n: 5100, display: '5.100' },
+      },
+      moreSamples: {
+        eyebrow: 'Más muestras',
+        title: 'Otras cuentas, el mismo cuidado.',
+        lead: 'Una selección de trabajo real para otros negocios. Cada proyecto, con su tono.',
+        tag: 'Muestra',
       },
     },
     about: {

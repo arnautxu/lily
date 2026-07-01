@@ -12,6 +12,18 @@ interface Props {
 const { lang } = Astro.props;
 const t = ui[lang];
 const cs = t.portfolio.caseStudy;
+const ms = t.portfolio.moreSamples;
+
+// Mostres d'altres comptes (src/assets/noves), optimitzades per al carrusel cilíndric.
+const sampleMods = import.meta.glob('../assets/noves/*.png', { eager: true, import: 'default' });
+const sampleImages = await Promise.all(
+  Object.entries(sampleMods)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(async ([, mod], i) => {
+      const img = await getImage({ src: mod as Parameters<typeof getImage>[0]['src'], width: 560 });
+      return { src: img.src, alt: `${ms.tag} · ${i + 1}` };
+    }),
+);
 
 // Totes les fotos reals (feed + taller) per al CylinderCarousel, optimitzades.
 const galleryMods = {
@@ -151,5 +163,28 @@ const metricsData = [
         <figcaption class="px-1 pt-3 text-[0.78rem] text-ink-soft/80">{cs.bannerCaption}</figcaption>
       </figure>
     </article>
+
+    <!-- ── Més mostres · galeria d'altres comptes ──────────────── -->
+    <div class="mt-24 border-t border-ink/10 pt-14 md:mt-28 md:pt-16">
+      <div class="grid items-end gap-8 md:grid-cols-[1.3fr_1fr]">
+        <div>
+          <p class="eyebrow" data-reveal>
+            <span class="inline-block h-1.5 w-1.5 rounded-full bg-accent"></span>
+            {ms.eyebrow}
+          </p>
+          <h3 class="mt-5 max-w-2xl text-h2 font-semibold" data-reveal>{ms.title}</h3>
+        </div>
+        <p class="lead" data-reveal>{ms.lead}</p>
+      </div>
+
+      <div class="relative mt-10 overflow-hidden md:mt-12" data-reveal>
+        <CylinderCarousel
+          className="min-h-[360px] md:min-h-[500px]"
+          images={sampleImages}
+          cardWidth={240}
+          animationDuration={42}
+        />
+      </div>
+    </div>
   </div>
 </section>

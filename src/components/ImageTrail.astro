@@ -46,7 +46,9 @@ const cfg = { threshold, minDelay, duration, maxItems, rotationRange, itemClass,
 
   const initImageTrail = () => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduced) return;
+    // Només desktop amb cursor real: a mòbil/tàctil no ha d'aparèixer cap foto.
+    const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (reduced || !canHover || window.innerWidth < 1024) return;
 
     document
       .querySelectorAll<HTMLElement>('[data-image-trail]:not([data-trail-ready])')
@@ -78,7 +80,8 @@ const cfg = { threshold, minDelay, duration, maxItems, rotationRange, itemClass,
         let idx = 0;
 
         el.addEventListener('pointermove', (e) => {
-          if (!maxItems) return;
+          // Ignora tàctil: cap foto al hero en mòbil.
+          if (e.pointerType === 'touch' || !maxItems) return;
           const b = el.getBoundingClientRect();
           const x = e.clientX - b.left;
           const y = e.clientY - b.top;

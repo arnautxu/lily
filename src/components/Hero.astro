@@ -1,4 +1,5 @@
 ---
+import { getImage } from 'astro:assets';
 import { ui, type Lang } from '../lib/i18n';
 import { whatsappLink } from '../lib/config';
 import ImageTrail from './ImageTrail.astro';
@@ -16,15 +17,28 @@ const { lang } = Astro.props;
 const t = ui[lang];
 const wa = whatsappLink(lang);
 
-// Fotos reals del case study (taller de guitarres) per al rastre.
-const trailImages = [
-  { src: cos.src, alt: '' },
-  { src: roseta.src, alt: '' },
-  { src: clamps.src, alt: '' },
-  { src: eines.src, alt: '' },
-  { src: flatlay.src, alt: '' },
-  { src: luthier.src, alt: '' },
+// Fotos reals per al rastre del hero: taller de guitarres + mostres d'altres
+// comptes. Optimitzades a mida petita perquè el rastre no pesi.
+const novesMods = import.meta.glob<{ default: ImageMetadata }>('../assets/noves/*.png', {
+  eager: true,
+});
+const trailSources: ImageMetadata[] = [
+  cos,
+  roseta,
+  clamps,
+  eines,
+  flatlay,
+  luthier,
+  ...Object.entries(novesMods)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([, mod]) => mod.default),
 ];
+const trailImages = await Promise.all(
+  trailSources.map(async (src) => {
+    const img = await getImage({ src, width: 360 });
+    return { src: img.src, alt: '' };
+  }),
+);
 const hintText = lang === 'ca' ? 'Mou el cursor pel hero' : 'Mueve el cursor por el hero';
 ---
 
