@@ -126,7 +126,6 @@ export const ui = {
       eyebrow: 'Feina',
       title: 'La millor carta de presentació és la feina.',
       lead: "Un cas real explicat de prop. La prova del que faig és el que ja s'ha publicat.",
-      placeholderNote: 'PLACEHOLDER · substitueix per casos i imatges reals',
       caseStudy: {
         tag: 'Cas · Taller de guitarres · Osona',
         title: "El que es fa a mà, s'ha d'ensenyar a mà",
@@ -141,7 +140,7 @@ export const ui = {
         result:
           'Feed amb olor a serradures. Ara els clients entenen per què una guitarra seva té aquest preu. Ho veuen reflectit al feed.',
         resultStat: '×3',
-        resultStatLabel: 'consultes al taller', // PLACEHOLDER · dada real
+        resultStatLabel: 'consultes al taller',
         captions: {
           roseta: 'La roseta, dibuixada peça a peça',
           clamps: 'Encolat: dotze clamps i molta paciència',
@@ -149,10 +148,10 @@ export const ui = {
           cos: 'El cos, just abans de tancar la tapa',
         },
         quote: '«Ara el meu Instagram té la mateixa cura que poso en cada guitarra.»',
-        quoteAuthor: 'PLACEHOLDER · nom del client',
+        quoteAuthor: '',
         bannerCaption: 'Tapa i fons, llestos per muntar — foto real del procés',
         resultsTitle: 'Els resultats, en dades',
-        resultsNote: 'PLACEHOLDER · dades reals del compte',
+        resultsNote: '',
         metrics: [
           { n: 214, prefix: '+', suffix: '%', label: 'abast mensual' },
           { n: 5, prefix: '×', suffix: '', label: 'interaccions per publicació' },
@@ -179,7 +178,6 @@ export const ui = {
       ],
       signature: 'Lídia Caldera',
       role: 'Màrqueting i comunicació · Vic, Osona',
-      imageAlt: 'PLACEHOLDER · foto real de la Lídia',
       voice: {
         eyebrow: 'Parla amb mi',
         title: 'Pregunta-m’ho com si fos al teu davant',
@@ -351,7 +349,6 @@ export const ui = {
       eyebrow: 'Trabajos',
       title: 'La mejor carta de presentación es el trabajo.',
       lead: 'Un caso real, contado de cerca. La prueba de lo que hago es lo que ya se ha publicado.',
-      placeholderNote: 'PLACEHOLDER · sustituye por casos e imágenes reales',
       caseStudy: {
         tag: 'Caso · Taller de guitarras · Osona',
         title: 'Lo que se hace a mano, hay que enseñarlo a mano',
@@ -366,7 +363,7 @@ export const ui = {
         result:
           'Feed con olor a serrín. Ahora los clientes entienden por qué una guitarra suya tiene ese precio. Lo ven reflejado en el feed.',
         resultStat: '×3',
-        resultStatLabel: 'consultas al taller', // PLACEHOLDER · dato real
+        resultStatLabel: 'consultas al taller',
         captions: {
           roseta: 'La roseta, dibujada pieza a pieza',
           clamps: 'Encolado: doce clamps y mucha paciencia',
@@ -374,10 +371,10 @@ export const ui = {
           cos: 'El cuerpo, justo antes de cerrar la tapa',
         },
         quote: '«Ahora mi Instagram tiene el mismo cuidado que pongo en cada guitarra.»',
-        quoteAuthor: 'PLACEHOLDER · nombre del cliente',
+        quoteAuthor: '',
         bannerCaption: 'Tapa y fondo, listos para montar — foto real del proceso',
         resultsTitle: 'Los resultados, en datos',
-        resultsNote: 'PLACEHOLDER · datos reales de la cuenta',
+        resultsNote: '',
         metrics: [
           { n: 214, prefix: '+', suffix: '%', label: 'alcance mensual' },
           { n: 5, prefix: '×', suffix: '', label: 'interacciones por publicación' },
@@ -404,7 +401,6 @@ export const ui = {
       ],
       signature: 'Lídia Caldera',
       role: 'Marketing y comunicación · Vic, Osona',
-      imageAlt: 'PLACEHOLDER · foto real de Lídia',
       voice: {
         eyebrow: 'Habla conmigo',
         title: 'Pregúntame como si estuviera delante de ti',

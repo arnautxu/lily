@@ -141,7 +141,9 @@ const metricsData = [
           </div>
         </div>
 
-        <p class="mx-auto mt-6 max-w-md text-center text-sm text-ink-soft/70">{cs.resultsNote}</p>
+        {cs.resultsNote && (
+          <p class="mx-auto mt-6 max-w-md text-center text-sm text-ink-soft/70">{cs.resultsNote}</p>
+        )}
       </div>
 
       <!-- Banner flat-lay + pull quote -->
@@ -157,7 +159,7 @@ const metricsData = [
           <div class="absolute inset-0 bg-gradient-to-tr from-ink/75 via-ink/30 to-transparent"></div>
           <figcaption class="absolute inset-0 flex flex-col justify-end gap-3 p-6 md:max-w-xl md:p-10">
             <p class="font-display text-2xl font-semibold leading-snug text-bg md:text-3xl">{cs.quote}</p>
-            <p class="text-sm text-bg/70">{cs.quoteAuthor}</p>
+            {cs.quoteAuthor && <p class="text-sm text-bg/70">{cs.quoteAuthor}</p>}
           </figcaption>
         </div>
         <figcaption class="px-1 pt-3 text-[0.78rem] text-ink-soft/80">{cs.bannerCaption}</figcaption>

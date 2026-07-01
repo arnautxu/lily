@@ -11,7 +11,7 @@ const { lang } = Astro.props;
 const t = ui[lang];
 
 const canonical = new URL(lang === 'ca' ? '/' : '/es', site.url).href;
-const ogImage = new URL('/og-image.jpg', site.url).href; // PLACEHOLDER 1200×630
+const ogImage = new URL('/og-image.jpg', site.url).href;
 
 const alternates = [
   { hreflang: 'ca', href: new URL('/', site.url).href },

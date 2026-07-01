@@ -1,6 +1,6 @@
 /**
  * ─────────────────────────────────────────────────────────────────────────
- *  CONFIGURACIÓ CENTRAL — omple aquí TOTS els placeholders.
+ *  CONFIGURACIÓ CENTRAL — dades del negoci.
  *  Aquest és l'únic fitxer que has de tocar per posar les teves dades reals.
  * ─────────────────────────────────────────────────────────────────────────
  */
@@ -17,7 +17,7 @@ export const contact = {
   whatsappNumber: '34619862217',
   // Email de contacte
   email: 'lidiacaldera09@gmail.com',
-  // PLACEHOLDER · handle d'Instagram sense @
+  // Handle d'Instagram sense @
   instagram: 'lidiacaldera',
   // Ubicació (per a SEO local i confiança)
   city: 'Vic',
@@ -25,7 +25,7 @@ export const contact = {
 };
 
 export const forms = {
-  // PLACEHOLDER · Web3Forms access key (https://web3forms.com → gratuït)
+  // Web3Forms access key (https://web3forms.com → gratuït)
   web3formsKey: 'YOUR-WEB3FORMS-ACCESS-KEY',
 };
 
