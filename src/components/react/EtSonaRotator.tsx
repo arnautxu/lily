@@ -29,18 +29,17 @@ export default function EtSonaRotator({
       onMouseLeave={() => setPaused(false)}
     >
       {/* Stepper numerat amb barra de progrés */}
-      <ol className="flex gap-6 md:flex-col md:gap-7" role="tablist" aria-label={label}>
+      <ol className="flex gap-6 md:flex-col md:gap-7" aria-label={label}>
         {items.map((it, idx) => {
           const active = idx === i;
           return (
             <li key={idx}>
               <button
                 type="button"
-                role="tab"
-                aria-selected={active}
+                aria-pressed={active}
                 aria-label={it.title}
                 onClick={() => setI(idx)}
-                className="group flex items-center gap-3"
+                className="group flex min-h-[44px] items-center gap-3"
               >
                 <span
                   className={`text-sm font-semibold tabular-nums transition-colors ${

@@ -56,7 +56,7 @@ const f = t.contact.form;
               required
               autocomplete="name"
               placeholder={f.namePh}
-              class="rounded-md border border-sand bg-bg px-3.5 py-2.5 text-ink outline-none transition-colors placeholder:text-ink-soft/60 focus:border-accent"
+              class="rounded-md border border-sand bg-bg px-3.5 py-2.5 text-ink outline-none transition-colors placeholder:text-ink-soft/70 focus:border-accent"
             />
           </label>
           <label class="grid gap-1.5 text-sm">
@@ -66,7 +66,7 @@ const f = t.contact.form;
               type="text"
               autocomplete="organization"
               placeholder={f.businessPh}
-              class="rounded-md border border-sand bg-bg px-3.5 py-2.5 text-ink outline-none transition-colors placeholder:text-ink-soft/60 focus:border-accent"
+              class="rounded-md border border-sand bg-bg px-3.5 py-2.5 text-ink outline-none transition-colors placeholder:text-ink-soft/70 focus:border-accent"
             />
           </label>
         </div>
@@ -79,7 +79,7 @@ const f = t.contact.form;
             required
             autocomplete="tel"
             placeholder={f.phonePh}
-            class="rounded-md border border-sand bg-bg px-3.5 py-2.5 text-ink outline-none transition-colors placeholder:text-ink-soft/60 focus:border-accent"
+            class="rounded-md border border-sand bg-bg px-3.5 py-2.5 text-ink outline-none transition-colors placeholder:text-ink-soft/70 focus:border-accent"
           />
         </label>
 
@@ -90,7 +90,7 @@ const f = t.contact.form;
             rows="4"
             required
             placeholder={f.messagePh}
-            class="resize-y rounded-md border border-sand bg-bg px-3.5 py-2.5 text-ink outline-none transition-colors placeholder:text-ink-soft/60 focus:border-accent"
+            class="resize-y rounded-md border border-sand bg-bg px-3.5 py-2.5 text-ink outline-none transition-colors placeholder:text-ink-soft/70 focus:border-accent"
           ></textarea>
         </label>
 
@@ -103,7 +103,7 @@ const f = t.contact.form;
           {f.submit}
         </button>
 
-        <p class="text-xs text-ink-soft/80">{f.privacy}</p>
+        <p class="text-xs text-ink-soft">{f.privacy}</p>
         <p
           id="form-status"
           role="status"
@@ -132,7 +132,7 @@ const f = t.contact.form;
     status.textContent = text;
     status.classList.remove('hidden');
     status.style.background = ok ? 'rgba(79,122,82,.12)' : 'rgba(198,90,54,.12)';
-    status.style.color = ok ? 'var(--success)' : 'var(--accent-ink)';
+    status.style.color = ok ? 'rgb(var(--success))' : 'rgb(var(--accent-ink))';
   }
 
   form?.addEventListener('submit', async (e) => {

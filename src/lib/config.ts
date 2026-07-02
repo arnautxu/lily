@@ -24,11 +24,6 @@ export const contact = {
   region: 'Osona',
 };
 
-export const forms = {
-  // Web3Forms access key (https://web3forms.com → gratuït)
-  web3formsKey: 'YOUR-WEB3FORMS-ACCESS-KEY',
-};
-
 /** Missatge pre-omplert del WhatsApp (CA per defecte; ES s'injecta a la pàgina) */
 export const waMessage = {
   ca: "Hola Lídia! T'escric des de la web, m'agradaria informació sobre la gestió d'Instagram del meu negoci.",

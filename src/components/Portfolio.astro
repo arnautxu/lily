@@ -136,13 +136,13 @@ const metricsData = [
             class="mt-6 flex justify-center px-4 md:pointer-events-none md:absolute md:inset-0 md:mt-0 md:items-center"
           >
             <div class="pointer-events-auto flex w-full max-w-[340px] justify-center">
-              <MetricsCarousel client:load metrics={metricsData} baseWidth={300} />
+              <MetricsCarousel client:visible metrics={metricsData} baseWidth={300} />
             </div>
           </div>
         </div>
 
         {cs.resultsNote && (
-          <p class="mx-auto mt-6 max-w-md text-center text-sm text-ink-soft/70">{cs.resultsNote}</p>
+          <p class="mx-auto mt-6 max-w-md text-center text-sm text-ink-soft/90">{cs.resultsNote}</p>
         )}
       </div>
 
@@ -162,7 +162,7 @@ const metricsData = [
             {cs.quoteAuthor && <p class="text-sm text-bg/70">{cs.quoteAuthor}</p>}
           </figcaption>
         </div>
-        <figcaption class="px-1 pt-3 text-[0.78rem] text-ink-soft/80">{cs.bannerCaption}</figcaption>
+        <figcaption class="px-1 pt-3 text-[0.78rem] text-ink-soft">{cs.bannerCaption}</figcaption>
       </figure>
     </article>
 
@@ -181,12 +181,31 @@ const metricsData = [
 
       <div class="relative mt-10 overflow-hidden md:mt-12" data-reveal>
         <CylinderCarousel
-          className="min-h-[360px] md:min-h-[500px]"
+          className="min-h-[320px] md:min-h-[440px]"
           images={sampleImages}
-          cardWidth={240}
-          animationDuration={42}
+          cardWidth={200}
+          animationDuration={58}
+          reverse
         />
       </div>
     </div>
   </div>
 </section>
+
+<script>
+  // Pausa els cilindres 3D quan són fora de pantalla (estalvia GPU/bateria).
+  const tracks = document.querySelectorAll<HTMLElement>('[data-cyl-track]');
+  if (tracks.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          (e.target as HTMLElement).style.animationPlayState = e.isIntersecting
+            ? 'running'
+            : 'paused';
+        });
+      },
+      { rootMargin: '120px 0px' },
+    );
+    tracks.forEach((t) => io.observe(t));
+  }
+</script>

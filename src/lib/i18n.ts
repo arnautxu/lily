@@ -24,6 +24,7 @@ export const ui = {
       ],
       cta: 'Escriu-me',
       langLabel: 'Canviar idioma',
+      menuLabel: 'Obrir menú',
     },
     hero: {
       eyebrow: 'Instagram per a comerços de Vic i Osona',
@@ -247,6 +248,7 @@ export const ui = {
       ],
       cta: 'Escríbeme',
       langLabel: 'Cambiar idioma',
+      menuLabel: 'Abrir menú',
     },
     hero: {
       eyebrow: 'Instagram para comercios de Vic y Osona',

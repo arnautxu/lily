@@ -270,19 +270,6 @@
   pointer-events: none;
 }
 
-/* ── Strands (orb Siri · WebGL) ────────────────────────────── */
-.strands-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-.strands-container canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
-  background-color: transparent;
-}
-
 /* ── Film grain (fix, no afecta scroll) ────────────────────── */
 .grain {
   position: fixed;

@@ -14,7 +14,7 @@ const otherLabel = otherLang === 'ca' ? 'CAT' : 'ES';
 const homeHref = lang === 'ca' ? '/' : '/es';
 ---
 
-<header class="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4 md:pt-5">
+<header class="pointer-events-none fixed inset-x-0 top-0 z-50 flex flex-col items-center px-4 pt-4 md:pt-5">
   <nav
     class="pointer-events-auto flex w-full max-w-content items-center justify-between gap-3 rounded-full border border-ink/[0.08] bg-bg/70 py-2 pl-4 pr-2 shadow-[0_10px_30px_-18px_rgb(24_21_18_/_0.4)] backdrop-blur-xl md:gap-4 md:pl-5"
     aria-label={t.nav.cta}
@@ -58,6 +58,80 @@ const homeHref = lang === 'ca' ? '/' : '/es';
           </svg>
         </span>
       </a>
+
+      <!-- Hamburguesa (només mòbil) -->
+      <button
+        type="button"
+        id="menu-toggle"
+        aria-label={t.nav.menuLabel}
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        class="btn-ico flex h-11 w-11 items-center justify-center rounded-full border border-ink/[0.12] text-ink transition-colors hover:border-accent/50 md:hidden"
+      >
+        <svg class="menu-open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16" />
+        </svg>
+        <svg class="menu-close hidden" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+          <path d="M6 6l12 12M18 6 6 18" />
+        </svg>
+      </button>
     </div>
   </nav>
+
+  <!-- Panell mòbil -->
+  <div
+    id="mobile-menu"
+    class="pointer-events-auto mt-2 grid w-full max-w-content grid-rows-[0fr] overflow-hidden rounded-3xl transition-[grid-template-rows] duration-300 ease-out-soft md:hidden"
+    data-open="false"
+  >
+    <div class="min-h-0 overflow-hidden">
+      <div class="rounded-3xl border border-ink/[0.08] bg-bg/90 p-3 shadow-[0_18px_40px_-20px_rgb(24_21_18_/_0.45)] backdrop-blur-xl">
+        <ul class="grid gap-1">
+          {
+            t.nav.links.map((l) => (
+              <li>
+                <a
+                  href={l.href}
+                  data-menu-link
+                  class="flex items-center justify-between rounded-2xl px-4 py-3 text-base font-medium text-ink transition-colors hover:bg-ink/[0.04] hover:text-accent-ink"
+                >
+                  {l.label}
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-ink-soft" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
 </header>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+
+  if (toggle && menu) {
+    const openIco = toggle.querySelector<HTMLElement>('.menu-open');
+    const closeIco = toggle.querySelector<HTMLElement>('.menu-close');
+
+    const setOpen = (open: boolean) => {
+      menu.dataset.open = String(open);
+      menu.style.gridTemplateRows = open ? '1fr' : '0fr';
+      toggle.setAttribute('aria-expanded', String(open));
+      openIco?.classList.toggle('hidden', open);
+      closeIco?.classList.toggle('hidden', !open);
+    };
+
+    toggle.addEventListener('click', () => setOpen(menu.dataset.open !== 'true'));
+    menu.querySelectorAll('[data-menu-link]').forEach((a) =>
+      a.addEventListener('click', () => setOpen(false)),
+    );
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && menu.dataset.open === 'true') {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+  }
+</script>

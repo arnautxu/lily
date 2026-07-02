@@ -14,6 +14,7 @@ export interface CylinderCarouselProps extends React.HTMLAttributes<HTMLDivEleme
   cardClassName?: string;
   animationDuration?: number; // in seconds
   cardWidth?: number; // in pixels
+  reverse?: boolean; // gira en sentit contrari
 }
 
 export const CylinderCarousel = React.forwardRef<HTMLDivElement, CylinderCarouselProps>(
@@ -25,6 +26,7 @@ export const CylinderCarousel = React.forwardRef<HTMLDivElement, CylinderCarouse
       cardClassName,
       animationDuration = 32,
       cardWidth = 250,
+      reverse = false,
       ...props
     },
     ref
@@ -57,6 +59,7 @@ export const CylinderCarousel = React.forwardRef<HTMLDivElement, CylinderCarouse
         {...props}
       >
         <div
+          data-cyl-track
           className={cn(
             "grid place-items-center [transform-style:preserve-3d] motion-reduce:!animate-[ry_128s_linear_infinite]",
             containerClassName
@@ -64,6 +67,7 @@ export const CylinderCarousel = React.forwardRef<HTMLDivElement, CylinderCarouse
           style={{
             ...customStyle,
             animation: "ry var(--anim-dur) linear infinite",
+            animationDirection: reverse ? "reverse" : "normal",
           }}
         >
           {/* We define the keyframes inline via a style block to ensure it works without global CSS config */}
@@ -80,6 +84,8 @@ export const CylinderCarousel = React.forwardRef<HTMLDivElement, CylinderCarouse
               key={i}
               src={img.src}
               alt={img.alt || `Carousel image ${i}`}
+              loading="lazy"
+              decoding="async"
               className={cn(
                 "[grid-area:1/1] object-cover rounded-2xl [backface-visibility:hidden]",
                 cardClassName

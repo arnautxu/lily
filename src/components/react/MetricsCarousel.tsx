@@ -35,7 +35,9 @@ export default function MetricsCarousel({
     const vw = window.innerWidth;
     return Math.min(w, vw < 640 ? Math.min(vw - 150, 240) : w);
   };
-  const [bw, setBw] = useState(() => safeWidth(baseWidth));
+  // Iniciem amb baseWidth (igual que el SSR) i ajustem després del muntatge,
+  // per evitar mismatch d'hidratació (React 19 no repara diferències d'estil).
+  const [bw, setBw] = useState(baseWidth);
   useEffect(() => {
     const fit = () => setBw(safeWidth(baseWidth));
     fit();
