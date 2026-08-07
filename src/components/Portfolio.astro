@@ -3,6 +3,7 @@ import { Image, getImage } from 'astro:assets';
 import { ui, type Lang } from '../lib/i18n';
 import { CylinderCarousel } from './react/CylinderCarousel.tsx';
 import MetricsCarousel from './react/MetricsCarousel.tsx';
+import Lightbox from './Lightbox.astro';
 import luthier from '../assets/guitarras/luthier-retrat.png';
 import flatlay from '../assets/guitarras/flatlay-tapa.png';
 
@@ -13,6 +14,11 @@ const { lang } = Astro.props;
 const t = ui[lang];
 const cs = t.portfolio.caseStudy;
 const ms = t.portfolio.moreSamples;
+const zoom = t.portfolio.zoom;
+
+// Versions grans per al visor a pantalla completa (morph amb View Transitions).
+const portraitZoom = (await getImage({ src: luthier, width: 1400 })).src;
+const bannerZoom = (await getImage({ src: flatlay, width: 1600 })).src;
 
 // Mostres d'altres comptes (src/assets/noves), optimitzades per al carrusel cilíndric.
 const sampleMods = import.meta.glob('../assets/noves/*.png', { eager: true, import: 'default' });
@@ -81,14 +87,23 @@ const metricsData = [
       <!-- Split: retrat + relat -->
       <div class="mt-6 grid items-center gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:gap-14">
         <figure class="bezel" data-tilt data-reveal>
-          <div class="bezel-core relative aspect-[4/5] overflow-hidden">
+          <div class="zoomable bezel-core relative aspect-[4/5] overflow-hidden">
             <Image
               src={luthier}
               alt={cs.portraitAlt}
               widths={[480, 900]}
               sizes="(max-width: 1024px) 90vw, 440px"
               class="absolute inset-0 h-full w-full object-cover"
+              data-zoom
+              data-zoom-src={portraitZoom}
+              data-zoom-caption={cs.portraitAlt}
+              role="button"
+              tabindex="0"
+              aria-label={`${zoom.open} — ${cs.portraitAlt}`}
             />
+            <span class="zoom-hint" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3M11 8v6M8 11h6" /></svg>
+            </span>
           </div>
         </figure>
 
@@ -136,7 +151,7 @@ const metricsData = [
             class="mt-6 flex justify-center px-4 md:pointer-events-none md:absolute md:inset-0 md:mt-0 md:items-center"
           >
             <div class="pointer-events-auto flex w-full max-w-[340px] justify-center">
-              <MetricsCarousel client:visible metrics={metricsData} baseWidth={300} />
+              <MetricsCarousel client:idle metrics={metricsData} baseWidth={300} />
             </div>
           </div>
         </div>
@@ -148,19 +163,28 @@ const metricsData = [
 
       <!-- Banner flat-lay + pull quote -->
       <figure class="mt-4 overflow-hidden rounded-2xl" data-reveal>
-        <div class="relative">
+        <div class="zoomable relative max-h-[28rem] overflow-hidden">
           <Image
             src={flatlay}
             alt={cs.bannerCaption}
             widths={[768, 1280, 1600]}
             sizes="(max-width: 1280px) 100vw, 1216px"
-            class="h-full max-h-[28rem] w-full object-cover"
+            class="banner-parallax h-full max-h-[28rem] w-full object-cover"
+            data-zoom
+            data-zoom-src={bannerZoom}
+            data-zoom-caption={cs.bannerCaption}
+            role="button"
+            tabindex="0"
+            aria-label={`${zoom.open} — ${cs.bannerCaption}`}
           />
-          <div class="absolute inset-0 bg-gradient-to-tr from-ink/75 via-ink/30 to-transparent"></div>
-          <figcaption class="absolute inset-0 flex flex-col justify-end gap-3 p-6 md:max-w-xl md:p-10">
+          <div class="pointer-events-none absolute inset-0 bg-gradient-to-tr from-ink/75 via-ink/30 to-transparent"></div>
+          <figcaption class="pointer-events-none absolute inset-0 flex flex-col justify-end gap-3 p-6 md:max-w-xl md:p-10">
             <p class="font-display text-2xl font-semibold leading-snug text-bg md:text-3xl">{cs.quote}</p>
             {cs.quoteAuthor && <p class="text-sm text-bg/70">{cs.quoteAuthor}</p>}
           </figcaption>
+          <span class="zoom-hint" aria-hidden="true">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3M11 8v6M8 11h6" /></svg>
+          </span>
         </div>
         <figcaption class="px-1 pt-3 text-[0.78rem] text-ink-soft">{cs.bannerCaption}</figcaption>
       </figure>
@@ -191,6 +215,69 @@ const metricsData = [
     </div>
   </div>
 </section>
+
+<Lightbox closeLabel={zoom.close} />
+
+<style>
+  /* Afordança de "ampliar" sobre les fotos obribles. */
+  .zoomable [data-zoom] {
+    cursor: zoom-in;
+  }
+  .zoom-hint {
+    position: absolute;
+    top: 0.85rem;
+    right: 0.85rem;
+    z-index: 2;
+    display: flex;
+    height: 34px;
+    width: 34px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: rgb(12 11 9 / 0.5);
+    color: rgb(var(--bg));
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    opacity: 0;
+    transform: scale(0.8);
+    transition:
+      opacity 0.3s var(--ease-soft),
+      transform 0.3s var(--ease-soft);
+    pointer-events: none;
+  }
+  .zoomable:hover .zoom-hint,
+  [data-zoom]:focus-visible ~ .zoom-hint {
+    opacity: 1;
+    transform: scale(1);
+  }
+  /* A tàctil (sense hover fi) mostra sempre el hint, discret. */
+  @media (hover: none) {
+    .zoom-hint {
+      opacity: 0.9;
+      transform: scale(1);
+    }
+  }
+
+  /* Parallax cinematogràfic del banner lligat a l'scroll (amb fallback estàtic). */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .banner-parallax {
+        transform-origin: center;
+        animation: banner-pan linear both;
+        animation-timeline: view();
+        animation-range: cover 0% cover 100%;
+      }
+      @keyframes banner-pan {
+        from {
+          transform: scale(1.14) translateY(-2.5%);
+        }
+        to {
+          transform: scale(1.14) translateY(2.5%);
+        }
+      }
+    }
+  }
+</style>
 
 <script>
   // Pausa els cilindres 3D quan són fora de pantalla (estalvia GPU/bateria).

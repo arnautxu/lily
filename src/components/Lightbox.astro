@@ -1,0 +1,254 @@
+---
+/**
+ * Lightbox — visor de fotos a pantalla completa amb morph via View Transitions.
+ * Qualsevol <img data-zoom data-zoom-src="…" data-zoom-caption="…"> l'obre.
+ * Degrada net: sense View Transitions fa un fade; respecta reduced-motion.
+ */
+interface Props {
+  closeLabel: string;
+}
+const { closeLabel } = Astro.props;
+---
+
+<div
+  id="lightbox"
+  class="lb"
+  data-open="false"
+  role="dialog"
+  aria-modal="true"
+  aria-label={closeLabel}
+  aria-hidden="true"
+>
+  <div class="lb-backdrop" data-lb-close></div>
+  <figure class="lb-figure">
+    <img id="lb-img" class="lb-img" alt="" decoding="async" />
+    <figcaption id="lb-cap" class="lb-cap"></figcaption>
+  </figure>
+  <button type="button" class="lb-close" aria-label={closeLabel} data-lb-close>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+      <path d="M6 6l12 12M18 6 6 18" />
+    </svg>
+  </button>
+</div>
+
+<style>
+  .lb {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    display: grid;
+    place-items: center;
+    padding: clamp(1rem, 4vw, 3rem);
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.28s var(--ease-soft), visibility 0.28s;
+  }
+  .lb[data-open='true'] {
+    visibility: visible;
+    opacity: 1;
+  }
+  .lb-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgb(12 11 9 / 0.82);
+    backdrop-filter: blur(14px) saturate(120%);
+    -webkit-backdrop-filter: blur(14px) saturate(120%);
+  }
+  .lb-figure {
+    position: relative;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9rem;
+    max-width: min(100%, 68rem);
+  }
+  .lb-img {
+    display: block;
+    max-width: 100%;
+    max-height: 78vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: clamp(10px, 1.4vw, 18px);
+    box-shadow: 0 40px 90px -30px rgb(0 0 0 / 0.8);
+  }
+  .lb-cap {
+    max-width: 52ch;
+    text-align: center;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    color: rgb(var(--bg) / 0.82);
+  }
+  .lb-cap:empty {
+    display: none;
+  }
+  .lb-close {
+    position: absolute;
+    top: max(1rem, env(safe-area-inset-top));
+    right: max(1rem, env(safe-area-inset-right));
+    display: flex;
+    height: 48px;
+    width: 48px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    border: 1px solid rgb(255 255 255 / 0.16);
+    background: rgb(255 255 255 / 0.08);
+    color: rgb(var(--bg));
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    cursor: pointer;
+    transition: background-color 0.2s var(--ease-soft), transform 0.2s var(--ease-soft);
+  }
+  .lb-close:hover {
+    background: rgb(255 255 255 / 0.18);
+  }
+  .lb-close:active {
+    transform: scale(0.94);
+  }
+  .lb-close:focus-visible {
+    outline: 2px solid rgb(var(--accent));
+    outline-offset: 3px;
+  }
+
+  /* Afinació del morph (durada/easing del grup compartit). */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(::view-transition-group(zoom)) {
+      animation-duration: 0.42s;
+      animation-timing-function: var(--ease-soft);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lb {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lb-img') as HTMLImageElement | null;
+  const lbCap = document.getElementById('lb-cap');
+
+  if (lb && lbImg && lbCap) {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const closeBtn = lb.querySelector<HTMLButtonElement>('.lb-close')!;
+    let lastFocused: HTMLElement | null = null;
+    let source: HTMLElement | null = null;
+    let busy = false; // evita cridar startViewTransition amb una altra en marxa
+
+    const supportsVT = 'startViewTransition' in document && !reduce;
+
+    // Executa una View Transition empassant-se qualsevol rebuig de les seves
+    // promeses (en pàgines no visibles el navegador les avorta i, si no,
+    // deixaria unhandled rejections).
+    const runVT = (
+      update: () => void,
+      onReady: () => void,
+      done: () => void,
+    ) => {
+      // @ts-ignore
+      const t = document.startViewTransition(update);
+      const noop = () => {};
+      t.updateCallbackDone?.catch(noop);
+      t.ready.then(onReady, onReady);
+      t.finished.then(done, done);
+    };
+
+    const reveal = (img: HTMLImageElement, full: string, caption: string) => {
+      lbImg.src = full;
+      lbImg.alt = img.alt || '';
+      lbCap.textContent = caption;
+      lb.dataset.open = 'true';
+      lb.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const hide = () => {
+      lb.dataset.open = 'false';
+      lb.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      lastFocused?.focus();
+      source = null;
+    };
+
+    const open = (img: HTMLImageElement) => {
+      if (busy || lb.dataset.open === 'true') return;
+      const full = img.dataset.zoomSrc || img.currentSrc || img.src;
+      const caption = img.dataset.zoomCaption || '';
+      lastFocused = document.activeElement as HTMLElement;
+      source = img;
+
+      if (supportsVT) {
+        busy = true;
+        img.style.viewTransitionName = 'zoom';
+        runVT(
+          () => {
+            img.style.viewTransitionName = '';
+            lbImg.style.viewTransitionName = 'zoom';
+            reveal(img, full, caption);
+          },
+          // El focus es mou DESPRÉS que la transició munti el DOM.
+          () => closeBtn.focus(),
+          () => {
+            lbImg.style.viewTransitionName = '';
+            busy = false;
+          },
+        );
+      } else {
+        reveal(img, full, caption);
+        closeBtn.focus();
+      }
+    };
+
+    const close = () => {
+      if (busy || lb.dataset.open !== 'true') return;
+      if (supportsVT && source) {
+        const src = source;
+        busy = true;
+        lbImg.style.viewTransitionName = 'zoom';
+        runVT(
+          () => {
+            lbImg.style.viewTransitionName = '';
+            hide();
+            src.style.viewTransitionName = 'zoom';
+          },
+          () => {},
+          () => {
+            src.style.viewTransitionName = '';
+            busy = false;
+          },
+        );
+      } else {
+        hide();
+      }
+    };
+
+    // Obertura: qualsevol [data-zoom]
+    document.querySelectorAll<HTMLImageElement>('[data-zoom]').forEach((img) => {
+      img.addEventListener('click', () => open(img));
+      img.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          open(img);
+        }
+      });
+    });
+
+    // Tancament
+    lb.querySelectorAll('[data-lb-close]').forEach((el) =>
+      el.addEventListener('click', close),
+    );
+    document.addEventListener('keydown', (e) => {
+      if (lb.dataset.open !== 'true') return;
+      if (e.key === 'Escape') close();
+      // Focus trap simple: només hi ha el botó de tancar.
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        closeBtn.focus();
+      }
+    });
+  }
+</script>

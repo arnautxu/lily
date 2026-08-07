@@ -168,6 +168,10 @@ export const ui = {
         lead: 'Una selecció de feina real per a altres negocis. Cada projecte, amb el seu to.',
         tag: 'Mostra',
       },
+      zoom: {
+        open: 'Amplia la foto',
+        close: 'Tanca la foto',
+      },
     },
     about: {
       eyebrow: 'Qui sóc',
@@ -391,6 +395,10 @@ export const ui = {
         title: 'Otras cuentas, el mismo cuidado.',
         lead: 'Una selección de trabajo real para otros negocios. Cada proyecto, con su tono.',
         tag: 'Muestra',
+      },
+      zoom: {
+        open: 'Amplía la foto',
+        close: 'Cierra la foto',
       },
     },
     about: {
